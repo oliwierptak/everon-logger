@@ -1,0 +1,21 @@
+[
+    {
+        "name": "LoggerPluginConfigurator",
+        "schema": [
+            {
+                "name": "name",
+                "type": "string",
+                "default": "everon-logger"
+            },
+            {
+                "name": "logLevel",
+                "type": "string"
+            },
+            {
+                "name": "timezone",
+                "type": "string",
+                "default": "UTC"
+            }
+        ]
+    }
+]

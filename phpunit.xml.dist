@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false"
+         colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="true" stopOnError="true"
+         stopOnIncomplete="false" stopOnSkipped="false" bootstrap="tests/bootstrap.php"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./src/</directory>
+        </include>
+        <report>
+            <clover outputFile="./tests/logs/coverage.xml"/>
+            <html outputDirectory="./tests/logs/coverage"/>
+        </report>
+    </coverage>
+    <testsuites>
+        <testsuite name="FunctionalSuit">
+            <directory>tests/suit/Functional</directory>
+        </testsuite>
+    </testsuites>
+    <logging>
+        <testdoxHtml outputFile="./tests/logs/testdox.html"/>
+    </logging>
+</phpunit>

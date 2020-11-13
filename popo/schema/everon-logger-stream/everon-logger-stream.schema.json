@@ -1,0 +1,25 @@
+[
+    {
+        "name": "StreamLoggerPluginConfigurator",
+        "schema": [
+            {
+                "name": "streamLocation",
+                "type": "string"
+            },
+            {
+                "name": "shouldBubble",
+                "type": "bool",
+                "default": true
+            },
+            {
+                "name": "filePermission",
+                "type": "int"
+            },
+            {
+                "name": "useLocking",
+                "type": "bool",
+                "default": false
+            }
+        ]
+    }
+]

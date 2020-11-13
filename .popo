@@ -1,0 +1,4 @@
+[everon-logger]
+schema = popo/schema
+output = src/Logger/Configurator/
+namespace = Everon\Logger\Configurator

@@ -1,0 +1,11 @@
+[
+    {
+        "name": "LoggerPluginConfigurator",
+        "schema": [
+            {
+                "name": "syslogConfigurator",
+                "type": "SyslogLoggerPluginConfigurator"
+            }
+        ]
+    }
+]

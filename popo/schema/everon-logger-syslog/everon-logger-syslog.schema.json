@@ -1,0 +1,26 @@
+[
+    {
+        "name": "SyslogLoggerPluginConfigurator",
+        "schema": [
+            {
+                "name": "ident",
+                "type": "string"
+            },
+            {
+                "name": "facility",
+                "type": "int",
+                "default": 128
+            },
+            {
+                "name": "shouldBubble",
+                "type": "bool",
+                "default": true
+            },
+            {
+                "name": "logopts",
+                "type": "int",
+                "default": "\\LOG_PID"
+            }
+        ]
+    }
+]
