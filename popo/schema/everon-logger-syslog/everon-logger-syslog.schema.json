@@ -3,6 +3,10 @@
         "name": "SyslogLoggerPluginConfigurator",
         "schema": [
             {
+                "name": "logLevel",
+                "type": "string"
+            },
+            {
                 "name": "ident",
                 "type": "string"
             },

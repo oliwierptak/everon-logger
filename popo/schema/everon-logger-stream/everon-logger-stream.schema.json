@@ -3,6 +3,10 @@
         "name": "StreamLoggerPluginConfigurator",
         "schema": [
             {
+                "name": "logLevel",
+                "type": "string"
+            },
+            {
                 "name": "streamLocation",
                 "type": "string"
             },

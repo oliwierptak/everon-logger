@@ -26,7 +26,7 @@ class SyslogLoggerPlugin implements LoggerPluginInterface
         return new SyslogHandler(
             $this->configurator->getSyslogConfigurator()->getIdent(),
             $this->configurator->getSyslogConfigurator()->getFacility(),
-            Logger::toMonologLevel($this->configurator->getLogLevel()),
+            $this->configurator->getSyslogConfigurator()->getLogLevel() ?? Logger::toMonologLevel($this->configurator->getLogLevel()),
             $this->configurator->getSyslogConfigurator()->shouldBubble(),
             $this->configurator->getSyslogConfigurator()->getLogopts(),
         );

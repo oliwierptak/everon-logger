@@ -11,6 +11,7 @@ use Everon\Logger\Contract\Container\LoggerProcessorContainerInterface;
 use Everon\Logger\Contract\Plugin\LoggerFormatterPluginInterface;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
+use function get_class;
 
 class LoggerBuilder
 {
@@ -53,7 +54,7 @@ class LoggerBuilder
                 $handler->setFormatter($formatter);
             }
 
-            $handlers[] = $handler;
+            $handlers[get_class($plugin)] = $handler;
         }
 
         return $handlers;

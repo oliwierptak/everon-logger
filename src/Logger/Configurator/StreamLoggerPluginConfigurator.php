@@ -20,6 +20,7 @@ use function trim;
 class StreamLoggerPluginConfigurator 
 {
     protected array $data = array (
+  'logLevel' => NULL,
   'streamLocation' => NULL,
   'shouldBubble' => true,
   'filePermission' => NULL,
@@ -27,6 +28,7 @@ class StreamLoggerPluginConfigurator
 );
 
     protected array $default = array (
+  'logLevel' => NULL,
   'streamLocation' => NULL,
   'shouldBubble' => true,
   'filePermission' => NULL,
@@ -34,6 +36,7 @@ class StreamLoggerPluginConfigurator
 );
 
     protected array $propertyMapping = array (
+  'logLevel' => 'string',
   'streamLocation' => 'string',
   'shouldBubble' => 'bool',
   'filePermission' => 'int',
@@ -233,6 +236,50 @@ class StreamLoggerPluginConfigurator
         return $value[0] === '\\' && ctype_upper($value[1]);
     }
     
+    /**
+     * @return string|null
+     */
+    public function getLogLevel(): ?string
+    {
+        return $this->popoGetValue('logLevel');
+    }
+
+    /**
+     * @param string|null $logLevel
+     *
+     * @return StreamLoggerPluginConfigurator
+     */
+    public function setLogLevel(?string $logLevel): StreamLoggerPluginConfigurator
+    {
+        $this->popoSetValue('logLevel', $logLevel);
+
+        return $this;
+    }
+
+    /**
+     * Throws exception if value is null.
+     *
+     * @throws \UnexpectedValueException
+     *
+     * @return string
+     */
+    public function requireLogLevel(): string
+    {
+        $this->assertPropertyValue('logLevel');
+
+        return (string)$this->popoGetValue('logLevel');
+    }
+
+    /**
+     * Returns true if value was set to any value, ignores defaults.
+     *
+     * @return bool
+     */
+    public function hasLogLevel(): bool
+    {
+        return $this->updateMap['logLevel'] ?? false;
+    }
+
     /**
      * @return string|null
      */
