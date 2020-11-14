@@ -11,9 +11,10 @@ interface EveronLoggerFacadeInterface
     /**
      * Specification:
      * - Validate configurator, throw exception on error
-     * - Build monolog handlers
-     * - Build and set formatter when the plugin implements Everon\Logger\Contract\Plugin\LoggerFormatterPluginInterface
-     * - Build processors when the container implements Everon\Logger\Contract\Container\Plugin\LoggerProcessorContainerInterface
+     * - Check if plugins can be executed
+     * - Run plugins and Build monolog handlers
+     * - Build and set formatters when the plugins implement Everon\Logger\Contract\Plugin\LoggerFormatterPluginInterface
+     * - Build and set processors when the container implements Everon\Logger\Contract\Container\Plugin\LoggerProcessorContainerInterface
      * - Configure timezone
      * - Create instance of logger implementing Psr\Log\LoggerInterface
      * - Return logger instance

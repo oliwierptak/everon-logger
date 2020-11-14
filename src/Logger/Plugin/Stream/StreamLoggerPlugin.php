@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Plugin\Stream;
 
-use Everon\Logger\Configurator\LoggerPluginConfigurator;
+use Everon\Logger\Configurator\StreamLoggerPluginConfigurator;
 use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
@@ -12,9 +12,9 @@ use Monolog\Logger;
 
 class StreamLoggerPlugin implements LoggerPluginInterface
 {
-    protected LoggerPluginConfigurator $configurator;
+    protected StreamLoggerPluginConfigurator $configurator;
 
-    public function __construct(LoggerPluginConfigurator $configurator)
+    public function __construct(StreamLoggerPluginConfigurator $configurator)
     {
         $this->configurator = $configurator;
     }
@@ -24,22 +24,22 @@ class StreamLoggerPlugin implements LoggerPluginInterface
         $this->validate();
 
         return new StreamHandler(
-            $this->configurator->getStreamConfigurator()->getStreamLocation(),
-            $this->configurator->getStreamConfigurator()->getLogLevel() ?? Logger::toMonologLevel($this->configurator->getLogLevel()),
-            $this->configurator->getStreamConfigurator()->shouldBubble(),
-            $this->configurator->getStreamConfigurator()->getFilePermission(),
-            $this->configurator->getStreamConfigurator()->useLocking()
+            $this->configurator->getStreamLocation(),
+            Logger::toMonologLevel($this->configurator->getLogLevel()),
+            $this->configurator->shouldBubble(),
+            $this->configurator->getFilePermission(),
+            $this->configurator->useLocking()
         );
     }
 
     public function canRun(): bool
     {
-        return $this->configurator->getStreamConfigurator()->hasStreamLocation();
+        return $this->configurator->hasStreamLocation();
     }
 
     protected function validate(): void
     {
-        $this->configurator->getStreamConfigurator()->requireStreamLocation();
+        $this->configurator->requireStreamLocation();
         $this->configurator->requireLogLevel();
     }
 }

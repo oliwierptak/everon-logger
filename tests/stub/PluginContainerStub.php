@@ -5,14 +5,11 @@ declare(strict_types = 1);
 namespace EveronLoggerTests\Stub;
 
 use Everon\Logger\Configurator\LoggerPluginConfigurator;
-use Everon\Logger\Contract\Container\LoggerConfiguratorContainerInterface;
 use Everon\Logger\Contract\Container\LoggerContainerInterface;
-use Everon\Logger\Contract\Container\LoggerProcessorContainerInterface;
 use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginStub;
 use EveronLoggerTests\Stub\Plugin\Syslog\SyslogLoggerPluginStub;
 
-class PluginContainerStub implements
-    LoggerContainerInterface, LoggerProcessorContainerInterface, LoggerConfiguratorContainerInterface
+class PluginContainerStub implements LoggerContainerInterface
 {
     protected LoggerPluginConfigurator $configurator;
 
@@ -24,18 +21,8 @@ class PluginContainerStub implements
     public function createPluginCollection(): array
     {
         return [
-            new StreamLoggerPluginStub($this->configurator),
-            new SyslogLoggerPluginStub($this->configurator),
+            new StreamLoggerPluginStub($this->configurator->getStreamConfigurator()),
+            new SyslogLoggerPluginStub($this->configurator->getSyslogConfigurator()),
         ];
-    }
-
-    public function createConfiguratorPluginCollection(): array
-    {
-        return [];
-    }
-
-    public function createProcessorCollection(): array
-    {
-        return [];
     }
 }

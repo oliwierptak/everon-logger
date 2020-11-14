@@ -45,9 +45,8 @@ class SyslogLoggerPluginTest extends TestCase
 
     public function test_should_not_log_when_level_too_low(): void
     {
-        $this->configurator
+        $this->configurator->getSyslogConfigurator()
             ->setLogLevel('info')
-            ->getSyslogConfigurator()
             ->setIdent('everon-logger-ident');
 
         $logger = $this->facade->buildLogger(
@@ -62,9 +61,8 @@ class SyslogLoggerPluginTest extends TestCase
 
     public function test_should_log(): void
     {
-        $this->configurator
+        $this->configurator->getSyslogConfigurator()
             ->setLogLevel('info')
-            ->getSyslogConfigurator()
             ->setIdent('everon-logger-ident');
 
         $logger = $this->facade->buildLogger(
@@ -81,9 +79,8 @@ class SyslogLoggerPluginTest extends TestCase
 
     public function test_should_log_context(): void
     {
-        $this->configurator
+        $this->configurator->getSyslogConfigurator()
             ->setLogLevel('info')
-            ->getSyslogConfigurator()
             ->setIdent('everon-logger-ident');
 
         $logger = $this->facade->buildLogger(

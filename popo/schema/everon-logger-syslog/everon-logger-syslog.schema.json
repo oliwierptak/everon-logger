@@ -13,7 +13,7 @@
             {
                 "name": "facility",
                 "type": "int",
-                "default": 128
+                "default": "\\LOG_LOCAL0"
             },
             {
                 "name": "shouldBubble",

@@ -21,7 +21,6 @@ class LoggerPluginConfigurator
 {
     protected array $data = array (
   'name' => 'everon-logger',
-  'logLevel' => NULL,
   'timezone' => 'UTC',
   'streamConfigurator' => NULL,
   'syslogConfigurator' => NULL,
@@ -29,7 +28,6 @@ class LoggerPluginConfigurator
 
     protected array $default = array (
   'name' => 'everon-logger',
-  'logLevel' => NULL,
   'timezone' => 'UTC',
   'streamConfigurator' => NULL,
   'syslogConfigurator' => NULL,
@@ -37,7 +35,6 @@ class LoggerPluginConfigurator
 
     protected array $propertyMapping = array (
   'name' => 'string',
-  'logLevel' => 'string',
   'timezone' => 'string',
   'streamConfigurator' => '\\Everon\\Logger\\Configurator\\StreamLoggerPluginConfigurator',
   'syslogConfigurator' => '\\Everon\\Logger\\Configurator\\SyslogLoggerPluginConfigurator',
@@ -278,50 +275,6 @@ class LoggerPluginConfigurator
     public function hasName(): bool
     {
         return $this->updateMap['name'] ?? false;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getLogLevel(): ?string
-    {
-        return $this->popoGetValue('logLevel');
-    }
-
-    /**
-     * @param string|null $logLevel
-     *
-     * @return LoggerPluginConfigurator
-     */
-    public function setLogLevel(?string $logLevel): LoggerPluginConfigurator
-    {
-        $this->popoSetValue('logLevel', $logLevel);
-
-        return $this;
-    }
-
-    /**
-     * Throws exception if value is null.
-     *
-     * @throws \UnexpectedValueException
-     *
-     * @return string
-     */
-    public function requireLogLevel(): string
-    {
-        $this->assertPropertyValue('logLevel');
-
-        return (string)$this->popoGetValue('logLevel');
-    }
-
-    /**
-     * Returns true if value was set to any value, ignores defaults.
-     *
-     * @return bool
-     */
-    public function hasLogLevel(): bool
-    {
-        return $this->updateMap['logLevel'] ?? false;
     }
 
     /**

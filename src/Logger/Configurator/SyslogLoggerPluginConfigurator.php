@@ -22,7 +22,7 @@ class SyslogLoggerPluginConfigurator
     protected array $data = array (
   'logLevel' => NULL,
   'ident' => NULL,
-  'facility' => 128,
+  'facility' => \LOG_LOCAL0,
   'shouldBubble' => true,
   'logopts' => \LOG_PID,
 );
@@ -30,7 +30,7 @@ class SyslogLoggerPluginConfigurator
     protected array $default = array (
   'logLevel' => NULL,
   'ident' => NULL,
-  'facility' => 128,
+  'facility' => \LOG_LOCAL0,
   'shouldBubble' => true,
   'logopts' => \LOG_PID,
 );

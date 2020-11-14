@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Plugin\Syslog;
 
-use Everon\Logger\Configurator\LoggerPluginConfigurator;
+use Everon\Logger\Configurator\SyslogLoggerPluginConfigurator;
 use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\SyslogHandler;
@@ -12,9 +12,9 @@ use Monolog\Logger;
 
 class SyslogLoggerPlugin implements LoggerPluginInterface
 {
-    protected LoggerPluginConfigurator $configurator;
+    protected SyslogLoggerPluginConfigurator $configurator;
 
-    public function __construct(LoggerPluginConfigurator $configurator)
+    public function __construct(SyslogLoggerPluginConfigurator $configurator)
     {
         $this->configurator = $configurator;
     }
@@ -24,23 +24,23 @@ class SyslogLoggerPlugin implements LoggerPluginInterface
         $this->validate();
 
         return new SyslogHandler(
-            $this->configurator->getSyslogConfigurator()->getIdent(),
-            $this->configurator->getSyslogConfigurator()->getFacility(),
-            $this->configurator->getSyslogConfigurator()->getLogLevel() ?? Logger::toMonologLevel($this->configurator->getLogLevel()),
-            $this->configurator->getSyslogConfigurator()->shouldBubble(),
-            $this->configurator->getSyslogConfigurator()->getLogopts(),
+            $this->configurator->getIdent(),
+            $this->configurator->getFacility(),
+            Logger::toMonologLevel($this->configurator->getLogLevel()),
+            $this->configurator->shouldBubble(),
+            $this->configurator->getLogopts(),
         );
     }
 
     public function canRun(): bool
     {
-        return $this->configurator->getSyslogConfigurator()->hasIdent();
+        return $this->configurator->hasIdent();
     }
 
     protected function validate(): void
     {
-        $this->configurator->getSyslogConfigurator()->requireIdent();
-        $this->configurator->getSyslogConfigurator()->requireFacility();
+        $this->configurator->requireIdent();
+        $this->configurator->requireFacility();
         $this->configurator->requireLogLevel();
     }
 }
