@@ -11,6 +11,16 @@
                 "name": "timezone",
                 "type": "string",
                 "default": "UTC"
+            },
+            {
+                "name": "pluginClassCollection",
+                "type": "array",
+                "default": []
+            },
+            {
+                "name": "processorClassCollection",
+                "type": "array",
+                "default": []
             }
         ]
     }

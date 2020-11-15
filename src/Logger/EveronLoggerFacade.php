@@ -12,12 +12,10 @@ class EveronLoggerFacade implements EveronLoggerFacadeInterface
 {
     protected EveronLoggerFactory $factory;
 
-    public function buildLogger(
-        LoggerPluginConfigurator $configurator,
-        LoggerContainerInterface $pluginContainer): LoggerInterface
+    public function buildLogger(LoggerPluginConfigurator $configurator): LoggerInterface
     {
         return $this->getFactory()
-            ->createBuilder($configurator, $pluginContainer)
+            ->createBuilderFromConfigurator($configurator)
             ->buildLogger();
     }
 
@@ -33,5 +31,12 @@ class EveronLoggerFacade implements EveronLoggerFacadeInterface
     public function setFactory(EveronLoggerFactory $factory): void
     {
         $this->factory = $factory;
+    }
+
+    public function buildLoggerFromContainer(LoggerContainerInterface $pluginContainer): LoggerInterface
+    {
+        return $this->getFactory()
+            ->createBuilderFromContainer($pluginContainer)
+            ->buildLogger();
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Contract\Container;
 
+use Everon\Logger\Configurator\LoggerPluginConfigurator;
+
 interface LoggerContainerInterface
 {
     /**
@@ -13,4 +15,12 @@ interface LoggerContainerInterface
      * @return \Everon\Logger\Contract\Plugin\LoggerPluginInterface[]
      */
     public function createPluginCollection(): array;
+
+    /**
+     * Specification:
+     * - Return instance of LoggerPluginConfigurator
+     *
+     * @return \Everon\Logger\Configurator\LoggerPluginConfigurator
+     */
+    public function getConfigurator(): LoggerPluginConfigurator;
 }

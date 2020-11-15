@@ -1,6 +1,6 @@
 {
     "name": "everon/logger",
-    "description": "PSR- compliant logger with pluggable architecture",
+    "description": "PSR-3 compliant logger with pluggable architecture and unified, shareable configuration based on Monolog",
     "minimum-stability": "stable",
     "license": "MIT",
     "require": {

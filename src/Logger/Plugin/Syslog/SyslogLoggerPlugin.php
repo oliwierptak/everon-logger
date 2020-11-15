@@ -32,15 +32,15 @@ class SyslogLoggerPlugin implements LoggerPluginInterface
         );
     }
 
-    public function canRun(): bool
-    {
-        return $this->configurator->hasIdent();
-    }
-
     protected function validate(): void
     {
         $this->configurator->requireIdent();
         $this->configurator->requireFacility();
         $this->configurator->requireLogLevel();
+    }
+
+    public function canRun(): bool
+    {
+        return $this->configurator->hasIdent();
     }
 }

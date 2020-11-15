@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace EveronLoggerTests\Stub;
+namespace EveronLoggerTests\Stub\Container;
 
 use Everon\Logger\Configurator\LoggerPluginConfigurator;
 use Everon\Logger\Contract\Container\LoggerContainerInterface;
@@ -24,5 +24,10 @@ class PluginContainerStub implements LoggerContainerInterface
             new StreamLoggerPluginStub($this->configurator->getStreamConfigurator()),
             new SyslogLoggerPluginStub($this->configurator->getSyslogConfigurator()),
         ];
+    }
+
+    public function getConfigurator(): LoggerPluginConfigurator
+    {
+        return $this->configurator;
     }
 }

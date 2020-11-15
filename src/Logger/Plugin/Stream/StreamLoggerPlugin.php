@@ -32,14 +32,14 @@ class StreamLoggerPlugin implements LoggerPluginInterface
         );
     }
 
-    public function canRun(): bool
-    {
-        return $this->configurator->hasStreamLocation();
-    }
-
     protected function validate(): void
     {
         $this->configurator->requireStreamLocation();
         $this->configurator->requireLogLevel();
+    }
+
+    public function canRun(): bool
+    {
+        return $this->configurator->hasStreamLocation();
     }
 }
