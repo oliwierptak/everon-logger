@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Plugin\Gelf;
 
-use Everon\Logger\Configurator\GelfLoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\GelfLoggerPluginConfigurator;
 use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
 use Gelf\Publisher;
 use Gelf\Transport\IgnoreErrorTransportWrapper;

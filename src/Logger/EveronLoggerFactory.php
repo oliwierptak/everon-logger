@@ -7,7 +7,7 @@ namespace Everon\Logger;
 use Everon\Logger\Builder\LoggerBuilderConfiguratorValidator;
 use Everon\Logger\Builder\LoggerBuilderFromConfigurator;
 use Everon\Logger\Builder\LoggerBuilderFromContainer;
-use Everon\Logger\Configurator\LoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
 use Everon\Logger\Contract\Container\LoggerContainerInterface;
 
 class EveronLoggerFactory

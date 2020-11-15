@@ -5,8 +5,8 @@ declare(strict_types = 1);
 namespace Everon\Logger\Builder;
 
 use DateTimeZone;
-use Everon\Logger\Configurator\LoggerPluginConfigurator;
-use Everon\Logger\Contract\Plugin\LoggerFormatterPluginInterface;
+use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
+use Everon\Logger\Contract\Plugin\LoggerPluginFormatterInterface;
 use Everon\Logger\Exception\HandlerBuildException;
 use Everon\Logger\Exception\PluginBuildException;
 use Everon\Logger\Exception\ProcessorBuildException;
@@ -78,7 +78,7 @@ class LoggerBuilderFromConfigurator
 
             try {
                 $handler = $plugin->buildHandler();
-                if ($plugin instanceof LoggerFormatterPluginInterface) {
+                if ($plugin instanceof LoggerPluginFormatterInterface) {
                     $formatter = $plugin->buildFormatter();
                     $handler->setFormatter($formatter);
                 }
@@ -108,6 +108,14 @@ class LoggerBuilderFromConfigurator
     protected function resolvePluginConfigurator(string $pluginClass)
     {
         try {
+            $tokens = explode('\\', $pluginClass);
+            array_pop($tokens);
+
+            $configuratorResolverClass = implode('\\', $tokens) . 'ConfigurationResolver';
+            if (\class_exists($configuratorResolverClass)) {
+                return (new $configuratorResolverClass)->resolve();
+            }
+
             $namespaceTokens = explode('\\', $pluginClass);
             $pluginName = array_pop($namespaceTokens);
 

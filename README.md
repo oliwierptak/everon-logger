@@ -60,7 +60,7 @@ $configurator = (new LoggerPluginConfigurator())
 ## Plugins
 A logger plugin is used to create and configure corresponding monolog handler.
 
-Besides `LoggerPluginInterface` a plugin can also implement `LoggerFormatterPluginInterface`,
+Besides `LoggerPluginInterface` a plugin can also implement `LoggerPluginFormatterInterface`,
 in which case the custom formatter provided by the plugin will be used.
 
 

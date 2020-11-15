@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Plugin\Syslog;
 
-use Everon\Logger\Configurator\SyslogLoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\SyslogLoggerPluginConfigurator;
 use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\SyslogHandler;

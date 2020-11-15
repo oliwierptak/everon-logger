@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace EveronLoggerTests\Suit\Functional\Builder;
 
-use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginStub;
+use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginFormatterStub;
 use EveronLoggerTests\Stub\Processor\MemoryUsageProcessorStub;
 use EveronLoggerTests\Suit\Functional\AbstractPluginLoggerTest;
 use Psr\Log\LoggerInterface;
@@ -21,7 +21,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
     public function test_should_not_log_without_logFile(): void
     {
         $this->configurator->setPluginClassCollection([
-            StreamLoggerPluginStub::class,
+            StreamLoggerPluginFormatterStub::class,
         ]);
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -34,7 +34,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
     {
         $this->configurator
             ->setPluginClassCollection([
-                StreamLoggerPluginStub::class,
+                StreamLoggerPluginFormatterStub::class,
             ])
             ->getStreamConfigurator()
             ->setLogLevel('info')
@@ -50,7 +50,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
     {
         $this->configurator
             ->setPluginClassCollection([
-                StreamLoggerPluginStub::class,
+                StreamLoggerPluginFormatterStub::class,
             ])
             ->setProcessorClassCollection([
                 MemoryUsageProcessorStub::class,
@@ -71,7 +71,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
     {
         $this->configurator
             ->setPluginClassCollection([
-                StreamLoggerPluginStub::class,
+                StreamLoggerPluginFormatterStub::class,
             ])
             ->setProcessorClassCollection([
                 MemoryUsageProcessorStub::class,

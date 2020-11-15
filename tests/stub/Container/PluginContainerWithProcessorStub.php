@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace EveronLoggerTests\Stub\Container;
 
-use Everon\Logger\Configurator\LoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
 use Everon\Logger\Contract\Container\LoggerContainerInterface;
 use Everon\Logger\Contract\Container\LoggerProcessorContainerInterface;
-use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginStub;
+use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginFormatterStub;
 use EveronLoggerTests\Stub\Processor\MemoryUsageProcessorStub;
 
 class PluginContainerWithProcessorStub implements LoggerContainerInterface, LoggerProcessorContainerInterface
@@ -22,7 +22,7 @@ class PluginContainerWithProcessorStub implements LoggerContainerInterface, Logg
     public function createPluginCollection(): array
     {
         return [
-            new StreamLoggerPluginStub($this->configurator->getStreamConfigurator()),
+            new StreamLoggerPluginFormatterStub($this->configurator->getStreamConfigurator()),
         ];
     }
 

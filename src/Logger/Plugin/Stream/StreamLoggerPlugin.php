@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Plugin\Stream;
 
-use Everon\Logger\Configurator\StreamLoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\StreamLoggerPluginConfigurator;
 use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;

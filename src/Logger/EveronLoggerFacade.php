@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Everon\Logger;
 
-use Everon\Logger\Configurator\LoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
 use Everon\Logger\Contract\Container\LoggerContainerInterface;
 use Psr\Log\LoggerInterface;
 

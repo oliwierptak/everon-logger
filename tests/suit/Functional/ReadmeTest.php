@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace EveronLoggerTests\Suit\Functional;
 
-use Everon\Logger\Configurator\LoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
 use Everon\Logger\EveronLoggerFacade;
 use Everon\Logger\Plugin\Stream\StreamLoggerPlugin;
 use Monolog\Processor\MemoryUsageProcessor;
