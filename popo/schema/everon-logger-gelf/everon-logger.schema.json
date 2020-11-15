@@ -1,0 +1,11 @@
+[
+    {
+        "name": "LoggerPluginConfigurator",
+        "schema": [
+            {
+                "name": "gelfConfigurator",
+                "type": "GelfLoggerPluginConfigurator"
+            }
+        ]
+    }
+]

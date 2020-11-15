@@ -4,7 +4,8 @@
         "schema": [
             {
                 "name": "logLevel",
-                "type": "string"
+                "type": "string",
+                "default": "debug"
             },
             {
                 "name": "streamLocation",

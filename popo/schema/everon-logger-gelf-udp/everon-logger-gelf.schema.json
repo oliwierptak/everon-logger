@@ -1,0 +1,11 @@
+[
+    {
+        "name": "GelfLoggerPluginConfigurator",
+        "schema": [
+            {
+                "name": "udpConfigurator",
+                "type": "GelfUdpLoggerPluginConfigurator"
+            }
+        ]
+    }
+]

@@ -20,7 +20,7 @@ use function trim;
 class SyslogLoggerPluginConfigurator 
 {
     protected array $data = array (
-  'logLevel' => NULL,
+  'logLevel' => 'debug',
   'ident' => NULL,
   'facility' => \LOG_LOCAL0,
   'shouldBubble' => true,
@@ -28,7 +28,7 @@ class SyslogLoggerPluginConfigurator
 );
 
     protected array $default = array (
-  'logLevel' => NULL,
+  'logLevel' => 'debug',
   'ident' => NULL,
   'facility' => \LOG_LOCAL0,
   'shouldBubble' => true,

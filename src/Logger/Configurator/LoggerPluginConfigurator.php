@@ -28,6 +28,7 @@ class LoggerPluginConfigurator
   'processorClassCollection' => 
   array (
   ),
+  'gelfConfigurator' => NULL,
   'streamConfigurator' => NULL,
   'syslogConfigurator' => NULL,
 );
@@ -41,6 +42,7 @@ class LoggerPluginConfigurator
   'processorClassCollection' => 
   array (
   ),
+  'gelfConfigurator' => NULL,
   'streamConfigurator' => NULL,
   'syslogConfigurator' => NULL,
 );
@@ -50,6 +52,7 @@ class LoggerPluginConfigurator
   'timezone' => 'string',
   'pluginClassCollection' => 'array',
   'processorClassCollection' => 'array',
+  'gelfConfigurator' => '\\Everon\\Logger\\Configurator\\GelfLoggerPluginConfigurator',
   'streamConfigurator' => '\\Everon\\Logger\\Configurator\\StreamLoggerPluginConfigurator',
   'syslogConfigurator' => '\\Everon\\Logger\\Configurator\\SyslogLoggerPluginConfigurator',
 );
@@ -421,6 +424,50 @@ class LoggerPluginConfigurator
     public function hasProcessorClassCollection(): bool
     {
         return $this->updateMap['processorClassCollection'] ?? false;
+    }
+
+    /**
+     * @return GelfLoggerPluginConfigurator|null
+     */
+    public function getGelfConfigurator(): ?GelfLoggerPluginConfigurator
+    {
+        return $this->popoGetValue('gelfConfigurator');
+    }
+
+    /**
+     * @param GelfLoggerPluginConfigurator|null $gelfConfigurator
+     *
+     * @return LoggerPluginConfigurator
+     */
+    public function setGelfConfigurator(?GelfLoggerPluginConfigurator $gelfConfigurator): LoggerPluginConfigurator
+    {
+        $this->popoSetValue('gelfConfigurator', $gelfConfigurator);
+
+        return $this;
+    }
+
+    /**
+     * Throws exception if value is null.
+     *
+     * @throws \UnexpectedValueException
+     *
+     * @return GelfLoggerPluginConfigurator
+     */
+    public function requireGelfConfigurator(): GelfLoggerPluginConfigurator
+    {
+        $this->assertPropertyValue('gelfConfigurator');
+
+        return $this->popoGetValue('gelfConfigurator');
+    }
+
+    /**
+     * Returns true if value was set to any value, ignores defaults.
+     *
+     * @return bool
+     */
+    public function hasGelfConfigurator(): bool
+    {
+        return $this->updateMap['gelfConfigurator'] ?? false;
     }
 
     /**

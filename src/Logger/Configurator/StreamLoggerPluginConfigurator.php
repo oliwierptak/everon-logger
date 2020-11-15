@@ -20,7 +20,7 @@ use function trim;
 class StreamLoggerPluginConfigurator 
 {
     protected array $data = array (
-  'logLevel' => NULL,
+  'logLevel' => 'debug',
   'streamLocation' => NULL,
   'shouldBubble' => true,
   'filePermission' => NULL,
@@ -28,7 +28,7 @@ class StreamLoggerPluginConfigurator
 );
 
     protected array $default = array (
-  'logLevel' => NULL,
+  'logLevel' => 'debug',
   'streamLocation' => NULL,
   'shouldBubble' => true,
   'filePermission' => NULL,

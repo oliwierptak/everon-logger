@@ -1,0 +1,27 @@
+[
+    {
+        "name": "GelfUdpLoggerPluginConfigurator",
+        "schema": [
+            {
+                "name": "logLevel",
+                "type": "string",
+                "default": "debug"
+            },
+            {
+                "name": "host",
+                "type": "string",
+                "default": "\\Gelf\\Transport\\UdpTransport::DEFAULT_HOST"
+            },
+            {
+                "name": "port",
+                "type": "int",
+                "default": "\\Gelf\\Transport\\UdpTransport::DEFAULT_PORT"
+            },
+            {
+                "name": "chunkSize",
+                "type": "int",
+                "default": "\\Gelf\\Transport\\UdpTransport::CHUNK_SIZE_WAN"
+            }
+        ]
+    }
+]

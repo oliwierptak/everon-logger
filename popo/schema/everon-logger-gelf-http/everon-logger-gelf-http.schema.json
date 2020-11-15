@@ -1,0 +1,27 @@
+[
+    {
+        "name": "GelfHttpLoggerPluginConfigurator",
+        "schema": [
+            {
+                "name": "host",
+                "type": "string",
+                "default": "\\Gelf\\Transport\\HttpTransport::DEFAULT_HOST"
+            },
+            {
+                "name": "port",
+                "type": "int",
+                "default": "\\Gelf\\Transport\\HttpTransport::DEFAULT_PORT"
+            },
+            {
+                "name": "path",
+                "type": "string",
+                "default": "\\Gelf\\Transport\\UdpTransport::DEFAULT_PATH"
+            },
+            {
+                "name": "sslOptions",
+                "type": "GelfLoggerPluginSslOptions",
+                "singular": "sslOption"
+            }
+        ]
+    }
+]

@@ -1,0 +1,11 @@
+[
+    {
+        "name": "GelfLoggerPluginConfigurator",
+        "schema": [
+            {
+                "name": "httpConfigurator",
+                "type": "GelfHttpLoggerPluginConfigurator"
+            }
+        ]
+    }
+]

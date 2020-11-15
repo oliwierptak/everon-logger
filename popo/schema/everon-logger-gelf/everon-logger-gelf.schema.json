@@ -1,0 +1,44 @@
+[
+    {
+        "name": "GelfLoggerPluginConfigurator",
+        "schema": [
+            {
+                "name": "logLevel",
+                "type": "string",
+                "default": "debug"
+            },
+            {
+                "name": "shouldBubble",
+                "type": "bool",
+                "default": true
+            }
+        ]
+    },
+    {
+        "name": "GelfLoggerPluginSslOptions",
+        "schema": [
+            {
+                "name": "verifyPeer",
+                "type": "bool",
+                "default": true,
+                "dockblock": "Enable certificate validation of remote party"
+            },
+            {
+                "name": "allowSelfSigned",
+                "type": "bool",
+                "default": false,
+                "dockblock": "Allow self-signed certificates"
+            },
+            {
+                "name": "caFile",
+                "type": "string",
+                "dockblock": "Path to custom CA"
+            },
+            {
+                "name": "ciphers",
+                "type": "string",
+                "dockblock": "List of ciphers the SSL layer may use. Formatted as specified in `ciphers(1)`"
+            }
+        ]
+    }
+]
