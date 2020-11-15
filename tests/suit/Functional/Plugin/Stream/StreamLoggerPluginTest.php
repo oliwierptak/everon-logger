@@ -11,6 +11,13 @@ use EveronLoggerTests\Suit\Functional\AbstractPluginLoggerTest;
 
 class StreamLoggerPluginTest extends AbstractPluginLoggerTest
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->pluginContainer = new PluginContainerStub($this->configurator);
+    }
+
     protected LoggerContainerInterface $pluginContainer;
 
     public function test_should_not_log_without_logFile(): void
@@ -84,12 +91,5 @@ class StreamLoggerPluginTest extends AbstractPluginLoggerTest
         $logger->info('foo bar', ['buzz' => 'lorem ipsum']);
 
         $this->assertLoggerFile('foo bar', 'info', ['buzz' => 'lorem ipsum'], ['memory_peak_usage' => '5 MB']);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->pluginContainer = new PluginContainerStub($this->configurator);
     }
 }

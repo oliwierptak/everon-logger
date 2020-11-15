@@ -16,6 +16,15 @@ class SyslogLoggerPluginTest extends AbstractPluginLoggerTest
 {
     protected LoggerContainerInterface $pluginContainer;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->pluginContainer = new PluginContainerStub($this->configurator);
+
+        shell_exec('truncate -s 0 ' . $this->logFilename);
+    }
+
     public function test_should_not_log_without_ident(): void
     {
         $logger = $this->facade->buildLoggerFromContainer(
@@ -123,14 +132,5 @@ class SyslogLoggerPluginTest extends AbstractPluginLoggerTest
         $logger->info('foo bar', ['buzz' => 'lorem ipsum']);
 
         $this->assertSyslog('foo bar', 'info', ['buzz' => 'lorem ipsum'], ['memory_peak_usage' => '5 MB']);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->pluginContainer = new PluginContainerStub($this->configurator);
-
-        shell_exec('truncate -s 0 ' . $this->logFilename);
     }
 }

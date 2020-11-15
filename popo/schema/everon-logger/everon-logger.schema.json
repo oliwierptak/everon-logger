@@ -14,11 +14,13 @@
             },
             {
                 "name": "pluginClassCollection",
+                "singular": "pluginClass",
                 "type": "array",
                 "default": []
             },
             {
                 "name": "processorClassCollection",
+                "singular": "pluginProcessorClass",
                 "type": "array",
                 "default": []
             }
