@@ -4,12 +4,12 @@ declare(strict_types = 1);
 
 namespace EveronLoggerTests\Stub\Plugin\Syslog;
 
-use Everon\Logger\Contract\Plugin\LoggerPluginFormatterInterface;
+use Everon\Logger\Contract\Plugin\PluginFormatterInterface;
 use Everon\Logger\Plugin\Syslog\SyslogLoggerPlugin;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LineFormatter;
 
-class SyslogLoggerPluginFormatterStub extends SyslogLoggerPlugin implements LoggerPluginFormatterInterface
+class SyslogLoggerPluginStub extends SyslogLoggerPlugin implements PluginFormatterInterface
 {
     public function buildFormatter(): FormatterInterface
     {

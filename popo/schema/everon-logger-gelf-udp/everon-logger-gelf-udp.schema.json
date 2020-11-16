@@ -8,6 +8,11 @@
                 "default": "debug"
             },
             {
+                "name": "shouldBubble",
+                "type": "bool",
+                "default": true
+            },
+            {
                 "name": "host",
                 "type": "string",
                 "default": "\\Gelf\\Transport\\UdpTransport::DEFAULT_HOST"

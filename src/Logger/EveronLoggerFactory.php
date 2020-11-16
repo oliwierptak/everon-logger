@@ -4,7 +4,8 @@ declare(strict_types = 1);
 
 namespace Everon\Logger;
 
-use Everon\Logger\Builder\LoggerBuilderConfiguratorValidator;
+use Everon\Logger\Builder\PluginBuilder;
+use Everon\Logger\Builder\ConfiguratorValidator;
 use Everon\Logger\Builder\LoggerBuilderFromConfigurator;
 use Everon\Logger\Builder\LoggerBuilderFromContainer;
 use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
@@ -16,20 +17,26 @@ class EveronLoggerFactory
     {
         return new LoggerBuilderFromConfigurator(
             $configurator,
-            $this->createLoggerBuilderConfiguratorValidator()
+            $this->createPluginBuilder(),
+            $this->createValidator()
         );
-    }
-
-    protected function createLoggerBuilderConfiguratorValidator(): LoggerBuilderConfiguratorValidator
-    {
-        return new LoggerBuilderConfiguratorValidator();
     }
 
     public function createBuilderFromContainer(LoggerContainerInterface $pluginContainer): LoggerBuilderFromContainer
     {
         return new LoggerBuilderFromContainer(
             $pluginContainer,
-            $this->createLoggerBuilderConfiguratorValidator()
+            $this->createValidator()
         );
+    }
+
+    protected function createValidator(): ConfiguratorValidator
+    {
+        return new ConfiguratorValidator();
+    }
+
+    protected function createPluginBuilder(): PluginBuilder
+    {
+        return new PluginBuilder();
     }
 }

@@ -20,7 +20,7 @@
             },
             {
                 "name": "processorClassCollection",
-                "singular": "pluginProcessorClass",
+                "singular": "processorClass",
                 "type": "array",
                 "default": []
             }

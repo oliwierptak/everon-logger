@@ -1,0 +1,11 @@
+[
+    {
+        "name": "GelfLoggerPluginConfigurator",
+        "schema": [
+            {
+                "name": "tcpConfigurator",
+                "type": "GelfTcpLoggerPluginConfigurator"
+            }
+        ]
+    }
+]

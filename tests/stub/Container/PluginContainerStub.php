@@ -6,8 +6,8 @@ namespace EveronLoggerTests\Stub\Container;
 
 use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
 use Everon\Logger\Contract\Container\LoggerContainerInterface;
-use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginFormatterStub;
-use EveronLoggerTests\Stub\Plugin\Syslog\SyslogLoggerPluginFormatterStub;
+use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginStub;
+use EveronLoggerTests\Stub\Plugin\Syslog\SyslogLoggerPluginStub;
 
 class PluginContainerStub implements LoggerContainerInterface
 {
@@ -21,8 +21,8 @@ class PluginContainerStub implements LoggerContainerInterface
     public function createPluginCollection(): array
     {
         return [
-            new StreamLoggerPluginFormatterStub($this->configurator->getStreamConfigurator()),
-            new SyslogLoggerPluginFormatterStub($this->configurator->getSyslogConfigurator()),
+            new StreamLoggerPluginStub($this->configurator->getStreamConfigurator()),
+            new SyslogLoggerPluginStub($this->configurator->getSyslogConfigurator()),
         ];
     }
 

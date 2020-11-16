@@ -4,13 +4,13 @@ declare(strict_types = 1);
 
 namespace EveronLoggerTests\Stub\Plugin\Stream;
 
-use Everon\Logger\Contract\Plugin\LoggerPluginFormatterInterface;
+use Everon\Logger\Contract\Plugin\PluginFormatterInterface;
 use Everon\Logger\Plugin\Stream\StreamLoggerPlugin;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LineFormatter;
 use const PHP_EOL;
 
-class StreamLoggerPluginFormatterStub extends StreamLoggerPlugin implements LoggerPluginFormatterInterface
+class StreamLoggerPluginStub extends StreamLoggerPlugin implements PluginFormatterInterface
 {
     public function buildFormatter(): FormatterInterface
     {

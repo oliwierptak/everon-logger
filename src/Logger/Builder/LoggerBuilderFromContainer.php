@@ -7,7 +7,7 @@ namespace Everon\Logger\Builder;
 use DateTimeZone;
 use Everon\Logger\Contract\Container\LoggerContainerInterface;
 use Everon\Logger\Contract\Container\LoggerProcessorContainerInterface;
-use Everon\Logger\Contract\Plugin\LoggerPluginFormatterInterface;
+use Everon\Logger\Contract\Plugin\PluginFormatterInterface;
 use Everon\Logger\Exception\HandlerBuildException;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
@@ -18,11 +18,11 @@ class LoggerBuilderFromContainer
 {
     protected LoggerContainerInterface $pluginContainer;
 
-    protected LoggerBuilderConfiguratorValidator $validator;
+    protected ConfiguratorValidator $validator;
 
     public function __construct(
         LoggerContainerInterface $pluginContainer,
-        LoggerBuilderConfiguratorValidator $validator)
+        ConfiguratorValidator $validator)
     {
         $this->pluginContainer = $pluginContainer;
         $this->validator = $validator;
@@ -62,7 +62,7 @@ class LoggerBuilderFromContainer
 
             try {
                 $handler = $plugin->buildHandler();
-                if ($plugin instanceof LoggerPluginFormatterInterface) {
+                if ($plugin instanceof PluginFormatterInterface) {
                     $formatter = $plugin->buildFormatter();
                     $handler->setFormatter($formatter);
                 }

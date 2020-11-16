@@ -6,27 +6,29 @@ namespace Everon\Logger\Builder;
 
 use DateTimeZone;
 use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
-use Everon\Logger\Contract\Plugin\LoggerPluginFormatterInterface;
+use Everon\Logger\Contract\Plugin\PluginFormatterInterface;
 use Everon\Logger\Exception\HandlerBuildException;
 use Everon\Logger\Exception\PluginBuildException;
 use Everon\Logger\Exception\ProcessorBuildException;
-use LogicException;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Throwable;
-use function ucfirst;
 
 class LoggerBuilderFromConfigurator
 {
     protected LoggerPluginConfigurator $configurator;
 
-    protected LoggerBuilderConfiguratorValidator $validator;
+    protected PluginBuilder $pluginBuilder;
+
+    protected ConfiguratorValidator $validator;
 
     public function __construct(
         LoggerPluginConfigurator $configurator,
-        LoggerBuilderConfiguratorValidator $validator)
+        PluginBuilder $configuratorResolver,
+        ConfiguratorValidator $validator)
     {
         $this->configurator = $configurator;
+        $this->pluginBuilder = $configuratorResolver;
         $this->validator = $validator;
     }
 
@@ -61,9 +63,12 @@ class LoggerBuilderFromConfigurator
     {
         $handlers = [];
         foreach ($this->configurator->getPluginClassCollection() as $pluginClass) {
-            $pluginConfigurator = $this->resolvePluginConfigurator($pluginClass);
             try {
-                $plugin = new $pluginClass($pluginConfigurator);
+                $plugin = $this->pluginBuilder->buildPlugin(
+                    $this->configurator,
+                    $pluginClass
+                );
+
                 if (!$plugin->canRun()) {
                     continue;
                 }
@@ -78,7 +83,7 @@ class LoggerBuilderFromConfigurator
 
             try {
                 $handler = $plugin->buildHandler();
-                if ($plugin instanceof LoggerPluginFormatterInterface) {
+                if ($plugin instanceof PluginFormatterInterface) {
                     $formatter = $plugin->buildFormatter();
                     $handler->setFormatter($formatter);
                 }
@@ -95,45 +100,6 @@ class LoggerBuilderFromConfigurator
         }
 
         return $handlers;
-    }
-
-    /**
-     * Returns plugin configurator found in LoggerPluginConfigurator, or throws exception
-     *
-     * @param string $pluginClass
-     *
-     * @return mixed
-     * @throws \LogicException
-     */
-    protected function resolvePluginConfigurator(string $pluginClass)
-    {
-        try {
-            $tokens = explode('\\', $pluginClass);
-            array_pop($tokens);
-
-            $configuratorResolverClass = implode('\\', $tokens) . 'ConfigurationResolver';
-            if (\class_exists($configuratorResolverClass)) {
-                return (new $configuratorResolverClass)->resolve();
-            }
-
-            $namespaceTokens = explode('\\', $pluginClass);
-            $pluginName = array_pop($namespaceTokens);
-
-            $tokens = preg_split('/(?<=[^A-Z])(?=[A-Z])/', $pluginName);
-            $pluginName = array_shift($tokens);
-
-            $getter = sprintf('get%sConfigurator', ucfirst($pluginName));
-            $pluginConfigurator = $this->configurator->$getter();
-
-            return $pluginConfigurator;
-        }
-        catch (Throwable $exception) {
-            throw new LogicException(sprintf(
-                'Could not resolve configurator for plugin class: "%s". Error: "%s"',
-                $pluginClass,
-                $exception->getMessage()
-            ));
-        }
     }
 
     /**

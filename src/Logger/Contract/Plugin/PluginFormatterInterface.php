@@ -6,7 +6,7 @@ namespace Everon\Logger\Contract\Plugin;
 
 use Monolog\Formatter\FormatterInterface;
 
-interface LoggerPluginFormatterInterface
+interface PluginFormatterInterface
 {
     /**
      * Specification:

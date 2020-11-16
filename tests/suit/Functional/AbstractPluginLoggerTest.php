@@ -23,27 +23,4 @@ abstract class AbstractPluginLoggerTest extends TestCase
 
         @unlink($this->logFilename);
     }
-
-    protected function assertLoggerFile(
-        string $message,
-        string $level,
-        array $context = [],
-        array $extra = [],
-        int $index = 0
-    ): void
-    {
-        $jsonContextString = json_encode($context);
-        $jsonExtraString = json_encode($extra);
-
-        $expected = sprintf(
-            '%s: %s %s %s' . \PHP_EOL,
-            \strtoupper($level),
-            $message,
-            $jsonContextString,
-            $jsonExtraString
-        );
-
-        $this->assertFileExists($this->logFilename);
-        $this->assertEquals($expected, file($this->logFilename)[$index]);
-    }
 }

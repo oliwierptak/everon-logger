@@ -5,6 +5,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
+        "ext-redis": "*",
         "monolog/monolog": "^2.1",
         "graylog2/gelf-php": "^1.6"
     },
@@ -26,7 +27,16 @@
         }
     },
     "scripts": {
-        "tests": "vendor/bin/phpunit --testdox --no-coverage",
-        "popo": "vendor/bin/popo generate"
+        "popo": [
+            "vendor/bin/popo generate -c .popo"
+        ],
+        "tests": [
+            "vendor/bin/phpunit --testdox --no-coverage"
+        ],
+        "tests-coverage": "@tests"
+    },
+    "scripts-descriptions": {
+        "popo": "Generate POPO files",
+        "tests": "Test suits"
     }
 }

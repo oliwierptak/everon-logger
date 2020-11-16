@@ -3,12 +3,7 @@
         "name": "GelfLoggerPluginConfigurator",
         "schema": [
             {
-                "name": "logLevel",
-                "type": "string",
-                "default": "debug"
-            },
-            {
-                "name": "shouldBubble",
+                "name": "ignoreTransportErrors",
                 "type": "bool",
                 "default": true
             }

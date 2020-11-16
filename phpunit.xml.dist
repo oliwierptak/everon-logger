@@ -21,4 +21,14 @@
     <logging>
         <testdoxHtml outputFile="./tests/logs/testdox.html"/>
     </logging>
+    <groups>
+        <exclude>
+            <group>acceptance</group>
+        </exclude>
+    </groups>
+    <php>
+        <env name="TEST_GELF_HOST" value="" />
+        <env name="TEST_REDIS_HOST" value="" />
+        <env name="TEST_REDIS_PORT" value="6379" />
+    </php>
 </phpunit>

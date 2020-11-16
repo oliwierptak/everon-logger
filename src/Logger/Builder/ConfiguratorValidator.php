@@ -8,7 +8,7 @@ use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
 use Everon\Logger\Exception\ConfiguratorValidationException;
 use InvalidArgumentException;
 
-class LoggerBuilderConfiguratorValidator
+class ConfiguratorValidator
 {
     /**
      * @param \Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator $configurator

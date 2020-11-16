@@ -22,7 +22,7 @@ class ReadmeTest extends TestCase
     {
         $configurator = (new LoggerPluginConfigurator())
             ->addPluginClass(StreamLoggerPlugin::class)
-            ->addPluginProcessorClass(MemoryUsageProcessor::class);
+            ->addProcessorClass(MemoryUsageProcessor::class);
 
         $configurator
             ->getStreamConfigurator()
@@ -35,7 +35,5 @@ class ReadmeTest extends TestCase
 
         $this->assertInstanceOf(LoggerInterface::class, $logger);
         $this->assertFileExists('/tmp/everon-logger-example.log');
-
-        echo \file_get_contents('/tmp/everon-logger-example.log');
     }
 }

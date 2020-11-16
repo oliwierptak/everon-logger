@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace EveronLoggerTests\Suit\Functional\Builder;
 
-use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginFormatterStub;
+use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginStub;
 use EveronLoggerTests\Stub\Processor\MemoryUsageProcessorStub;
 use EveronLoggerTests\Suit\Functional\AbstractPluginLoggerTest;
 use Psr\Log\LoggerInterface;
@@ -21,7 +21,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
     public function test_should_not_log_without_logFile(): void
     {
         $this->configurator->setPluginClassCollection([
-            StreamLoggerPluginFormatterStub::class,
+            StreamLoggerPluginStub::class,
         ]);
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -34,7 +34,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
     {
         $this->configurator
             ->setPluginClassCollection([
-                StreamLoggerPluginFormatterStub::class,
+                StreamLoggerPluginStub::class,
             ])
             ->getStreamConfigurator()
             ->setLogLevel('info')
@@ -50,7 +50,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
     {
         $this->configurator
             ->setPluginClassCollection([
-                StreamLoggerPluginFormatterStub::class,
+                StreamLoggerPluginStub::class,
             ])
             ->setProcessorClassCollection([
                 MemoryUsageProcessorStub::class,
@@ -71,7 +71,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
     {
         $this->configurator
             ->setPluginClassCollection([
-                StreamLoggerPluginFormatterStub::class,
+                StreamLoggerPluginStub::class,
             ])
             ->setProcessorClassCollection([
                 MemoryUsageProcessorStub::class,
@@ -84,5 +84,28 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
         $logger->info('foo bar', ['buzz' => 'lorem ipsum']);
 
         $this->assertLoggerFile('foo bar', 'info', ['buzz' => 'lorem ipsum'], ['memory_peak_usage' => '5 MB']);
+    }
+
+    protected function assertLoggerFile(
+        string $message,
+        string $level,
+        array $context = [],
+        array $extra = [],
+        int $index = 0
+    ): void
+    {
+        $jsonContextString = json_encode($context);
+        $jsonExtraString = json_encode($extra);
+
+        $expected = sprintf(
+            '%s: %s %s %s' . \PHP_EOL,
+            \strtoupper($level),
+            $message,
+            $jsonContextString,
+            $jsonExtraString
+        );
+
+        $this->assertFileExists($this->logFilename);
+        $this->assertEquals($expected, file($this->logFilename)[$index]);
     }
 }

@@ -1,0 +1,65 @@
+[
+    {
+        "name": "RedisLoggerPluginConfigurator",
+        "schema": [
+            {
+                "name": "logLevel",
+                "type": "string",
+                "default": "debug"
+            },
+            {
+                "name": "shouldBubble",
+                "type": "bool",
+                "default": true
+            },
+            {
+                "name": "key",
+                "type": "string",
+                "docblock": "The key name to push records to"
+            },
+            {
+                "name": "capSize",
+                "type": "int",
+                "default": 0,
+                "docblock": "Number of entries to limit list size to, 0 = unlimited"
+            },
+            {
+                "name": "redisConnection",
+                "type": "RedisConnectionConfigurator"
+            }
+        ]
+    },
+    {
+        "name": "RedisConnectionConfigurator",
+        "schema": [
+            {
+                "name": "host",
+                "type": "string"
+            },
+            {
+                "name": "port",
+                "type": "int",
+                "default": 6379
+            },
+            {
+                "name": "timeout",
+                "type": "float",
+                "default": 0.0
+            },
+            {
+                "name": "persistentId",
+                "type": "string"
+            },
+            {
+                "name": "retryInterval",
+                "type": "int",
+                "default": 0
+            },
+            {
+                "name": "readTimeout",
+                "type": "float",
+                "default": 0.0
+            }
+        ]
+    }
+]

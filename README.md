@@ -8,7 +8,7 @@ PSR-3 compliant logger, with pluggable architecture and simple configuration.
  - Pluggable architecture, contracts, semantically versioned
  - One unified plugin schema (JSON)
  - Simple value object based configuration (POPO) 
- - All logger handlers and processors are created and configured via plugins
+ - Logger handlers and processors are created and configured via plugins
  - Plugins can be grouped into sets to easily create customized and very specific loggers instances
  - Based on Monolog 
  
@@ -42,11 +42,11 @@ composer require everon/logger
 ```
 
 ## Configuration
-All configuration is done by simple value objects called `configurators`.
- 
-Each logger plugin has its own configurator accessible in the `LoggerPluginConfigurator`.
 
-Each plugin configuration has only plugin specific settings.
+All configuration is done by simple value objects called `configurators`.
+Each plugin configurator has only plugin specific settings.
+
+
 
 For example: 
 
@@ -58,37 +58,39 @@ $configurator = (new LoggerPluginConfigurator())
 ```  
 
 ## Plugins
-A logger plugin is used to create and configure corresponding monolog handler.
 
-Besides `LoggerPluginInterface` a plugin can also implement `LoggerPluginFormatterInterface`,
+A logger plugin is used to create and configure corresponding monolog handler.
+It has its own configurator accessible in the `LoggerPluginConfigurator`.
+
+Besides `LoggerPluginInterface` a plugin can also implement `PluginFormatterInterface`,
 in which case the custom formatter provided by the plugin will be used.
 
 
 ## Simple Usage with Configurator
 
-The required plugins and processors can be added to `LoggerPluginConfigurator`. 
+Add a plugin's class representing specific handler to the collection in `LoggerPluginConfigurator`,
+and use the plugin's configurator to set it up.
 
-To setup specific handler, use the plugin's configurator.
   
-For example: setup logging to a file and enable memory usage processor.
+For example: setup logging to a redis server and enable memory usage processor.
 
 ```php
 $configurator = (new LoggerPluginConfigurator())
-    ->setName('everon-example')
-    ->addPluginClass(StreamLoggerPlugin::class)
-    ->addPluginProcessorClass(MemoryUsageProcessor::class);
+    ->setName('everon-logger-example')
+    ->addPluginClass(RedisLoggerPlugin::class)
+    ->addProcessorClass(MemoryUsageProcessor::class);
 
-$configurator
-    ->getStreamConfigurator()
+$configurator->getRedisConfigurator()
     ->setLogLevel('info')
-    ->setStreamLocation('/tmp/example.log');
+    ->setKey('redis-queue-test')
+    ->setHost('redis.host');
 
 $logger = (new EveronLoggerFacade())->buildLogger($configurator);
 
 $logger->info('lorem ipsum');
 ```
 
-Content of `/tmp/example.log`.
+Content of `redis-queue-test` in redis.
 ```
 [2020-11-15T16:39:12.495319+00:00] everon-logger.INFO: lorem ipsum [] {"memory_usage":"6 MB"}
 ```
@@ -97,7 +99,6 @@ Content of `/tmp/example.log`.
 ## Advanced Usage with Plugin Container
 
 Plugin Container can be used for cases where a handler, plugin or processor needs extra/external dependencies or custom logic.
-
 
 Example plugin container with plugins setup for CLI applications. 
 
@@ -123,7 +124,7 @@ class WebAppLoggerContainer implements LoggerContainerInterface
     public function createPluginCollection(): array
     {
         return [
-            new GelfLoggerPlugin($this->configurator->getGelfConfigurator()),  
+            new GelfUdpLoggerPlugin($this->configurator->getGelfConfigurator()),  
             new StreamLoggerPlugin($this->configurator->getStreamConfigurator()),  
             // ...
         ];
@@ -131,19 +132,22 @@ class WebAppLoggerContainer implements LoggerContainerInterface
 }
 ```
 
-Configure and build logger instances using containers above.
+Configure and build 2 logger instances using containers above.
 
 ```php
 $configurator = (new LoggerPluginConfigurator())
     ->setName('my-app-logger')
+    ->getGetlConfigurator()->getUdpConfigurator()
+        ->setLogLevel('notice')
+        ->setHost('graylog.host.udp')
     ->getStreamConfigurator()
         ->setLogLevel('debug')
         ->setStreamLocation('/tmp/my-app-debug.log')
     ->getSyslogConfigurator()
         ->setLogLevel('info')
         ->setIdent('everon-logger-ident')
-    //...
-;
+    ->getSymfonyConsoleConfigurator()
+        ->setLogLevel('debug');
 
 $loggerForCliApp = (new EveronLoggerFacade())->buildLoggerFromContainer(
     new CliAppLoggerContainer($configurator)
