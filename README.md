@@ -93,7 +93,7 @@ Content of `redis-queue-test` in redis.
 [2020-11-15T16:39:12.495319+00:00] everon-logger.INFO: lorem ipsum [] {"memory_usage":"6 MB"}
 ```
 
-### Logger processors
+## Logger processors
 
 Add required processor classes to logger configurator with `addProcessorClass()`.
 
