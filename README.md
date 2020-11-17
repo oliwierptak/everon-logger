@@ -65,7 +65,7 @@ in which case the custom formatter provided by the plugin will be used.
 
 ### Handler / Plugin setup
 
-To set it up a plugin with given handler, add it to the collection in `LoggerPluginConfigurator` with `addPluginConfigurator()`
+To setup a plugin with given handler, add it to the collection in `LoggerPluginConfigurator` with `addPluginConfigurator()`
   
 For example: setup logging to a redis server and enable memory usage processor.
 
