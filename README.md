@@ -15,7 +15,7 @@ PSR-3 compliant logger, with pluggable architecture and simple configuration.
  
 #### Simple Usage
 
-Configure `StreamLoggerPlugin` to start logging everything at level `info` and above to `/tmp/example.log`.
+Log everything at level `info` and above to `/tmp/example.log`.
 
 ```php
 $streamPluginConfigurator = (new StreamLoggerPluginConfigurator)
@@ -44,12 +44,12 @@ composer require everon/logger
 
 ## Configuration
 
-All configuration is done by simple value objects called `configurators`.
+The configuration is done by simple value objects called `configurators`.
 Each plugin configurator has only plugin specific settings.
 
-To enable plugin with given handler just setup its configurator, and add it to `LoggerPluginConfigurator`.
+To enable plugin with given handler setup its configurator, and add it to `LoggerPluginConfigurator`.
 
-For example, setup syslog and file logging: 
+For example: use `addPluginConfigurator()` and setup syslog and file logging.
 
 ```php
 $configurator = (new LoggerPluginConfigurator())
@@ -75,9 +75,7 @@ in which case the custom formatter provided by the plugin will be used.
 
 ### Handler / Plugin setup
 
-Add a plugin's class representing specific handler to the collection in `LoggerPluginConfigurator`,
-and use the plugin's configurator to set it up.
-
+To set it up a plugin with given handler, add it to the collection in `LoggerPluginConfigurator`.
   
 For example: setup logging to a redis server and enable memory usage processor.
 
@@ -104,7 +102,7 @@ Content of `redis-queue-test` in redis.
 
 ## Logger processors
 
-To add processor to a logger use `addProcessorClass()`.
+Add required processor classes to logger configurator with `addProcessorClass()`.
 
 ```php
 $configurator = (new LoggerPluginConfigurator())
