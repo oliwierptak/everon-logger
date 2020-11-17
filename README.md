@@ -18,12 +18,13 @@ PSR-3 compliant logger, with pluggable architecture and simple configuration.
 Configure `StreamLoggerPlugin` to start logging everything at level `info` and above to `/tmp/example.log`.
 
 ```php
-$configurator = (new LoggerPluginConfigurator())
-    ->addPluginClass(StreamLoggerPlugin::class);
-
-$configurator->getStreamConfigurator()
+$streamPluginConfigurator = (new StreamLoggerPluginConfigurator)
     ->setLogLevel('info')
     ->setStreamLocation('/tmp/example.log');
+
+$configurator = (new LoggerPluginConfigurator())
+    ->addPluginConfigurator($streamPluginConfigurator)
+    ->addProcessorClass(MemoryUsageProcessorStub::class);
 
 $logger = (new EveronLoggerFacade())->buildLogger($configurator);
 
@@ -46,15 +47,21 @@ composer require everon/logger
 All configuration is done by simple value objects called `configurators`.
 Each plugin configurator has only plugin specific settings.
 
+To enable plugin with given handler just setup its configurator, and add it to `LoggerPluginConfigurator`.
 
-
-For example: 
+For example, setup syslog and file logging: 
 
 ```php
 $configurator = (new LoggerPluginConfigurator())
-    ->setName('my-app-logger')
-    ->getStreamLoggerConfigurator()
-    ->setStreamLocation('/tmp/foo.log');
+    ->addPluginConfigurator(
+        (new StreamLoggerPluginConfigurator)
+            ->setLogLevel('debug')
+            ->setStreamLocation('/tmp/example.log')
+    )->addPluginConfigurator(
+        (new SyslogLoggerPluginConfigurator())
+            ->setLogLevel('info')
+            ->setIdent('everon-logger-ident')
+    );
 ```  
 
 ## Plugins
@@ -66,7 +73,7 @@ Besides `LoggerPluginInterface` a plugin can also implement `PluginFormatterInte
 in which case the custom formatter provided by the plugin will be used.
 
 
-## Simple Usage with Configurator
+### Handler / Plugin setup
 
 Add a plugin's class representing specific handler to the collection in `LoggerPluginConfigurator`,
 and use the plugin's configurator to set it up.
@@ -95,70 +102,14 @@ Content of `redis-queue-test` in redis.
 [2020-11-15T16:39:12.495319+00:00] everon-logger.INFO: lorem ipsum [] {"memory_usage":"6 MB"}
 ```
 
+## Logger processors
 
-## Advanced Usage with Plugin Container
-
-Plugin Container can be used for cases where a handler, plugin or processor needs extra/external dependencies or custom logic.
-
-Example plugin container with plugins setup for CLI applications. 
-
-```php
-class CliAppLoggerContainer implements LoggerContainerInterface
-{
-    public function createPluginCollection(): array
-    {
-        return [
-            new SymfonyConsolePlugin($this->configurator->getSymfonyConsoleConfigurator()),  
-            new SyslogLoggerPlugin($this->configurator->getSyslogConfigurator()),  
-            // ...
-        ];
-    }
-}
-```
-
-Example plugin container with plugins setup for WEB applications.
-
-```php
-class WebAppLoggerContainer implements LoggerContainerInterface
-{
-    public function createPluginCollection(): array
-    {
-        return [
-            new GelfUdpLoggerPlugin($this->configurator->getGelfConfigurator()),  
-            new StreamLoggerPlugin($this->configurator->getStreamConfigurator()),  
-            // ...
-        ];
-    }
-}
-```
-
-Configure and build 2 logger instances using containers above.
+To add processor to a logger use `addProcessorClass()`.
 
 ```php
 $configurator = (new LoggerPluginConfigurator())
-    ->setName('my-app-logger')
-    ->getGetlConfigurator()->getUdpConfigurator()
-        ->setLogLevel('notice')
-        ->setHost('graylog.host.udp')
-    ->getStreamConfigurator()
-        ->setLogLevel('debug')
-        ->setStreamLocation('/tmp/my-app-debug.log')
-    ->getSyslogConfigurator()
-        ->setLogLevel('info')
-        ->setIdent('everon-logger-ident')
-    ->getSymfonyConsoleConfigurator()
-        ->setLogLevel('debug');
-
-$loggerForCliApp = (new EveronLoggerFacade())->buildLoggerFromContainer(
-    new CliAppLoggerContainer($configurator)
-);
-
-$loggerForWebApp = (new EveronLoggerFacade())->buildLoggerFromContainer(
-    new WebAppLoggerContainer($configurator)
-);
+    ->addProcessorClass(MemoryUsageProcessor::class)
+    ->addProcessorClass(HostnameProcessor::class)
+    ->addPluginConfigurator(
+    ...
 ```
-
-## Logger processors
-A container can also implement `LoggerProcessorContainerInterface`, in which case a list of monolog processors
-will be injected into logger instance.
-
