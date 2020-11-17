@@ -4,23 +4,27 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Plugin\GelfUdp;
 
+use Everon\Logger\Configurator\Plugin\GelfUdpLoggerPluginConfigurator;
 use Everon\Logger\Plugin\Gelf\AbstractGelfLoggerPlugin;
 use Gelf\Transport\AbstractTransport;
 use Gelf\Transport\UdpTransport;
 
+/**
+ * @property GelfUdpLoggerPluginConfigurator $configurator
+ */
 class GelfUdpLoggerPlugin extends AbstractGelfLoggerPlugin
 {
     public function canRun(): bool
     {
-        return $this->configurator->getUdpConfigurator()->hasHost();
+        return $this->configurator->hasHost();
     }
 
     protected function buildTransport(): AbstractTransport
     {
         return new UdpTransport(
-            $this->configurator->getUdpConfigurator()->getHost(),
-            $this->configurator->getUdpConfigurator()->getPort(),
-            $this->configurator->getUdpConfigurator()->getChunkSize()
+            $this->configurator->getHost(),
+            $this->configurator->getPort(),
+            $this->configurator->getChunkSize()
         );
     }
 
@@ -28,13 +32,8 @@ class GelfUdpLoggerPlugin extends AbstractGelfLoggerPlugin
     {
         parent::validate();
 
-        $this->configurator->getUdpConfigurator()->requireHost();
-        $this->configurator->getUdpConfigurator()->requirePort();
-        $this->configurator->getUdpConfigurator()->requireChunkSize();
-    }
-
-    public function resolveConfigurator()
-    {
-        return $this->configurator->getUdpConfigurator();
+        $this->configurator->requireHost();
+        $this->configurator->requirePort();
+        $this->configurator->requireChunkSize();
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace EveronLoggerTests\Suit\Functional\Builder;
 
+use Everon\Logger\Configurator\Plugin\StreamLoggerPluginConfigurator;
 use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginStub;
 use EveronLoggerTests\Stub\Processor\MemoryUsageProcessorStub;
 use EveronLoggerTests\Suit\Functional\AbstractPluginLoggerTest;
@@ -20,9 +21,10 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
 
     public function test_should_not_log_without_logFile(): void
     {
-        $this->configurator->setPluginClassCollection([
-            StreamLoggerPluginStub::class,
-        ]);
+        $streamPluginConfigurator = (new StreamLoggerPluginConfigurator())
+            ->setPluginClass(StreamLoggerPluginStub::class);
+
+        $this->configurator->addPluginConfigurator($streamPluginConfigurator);
         $logger = $this->facade->buildLogger($this->configurator);
 
         $logger->debug('foo bar');
@@ -32,13 +34,12 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
 
     public function test_should_not_log_when_level_too_low(): void
     {
-        $this->configurator
-            ->setPluginClassCollection([
-                StreamLoggerPluginStub::class,
-            ])
-            ->getStreamConfigurator()
+        $streamPluginConfigurator = (new StreamLoggerPluginConfigurator())
+            ->setPluginClass(StreamLoggerPluginStub::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
+
+        $this->configurator->addPluginConfigurator($streamPluginConfigurator);
         $logger = $this->facade->buildLogger($this->configurator);
 
         $logger->debug('foo bar');
@@ -48,16 +49,15 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
 
     public function test_should_log_extra(): void
     {
-        $this->configurator
-            ->setPluginClassCollection([
-                StreamLoggerPluginStub::class,
-            ])
-            ->setProcessorClassCollection([
-                MemoryUsageProcessorStub::class,
-            ])
-            ->getStreamConfigurator()
+        $streamPluginConfigurator = (new StreamLoggerPluginConfigurator())
+            ->setPluginClass(StreamLoggerPluginStub::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
+
+        $this->configurator
+            ->addPluginConfigurator($streamPluginConfigurator)
+            ->addProcessorClass(MemoryUsageProcessorStub::class);
+
         $logger = $this->facade->buildLogger($this->configurator);
 
         $logger->info('foo bar');
@@ -69,16 +69,15 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
 
     public function test_should_log_context_and_extra(): void
     {
-        $this->configurator
-            ->setPluginClassCollection([
-                StreamLoggerPluginStub::class,
-            ])
-            ->setProcessorClassCollection([
-                MemoryUsageProcessorStub::class,
-            ])
-            ->getStreamConfigurator()
+        $streamPluginConfigurator = (new StreamLoggerPluginConfigurator())
+            ->setPluginClass(StreamLoggerPluginStub::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
+
+        $this->configurator
+            ->addPluginConfigurator($streamPluginConfigurator)
+            ->addProcessorClass(MemoryUsageProcessorStub::class);
+
         $logger = $this->facade->buildLogger($this->configurator);
 
         $logger->info('foo bar', ['buzz' => 'lorem ipsum']);

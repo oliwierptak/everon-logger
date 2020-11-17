@@ -1,7 +1,17 @@
 [
     {
         "name": "StreamLoggerPluginConfigurator",
+        "extends": "\\Everon\\Logger\\Configurator\\AbstractPluginConfigurator",
         "schema": [
+            {
+                "name": "pluginClass",
+                "type": "string",
+                "default": "\\Everon\\Logger\\Plugin\\Stream\\StreamLoggerPlugin::class"
+            },
+            {
+                "name": "pluginFactoryClass",
+                "type": "string"
+            },
             {
                 "name": "logLevel",
                 "type": "string",

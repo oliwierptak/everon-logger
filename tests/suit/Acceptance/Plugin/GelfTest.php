@@ -4,11 +4,9 @@ declare(strict_types = 1);
 
 namespace EveronLoggerTests\Suit\Acceptance\Plugin;
 
+use Everon\Logger\Configurator\Plugin\GelfLoggerPluginConfigurator;
 use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
 use Everon\Logger\EveronLoggerFacade;
-use Everon\Logger\Plugin\GelfHttp\GelfHttpLoggerPlugin;
-use Everon\Logger\Plugin\GelfTcp\GelfTcpLoggerPlugin;
-use Everon\Logger\Plugin\GelfUdp\GelfUdpLoggerPlugin;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
@@ -29,15 +27,13 @@ class GelfTest extends TestCase
 
     public function test_gelf_http(): void
     {
-        $configurator = (new LoggerPluginConfigurator())
-            ->addPluginClass(GelfHttpLoggerPlugin::class);
-
-        $configurator
-            ->getGelfConfigurator()
-            ->getHttpConfigurator()
+        $gelfPluginConfigurator = (new GelfLoggerPluginConfigurator())->getHttpConfigurator()
             ->setLogLevel('info')
             ->setHost($this->graylogHost)
             ->setPort(12202);
+
+        $configurator = (new LoggerPluginConfigurator())
+            ->addPluginConfigurator($gelfPluginConfigurator);
 
         $logger = (new EveronLoggerFacade())->buildLogger($configurator);
 
@@ -51,17 +47,17 @@ class GelfTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessageMatches('@^Failed to create socket-client for ssl://(.*)@');
 
-        $configurator = (new LoggerPluginConfigurator())
-            ->addPluginClass(GelfHttpLoggerPlugin::class);
-
-        $configurator
-            ->getGelfConfigurator()
+        $gelfPluginConfigurator = (new GelfLoggerPluginConfigurator())->getHttpConfigurator();
+        $gelfPluginConfigurator
             ->setIgnoreTransportErrors(false)
-            ->getHttpConfigurator()
             ->setLogLevel('info')
-            ->setUseSsl(true)
             ->setHost($this->graylogHost)
-            ->setPort(12202);
+            ->setPort(12202)
+            ->getSslOptions()
+            ->setUseSsl(true);
+
+        $configurator = (new LoggerPluginConfigurator())
+            ->addPluginConfigurator($gelfPluginConfigurator);
 
         $logger = (new EveronLoggerFacade())->buildLogger($configurator);
 
@@ -72,14 +68,12 @@ class GelfTest extends TestCase
 
     public function test_gelf_udp(): void
     {
-        $configurator = (new LoggerPluginConfigurator())
-            ->addPluginClass(GelfUdpLoggerPlugin::class);
-
-        $configurator
-            ->getGelfConfigurator()
-            ->getUdpConfigurator()
+        $gelfPluginConfigurator = (new GelfLoggerPluginConfigurator())->getUdpConfigurator()
             ->setLogLevel('info')
             ->setHost($this->graylogHost);
+
+        $configurator = (new LoggerPluginConfigurator())
+            ->addPluginConfigurator($gelfPluginConfigurator);
 
         $logger = (new EveronLoggerFacade())->buildLogger($configurator);
 
@@ -90,16 +84,14 @@ class GelfTest extends TestCase
 
     public function test_gelf_tcp(): void
     {
-        $configurator = (new LoggerPluginConfigurator())
-            ->addPluginClass(GelfTcpLoggerPlugin::class);
-
-        $configurator
-            ->getGelfConfigurator()
-            ->setIgnoreTransportErrors(false)
-            ->getTcpConfigurator()
+        $gelfPluginConfigurator = (new GelfLoggerPluginConfigurator())->getTcpConfigurator()
             ->setLogLevel('info')
             ->setHost($this->graylogHost)
             ->setPort(5555);
+
+        $configurator = (new LoggerPluginConfigurator())
+            ->addPluginConfigurator($gelfPluginConfigurator);
+
 
         $logger = (new EveronLoggerFacade())->buildLogger($configurator);
 

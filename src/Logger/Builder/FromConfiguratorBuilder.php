@@ -6,29 +6,30 @@ namespace Everon\Logger\Builder;
 
 use DateTimeZone;
 use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
-use Everon\Logger\Contract\Plugin\PluginFormatterInterface;
-use Everon\Logger\Exception\HandlerBuildException;
-use Everon\Logger\Exception\PluginBuildException;
 use Everon\Logger\Exception\ProcessorBuildException;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
-class LoggerBuilderFromConfigurator
+class FromConfiguratorBuilder
 {
     protected LoggerPluginConfigurator $configurator;
 
     protected PluginBuilder $pluginBuilder;
 
+    protected HandlerBuilder $handlerBuilder;
+
     protected ConfiguratorValidator $validator;
 
     public function __construct(
         LoggerPluginConfigurator $configurator,
-        PluginBuilder $configuratorResolver,
+        PluginBuilder $pluginBuilder,
+        HandlerBuilder $handlerBuilder,
         ConfiguratorValidator $validator)
     {
         $this->configurator = $configurator;
-        $this->pluginBuilder = $configuratorResolver;
+        $this->pluginBuilder = $pluginBuilder;
+        $this->handlerBuilder = $handlerBuilder;
         $this->validator = $validator;
     }
 
@@ -62,41 +63,14 @@ class LoggerBuilderFromConfigurator
     protected function buildHandlers(): array
     {
         $handlers = [];
-        foreach ($this->configurator->getPluginClassCollection() as $pluginClass) {
-            try {
-                $plugin = $this->pluginBuilder->buildPlugin(
-                    $this->configurator,
-                    $pluginClass
-                );
+        foreach ($this->configurator->getPluginConfiguratorCollection() as $pluginClass => $pluginConfigurator) {
+            $plugin = $this->pluginBuilder->buildPlugin($pluginConfigurator);
 
-                if (!$plugin->canRun()) {
-                    continue;
-                }
-            }
-            catch (Throwable $exception) {
-                throw new PluginBuildException(sprintf(
-                    'Could not build plugin: "%s". Error: %s',
-                    $pluginClass,
-                    $exception->getMessage()
-                ), $exception->getCode(), $exception);
+            if (!$plugin->canRun()) {
+                continue;
             }
 
-            try {
-                $handler = $plugin->buildHandler();
-                if ($plugin instanceof PluginFormatterInterface) {
-                    $formatter = $plugin->buildFormatter();
-                    $handler->setFormatter($formatter);
-                }
-
-                $handlers[] = $handler;
-            }
-            catch (Throwable $exception) {
-                throw new HandlerBuildException(sprintf(
-                    'Could not build handler: "%s". Error: %s',
-                    $pluginClass,
-                    $exception->getMessage()
-                ), $exception->getCode(), $exception);
-            }
+            $handlers[] = $this->handlerBuilder->buildHandler($plugin);
         }
 
         return $handlers;

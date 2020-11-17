@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Everon\Logger;
 
 use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
-use Everon\Logger\Contract\Container\LoggerContainerInterface;
 use Psr\Log\LoggerInterface;
 
 class EveronLoggerFacade implements EveronLoggerFacadeInterface
@@ -31,12 +30,5 @@ class EveronLoggerFacade implements EveronLoggerFacadeInterface
     public function setFactory(EveronLoggerFactory $factory): void
     {
         $this->factory = $factory;
-    }
-
-    public function buildLoggerFromContainer(LoggerContainerInterface $pluginContainer): LoggerInterface
-    {
-        return $this->getFactory()
-            ->createBuilderFromContainer($pluginContainer)
-            ->buildLogger();
     }
 }

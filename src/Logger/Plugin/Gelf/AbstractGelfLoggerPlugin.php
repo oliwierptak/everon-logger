@@ -4,9 +4,7 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Plugin\Gelf;
 
-use Everon\Logger\Configurator\Plugin\GelfLoggerPluginConfigurator;
 use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
-use Everon\Logger\Contract\Plugin\PluginConfiguratorResolverInterface;
 use Gelf\Publisher;
 use Gelf\PublisherInterface;
 use Gelf\Transport\AbstractTransport;
@@ -15,13 +13,13 @@ use Gelf\Transport\SslOptions;
 use Monolog\Handler\GelfHandler;
 use Monolog\Handler\HandlerInterface;
 
-abstract class AbstractGelfLoggerPlugin implements LoggerPluginInterface, PluginConfiguratorResolverInterface
+abstract class AbstractGelfLoggerPlugin implements LoggerPluginInterface
 {
-    protected GelfLoggerPluginConfigurator $configurator;
+    protected AbstractGelfPluginConfigurator $configurator;
 
     abstract protected function buildTransport(): AbstractTransport;
 
-    public function __construct(GelfLoggerPluginConfigurator $configurator)
+    public function __construct(AbstractGelfPluginConfigurator $configurator)
     {
         $this->configurator = $configurator;
     }
@@ -33,8 +31,8 @@ abstract class AbstractGelfLoggerPlugin implements LoggerPluginInterface, Plugin
 
         return new GelfHandler(
             $publisher,
-            $this->resolveConfigurator()->getLogLevel(),
-            $this->resolveConfigurator()->shouldBubble()
+            $this->configurator->getLogLevel(),
+            $this->configurator->shouldBubble()
         );
     }
 
@@ -50,12 +48,12 @@ abstract class AbstractGelfLoggerPlugin implements LoggerPluginInterface, Plugin
 
     protected function validate(): void
     {
-        $this->resolveConfigurator()->requireLogLevel();
+        $this->configurator->requireLogLevel();
     }
 
-    protected function buildSslOptions($pluginConfigurator): ?SslOptions
+    protected function buildSslOptions(AbstractGelfSslPluginConfigurator $pluginConfigurator): ?SslOptions
     {
-        if (!$pluginConfigurator->useSsl()) {
+        if (!$pluginConfigurator->getSslOptions()->useSsl()) {
             return null;
         }
 

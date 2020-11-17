@@ -4,25 +4,29 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Plugin\GelfHttp;
 
+use Everon\Logger\Configurator\Plugin\GelfHttpLoggerPluginConfigurator;
 use Everon\Logger\Plugin\Gelf\AbstractGelfLoggerPlugin;
 use Gelf\Transport\AbstractTransport;
 use Gelf\Transport\HttpTransport;
 
+/**
+ * @property GelfHttpLoggerPluginConfigurator $configurator
+ */
 class GelfHttpLoggerPlugin extends AbstractGelfLoggerPlugin
 {
     public function canRun(): bool
     {
-        return $this->configurator->getHttpConfigurator()->hasHost();
+        return $this->configurator->hasHost();
     }
 
     protected function buildTransport(): AbstractTransport
     {
-        $sslOptions = $this->buildSslOptions($this->configurator->getHttpConfigurator());
+        $sslOptions = $this->buildSslOptions($this->configurator);
 
         return new HttpTransport(
-            $this->configurator->getHttpConfigurator()->getHost(),
-            $this->configurator->getHttpConfigurator()->getPort(),
-            $this->configurator->getHttpConfigurator()->getPath(),
+            $this->configurator->getHost(),
+            $this->configurator->getPort(),
+            $this->configurator->getPath(),
             $sslOptions
         );
     }
@@ -31,12 +35,7 @@ class GelfHttpLoggerPlugin extends AbstractGelfLoggerPlugin
     {
         parent::validate();
 
-        $this->configurator->getHttpConfigurator()->requireHost();
-        $this->configurator->getHttpConfigurator()->requirePort();
-    }
-
-    public function resolveConfigurator()
-    {
-        return $this->configurator->getHttpConfigurator();
+        $this->configurator->requireHost();
+        $this->configurator->requirePort();
     }
 }

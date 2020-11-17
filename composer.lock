@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "13a63a15aca4ee1e90faab738d09778c",
+    "content-hash": "f86de5f62926f58a1bb3a7ddb289c4c2",
     "packages": [
         {
             "name": "graylog2/gelf-php",
@@ -3283,7 +3283,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4"
+        "php": "^7.4",
+        "ext-redis": "*"
     },
     "platform-dev": {
         "ext-json": "*"

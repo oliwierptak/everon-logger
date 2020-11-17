@@ -1,7 +1,17 @@
 [
     {
         "name": "SyslogLoggerPluginConfigurator",
+        "extends": "\\Everon\\Logger\\Configurator\\AbstractPluginConfigurator",
         "schema": [
+            {
+                "name": "pluginClass",
+                "type": "string",
+                "default": "\\Everon\\Logger\\Plugin\\Syslog\\SyslogLoggerPlugin::class"
+            },
+            {
+                "name": "pluginFactoryClass",
+                "type": "string"
+            },
             {
                 "name": "logLevel",
                 "type": "string",

@@ -1,7 +1,17 @@
 [
     {
         "name": "RedisLoggerPluginConfigurator",
+        "extends": "\\Everon\\Logger\\Configurator\\AbstractPluginConfigurator",
         "schema": [
+            {
+                "name": "pluginClass",
+                "type": "string",
+                "default": "\\Everon\\Logger\\Plugin\\Redis\\RedisLoggerPlugin::class"
+            },
+            {
+                "name": "pluginFactoryClass",
+                "type": "string"
+            },
             {
                 "name": "logLevel",
                 "type": "string",
@@ -31,6 +41,7 @@
     },
     {
         "name": "RedisConnectionConfigurator",
+        "extends": "\\Everon\\Logger\\Configurator\\AbstractConfigurator",
         "schema": [
             {
                 "name": "host",

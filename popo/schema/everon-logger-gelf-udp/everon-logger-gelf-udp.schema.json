@@ -1,7 +1,22 @@
 [
     {
         "name": "GelfUdpLoggerPluginConfigurator",
+        "extends": "\\Everon\\Logger\\Plugin\\Gelf\\AbstractGelfPluginConfigurator",
         "schema": [
+            {
+                "name": "pluginClass",
+                "type": "string",
+                "default": "\\Everon\\Logger\\Plugin\\GelfUdp\\GelfUdpLoggerPlugin::class"
+            },
+            {
+                "name": "pluginFactoryClass",
+                "type": "string"
+            },
+            {
+                "name": "ignoreTransportErrors",
+                "type": "bool",
+                "default": true
+            },
             {
                 "name": "logLevel",
                 "type": "string",

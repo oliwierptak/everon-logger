@@ -1,6 +1,7 @@
 [
     {
         "name": "LoggerPluginConfigurator",
+        "extends": "\\Everon\\Logger\\Configurator\\AbstractConfigurator",
         "schema": [
             {
                 "name": "name",
@@ -11,12 +12,6 @@
                 "name": "timezone",
                 "type": "string",
                 "default": "UTC"
-            },
-            {
-                "name": "pluginClassCollection",
-                "singular": "pluginClass",
-                "type": "array",
-                "default": []
             },
             {
                 "name": "processorClassCollection",

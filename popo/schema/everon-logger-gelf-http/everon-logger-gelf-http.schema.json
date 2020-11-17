@@ -1,7 +1,22 @@
 [
     {
         "name": "GelfHttpLoggerPluginConfigurator",
+        "extends": "\\Everon\\Logger\\Plugin\\Gelf\\AbstractGelfSslPluginConfigurator",
         "schema": [
+            {
+                "name": "pluginClass",
+                "type": "string",
+                "default": "\\Everon\\Logger\\Plugin\\GelfHttp\\GelfHttpLoggerPlugin::class"
+            },
+            {
+                "name": "pluginFactoryClass",
+                "type": "string"
+            },
+            {
+                "name": "ignoreTransportErrors",
+                "type": "bool",
+                "default": true
+            },
             {
                 "name": "logLevel",
                 "type": "string",
@@ -31,11 +46,6 @@
                 "name": "sslOptions",
                 "type": "GelfLoggerPluginSslOptions",
                 "singular": "sslOption"
-            },
-            {
-                "name": "useSsl",
-                "type": "bool",
-                "default": false
             }
         ]
     }

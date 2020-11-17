@@ -2,9 +2,9 @@
 
 namespace Everon\Logger\Contract\Plugin;
 
-use Everon\Logger\Configurator\Plugin\GelfLoggerPluginConfigurator;
+use Everon\Logger\Configurator\AbstractPluginConfigurator;
 
 interface PluginFactoryInterface
 {
-    public function create(GelfLoggerPluginConfigurator $configurator): LoggerPluginInterface;
+    public function create(AbstractPluginConfigurator $configurator): LoggerPluginInterface;
 }

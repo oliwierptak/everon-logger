@@ -1,16 +1,12 @@
 [
     {
         "name": "GelfLoggerPluginConfigurator",
-        "schema": [
-            {
-                "name": "ignoreTransportErrors",
-                "type": "bool",
-                "default": true
-            }
-        ]
+        "extends": "\\Everon\\Logger\\Configurator\\AbstractConfigurator",
+        "schema": []
     },
     {
         "name": "GelfLoggerPluginSslOptions",
+        "extends": "\\Everon\\Logger\\Configurator\\AbstractConfigurator",
         "schema": [
             {
                 "name": "verifyPeer",
@@ -33,6 +29,11 @@
                 "name": "ciphers",
                 "type": "string",
                 "dockblock": "List of ciphers the SSL layer may use. Formatted as specified in `ciphers(1)`"
+            },
+            {
+                "name": "useSsl",
+                "type": "bool",
+                "default": false
             }
         ]
     }

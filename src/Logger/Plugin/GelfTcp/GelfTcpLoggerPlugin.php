@@ -4,24 +4,28 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Plugin\GelfTcp;
 
+use Everon\Logger\Configurator\Plugin\GelfTcpLoggerPluginConfigurator;
 use Everon\Logger\Plugin\Gelf\AbstractGelfLoggerPlugin;
 use Gelf\Transport\AbstractTransport;
 use Gelf\Transport\TcpTransport;
 
+/**
+ * @property GelfTcpLoggerPluginConfigurator $configurator
+ */
 class GelfTcpLoggerPlugin extends AbstractGelfLoggerPlugin
 {
     public function canRun(): bool
     {
-        return $this->configurator->getTcpConfigurator()->hasHost();
+        return $this->configurator->hasHost();
     }
 
     protected function buildTransport(): AbstractTransport
     {
-        $sslOptions = $this->buildSslOptions($this->configurator->getTcpConfigurator());
+        $sslOptions = $this->buildSslOptions($this->configurator);
 
         return new TcpTransport(
-            $this->configurator->getTcpConfigurator()->getHost(),
-            $this->configurator->getTcpConfigurator()->getPort(),
+            $this->configurator->getHost(),
+            $this->configurator->getPort(),
             $sslOptions
         );
     }
@@ -30,12 +34,7 @@ class GelfTcpLoggerPlugin extends AbstractGelfLoggerPlugin
     {
         parent::validate();
 
-        $this->configurator->getTcpConfigurator()->requireHost();
-        $this->configurator->getTcpConfigurator()->requirePort();
-    }
-
-    public function resolveConfigurator()
-    {
-        return $this->configurator->getTcpConfigurator();
+        $this->configurator->requireHost();
+        $this->configurator->requirePort();
     }
 }

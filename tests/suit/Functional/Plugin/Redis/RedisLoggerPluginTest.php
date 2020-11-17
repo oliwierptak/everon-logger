@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace EveronLoggerTests\Suit\Functional\Plugin\Redis;
 
+use Everon\Logger\Configurator\Plugin\RedisLoggerPluginConfigurator;
 use EveronLoggerTests\Stub\Plugin\Redis\RedisLoggerPluginStub;
 use EveronLoggerTests\Stub\Processor\MemoryUsageProcessorStub;
 use EveronLoggerTests\Suit\Functional\AbstractPluginLoggerTest;
@@ -27,6 +28,18 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
         $this->redisPort = (int) $_ENV['TEST_REDIS_PORT'];
 
         $this->getRedis()->flushAll();
+
+        $redisPluginConfigurator = (new RedisLoggerPluginConfigurator())
+            ->setPluginClass(RedisLoggerPluginStub::class)
+            ->setLogLevel('debug');
+
+        $redisPluginConfigurator
+            ->getRedisConnection()
+            ->setHost($this->redisHost)
+            ->setPort($this->redisPort)
+            ->setTimeout(10);
+
+        $this->configurator->addPluginConfigurator($redisPluginConfigurator);
     }
 
     public function getRedis(): \Redis
@@ -45,11 +58,6 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
 
     public function test_should_not_log_without_key(): void
     {
-        $this->configurator
-            ->addPluginClass(RedisLoggerPluginStub::class)
-            ->getRedisConfigurator()
-            ->setLogLevel('info');
-
         $logger = $this->facade->buildLogger($this->configurator);
 
         $logger->debug('foo bar');
@@ -64,14 +72,8 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
 
     public function test_should_not_log_when_level_too_low(): void
     {
-        $this->configurator
-            ->addPluginClass(RedisLoggerPluginStub::class)
-            ->getRedisConfigurator()
-            ->setLogLevel('info')
-            ->setKey(static::REDIS_QUEUE)
-            ->getRedisConnection()
-            ->setHost($this->redisHost)
-            ->setPort($this->redisPort);
+        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(RedisLoggerPluginStub::class);
+        $pluginConfigurator->setLogLevel('info');
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -82,14 +84,10 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
 
     public function test_should_log(): void
     {
-        $this->configurator
-            ->addPluginClass(RedisLoggerPluginStub::class)
-            ->getRedisConfigurator()
+        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(RedisLoggerPluginStub::class);
+        $pluginConfigurator
             ->setLogLevel('info')
-            ->setKey(static::REDIS_QUEUE)
-            ->getRedisConnection()
-            ->setHost($this->redisHost)
-            ->setPort($this->redisPort);
+            ->setKey(static::REDIS_QUEUE);
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -102,14 +100,10 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
 
     public function test_should_log_context(): void
     {
-        $this->configurator
-            ->addPluginClass(RedisLoggerPluginStub::class)
-            ->getRedisConfigurator()
+        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(RedisLoggerPluginStub::class);
+        $pluginConfigurator
             ->setLogLevel('info')
-            ->setKey(static::REDIS_QUEUE)
-            ->getRedisConnection()
-            ->setHost($this->redisHost)
-            ->setPort($this->redisPort);
+            ->setKey(static::REDIS_QUEUE);
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -120,15 +114,12 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
 
     public function test_should_log_context_and_extra(): void
     {
-        $this->configurator
-            ->addPluginClass(RedisLoggerPluginStub::class)
-            ->addProcessorClass(MemoryUsageProcessorStub::class)
-            ->getRedisConfigurator()
+        $this->configurator->addProcessorClass(MemoryUsageProcessorStub::class);
+
+        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(RedisLoggerPluginStub::class);
+        $pluginConfigurator
             ->setLogLevel('info')
-            ->setKey(static::REDIS_QUEUE)
-            ->getRedisConnection()
-            ->setHost($this->redisHost)
-            ->setPort($this->redisPort);
+            ->setKey(static::REDIS_QUEUE);
 
         $logger = $this->facade->buildLogger($this->configurator);
 
