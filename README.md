@@ -23,8 +23,7 @@ $streamPluginConfigurator = (new StreamLoggerPluginConfigurator)
     ->setStreamLocation('/tmp/example.log');
 
 $configurator = (new LoggerPluginConfigurator())
-    ->addPluginConfigurator($streamPluginConfigurator)
-    ->addProcessorClass(MemoryUsageProcessorStub::class);
+    ->addPluginConfigurator($streamPluginConfigurator);
 
 $logger = (new EveronLoggerFacade())->buildLogger($configurator);
 
@@ -85,10 +84,14 @@ $configurator = (new LoggerPluginConfigurator())
     ->addPluginClass(RedisLoggerPlugin::class)
     ->addProcessorClass(MemoryUsageProcessor::class);
 
-$configurator->getRedisConfigurator()
+$redisPluginConfigurator  = (new RedisLoggerPluginConfigurator)
     ->setLogLevel('info')
     ->setKey('redis-queue-test')
-    ->setHost('redis.host');
+    ->getRedisConnection()
+        ->setHost($this->redisHost)
+        ->setPort($this->redisPort)
+        ->setTimeout(10);
+
 
 $logger = (new EveronLoggerFacade())->buildLogger($configurator);
 
