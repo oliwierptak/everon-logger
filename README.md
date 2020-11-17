@@ -35,12 +35,6 @@ Content of `/tmp/example.log`.
 [2020-11-15T16:29:16.400318+00:00] everon-logger.INFO: lorem ipsum [] []
 ```
   
-## Installation
-
-```
-composer require everon/logger
-```
-
 ## Configuration
 
 The configuration is done by simple value objects called `configurators`.
@@ -111,4 +105,10 @@ $configurator = (new LoggerPluginConfigurator())
     ->addProcessorClass(HostnameProcessor::class)
     ->addPluginConfigurator(
     ...
+```
+
+## Installation
+
+```
+composer require everon/logger
 ```
