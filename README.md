@@ -40,9 +40,9 @@ Content of `/tmp/example.log`.
 The configuration is done by simple value objects called `configurators`.
 Each plugin configurator has only plugin specific settings.
 
-To enable plugin with given handler setup its configurator, and add it to `LoggerPluginConfigurator`.
+To enable plugin with given handler setup its configurator, and add it to `LoggerPluginConfigurator` with `addPluginConfigurator()`.
 
-For example: use `addPluginConfigurator()` and setup syslog and file logging.
+For example: setup syslog and file logging.
 
 ```php
 $configurator = (new LoggerPluginConfigurator())
