@@ -18,12 +18,12 @@ PSR-3 compliant logger, with pluggable architecture and simple configuration.
 Log everything at level `info` and above to `/tmp/example.log`.
 
 ```php
-$streamPluginConfigurator = (new StreamLoggerPluginConfigurator)
-    ->setLogLevel('info')
-    ->setStreamLocation('/tmp/example.log');
-
 $configurator = (new LoggerPluginConfigurator)
-    ->addPluginConfigurator($streamPluginConfigurator);
+    ->addPluginConfigurator(
+        (new StreamLoggerPluginConfigurator)
+            ->setLogLevel('info')
+            ->setStreamLocation('/tmp/example.log')    
+    );
 
 $logger = (new EveronLoggerFacade)->buildLogger($configurator);
 
