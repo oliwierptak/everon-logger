@@ -22,7 +22,7 @@ $streamPluginConfigurator = (new StreamLoggerPluginConfigurator)
     ->setLogLevel('info')
     ->setStreamLocation('/tmp/example.log');
 
-$configurator = (new LoggerPluginConfigurator())
+$configurator = (new LoggerPluginConfigurator)
     ->addPluginConfigurator($streamPluginConfigurator);
 
 $logger = (new EveronLoggerFacade())->buildLogger($configurator);
@@ -43,13 +43,13 @@ Each plugin configurator has only plugin specific settings.
 For example: setup syslog and file logging.
 
 ```php
-$configurator = (new LoggerPluginConfigurator())
+$configurator = (new LoggerPluginConfigurator)
     ->addPluginConfigurator(
         (new StreamLoggerPluginConfigurator)
             ->setLogLevel('debug')
             ->setStreamLocation('/tmp/example.log')
     )->addPluginConfigurator(
-        (new SyslogLoggerPluginConfigurator())
+        (new SyslogLoggerPluginConfigurator)
             ->setLogLevel('info')
             ->setIdent('everon-logger-ident')
     );
@@ -65,12 +65,12 @@ in which case the custom formatter provided by the plugin will be used.
 
 ### Handler / Plugin setup
 
-To setup a plugin add it to the collection in `LoggerPluginConfigurator` with `addPluginConfigurator()`
+To setup a plugin add it to the collection in `LoggerPluginConfigurator` with `addPluginConfigurator()`.
   
 For example: setup logging to a redis server and enable memory usage processor.
 
 ```php
-$configurator = (new LoggerPluginConfigurator())
+$configurator = (new LoggerPluginConfigurator)
     ->setName('everon-logger-example')
     ->addPluginClass(RedisLoggerPlugin::class)
     ->addProcessorClass(MemoryUsageProcessor::class);
@@ -98,7 +98,7 @@ Content of `redis-queue-test` in redis.
 Add required processor classes to logger configurator with `addProcessorClass()`.
 
 ```php
-$configurator = (new LoggerPluginConfigurator())
+$configurator = (new LoggerPluginConfigurator)
     ->addProcessorClass(MemoryUsageProcessor::class)
     ->addProcessorClass(HostnameProcessor::class)
     ->addPluginConfigurator(
