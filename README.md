@@ -72,16 +72,15 @@ For example: setup logging to a redis server and enable memory usage processor.
 ```php
 $configurator = (new LoggerPluginConfigurator)
     ->setName('everon-logger-example')
-    ->addPluginClass(RedisLoggerPlugin::class)
-    ->addProcessorClass(MemoryUsageProcessor::class);
-
-$redisPluginConfigurator  = (new RedisLoggerPluginConfigurator)
-    ->setLogLevel('info')
-    ->setKey('redis-queue-test')
-    ->getRedisConnection()
-        ->setHost('redis.host')
-        ->setTimeout(10);
-
+    ->addProcessorClass(MemoryUsageProcessor::class)
+    ->addPluginConfigurator(
+        (new RedisLoggerPluginConfigurator)
+            ->setLogLevel('info')
+            ->setKey('redis-queue-test')
+            ->getRedisConnection()
+                ->setHost('redis.host')
+                ->setTimeout(10)
+    );
 
 $logger = (new EveronLoggerFacade)->buildLogger($configurator);
 
