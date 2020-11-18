@@ -25,7 +25,7 @@ $streamPluginConfigurator = (new StreamLoggerPluginConfigurator)
 $configurator = (new LoggerPluginConfigurator)
     ->addPluginConfigurator($streamPluginConfigurator);
 
-$logger = (new EveronLoggerFacade())->buildLogger($configurator);
+$logger = (new EveronLoggerFacade)->buildLogger($configurator);
 
 $logger->info('lorem ipsum');
 ```
@@ -83,7 +83,7 @@ $redisPluginConfigurator  = (new RedisLoggerPluginConfigurator)
         ->setTimeout(10);
 
 
-$logger = (new EveronLoggerFacade())->buildLogger($configurator);
+$logger = (new EveronLoggerFacade)->buildLogger($configurator);
 
 $logger->info('lorem ipsum');
 ```
