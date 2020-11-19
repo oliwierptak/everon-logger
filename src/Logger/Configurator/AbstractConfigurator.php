@@ -19,6 +19,8 @@ abstract class AbstractConfigurator
     protected array $pluginConfiguratorCollection = [];
 
     /**
+     * [pluginClassName => configurator]
+     *
      * @return \Everon\Logger\Configurator\AbstractPluginConfigurator[]
      */
     public function getPluginConfiguratorCollection(): array
@@ -27,6 +29,8 @@ abstract class AbstractConfigurator
     }
 
     /**
+     * [pluginClass => configurator]
+     *
      * @param \Everon\Logger\Configurator\AbstractPluginConfigurator[] $pluginConfiguratorCollection
      *
      * @return $this

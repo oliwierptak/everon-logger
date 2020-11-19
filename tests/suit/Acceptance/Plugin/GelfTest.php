@@ -21,8 +21,6 @@ class GelfTest extends TestCase
     protected function setUp(): void
     {
         $this->graylogHost = $_ENV['TEST_GELF_HOST'];
-
-        @unlink('/tmp/everon-logger-gelf.log');
     }
 
     public function test_gelf_http(): void
