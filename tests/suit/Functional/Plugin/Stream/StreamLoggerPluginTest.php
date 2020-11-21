@@ -5,9 +5,10 @@ declare(strict_types = 1);
 namespace EveronLoggerTests\Suit\Functional\Plugin\Stream;
 
 use Everon\Logger\Configurator\Plugin\StreamLoggerPluginConfigurator;
+use Everon\Logger\Plugin\Stream\StreamLoggerPlugin;
 use EveronLoggerTests\Stub\Plugin\Stream\FactoryStub;
-use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginStub;
 use EveronLoggerTests\Stub\Processor\MemoryUsageProcessorStub;
+use EveronLoggerTests\Suit\Configurator\TestLoggerConfigurator;
 use EveronLoggerTests\Suit\Functional\AbstractPluginLoggerTest;
 
 class StreamLoggerPluginTest extends AbstractPluginLoggerTest
@@ -17,7 +18,7 @@ class StreamLoggerPluginTest extends AbstractPluginLoggerTest
         parent::setUp();
 
         $streamPluginConfigurator = (new StreamLoggerPluginConfigurator())
-            ->setPluginClass(StreamLoggerPluginStub::class)
+            ->setPluginClass(StreamLoggerPlugin::class)
             ->setLogLevel('debug');
 
         $this->configurator->addPluginConfigurator($streamPluginConfigurator);
@@ -34,8 +35,8 @@ class StreamLoggerPluginTest extends AbstractPluginLoggerTest
 
     public function test_should_not_log_when_level_too_low(): void
     {
-        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(StreamLoggerPluginStub::class);
-        $pluginConfigurator
+        $this->configurator
+            ->getPluginConfiguratorByPluginName(StreamLoggerPlugin::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
 
@@ -48,24 +49,28 @@ class StreamLoggerPluginTest extends AbstractPluginLoggerTest
 
     public function test_should_log(): void
     {
-        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(StreamLoggerPluginStub::class);
-        $pluginConfigurator
+        $this->configurator
+            ->getPluginConfiguratorByPluginName(StreamLoggerPlugin::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
 
         $logger = $this->facade->buildLogger($this->configurator);
 
         $logger->info('foo bar');
-        $logger->warning('foo bar warning');
+        $this->assertLogFile((new TestLoggerConfigurator())
+            ->setMessage('foo bar')
+            ->setLevel('info'));
 
-        $this->assertLoggerFile('foo bar', 'info', [], [], 0);
-        $this->assertLoggerFile('foo bar warning', 'warning', [], [], 1);
+        $logger->warning('foo bar warning');
+        $this->assertLogFile((new TestLoggerConfigurator())
+            ->setMessage('foo bar warning')
+            ->setLevel('warning'));
     }
 
     public function test_should_log_context(): void
     {
-        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(StreamLoggerPluginStub::class);
-        $pluginConfigurator
+        $this->configurator
+            ->getPluginConfiguratorByPluginName(StreamLoggerPlugin::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
 
@@ -73,15 +78,17 @@ class StreamLoggerPluginTest extends AbstractPluginLoggerTest
 
         $logger->info('foo bar', ['buzz' => 'lorem ipsum']);
 
-        $this->assertLoggerFile('foo bar', 'info', ['buzz' => 'lorem ipsum']);
+        $this->assertLogFile((new TestLoggerConfigurator())
+            ->setMessage('foo bar')
+            ->setLevel('info')
+            ->setContext(['buzz' => 'lorem ipsum']));
     }
 
     public function test_should_log_context_and_extra(): void
     {
-        $this->configurator->addProcessorClass(MemoryUsageProcessorStub::class);
-
-        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(StreamLoggerPluginStub::class);
-        $pluginConfigurator
+        $this->configurator
+            ->addProcessorClass(MemoryUsageProcessorStub::class)
+            ->getPluginConfiguratorByPluginName(StreamLoggerPlugin::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
 
@@ -89,15 +96,18 @@ class StreamLoggerPluginTest extends AbstractPluginLoggerTest
 
         $logger->info('foo bar', ['buzz' => 'lorem ipsum']);
 
-        $this->assertLoggerFile('foo bar', 'info', ['buzz' => 'lorem ipsum'], ['memory_peak_usage' => '5 MB']);
+        $this->assertLogFile((new TestLoggerConfigurator())
+            ->setMessage('foo bar')
+            ->setLevel('info')
+            ->setContext(['buzz' => 'lorem ipsum'])
+            ->setExtra(['memory_peak_usage' => '5 MB']));
     }
 
     public function test_should_use_plugin_factory(): void
     {
-        $this->configurator->addProcessorClass(MemoryUsageProcessorStub::class);
-
-        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(StreamLoggerPluginStub::class);
-        $pluginConfigurator
+        $this->configurator
+            ->addProcessorClass(MemoryUsageProcessorStub::class)
+            ->getPluginConfiguratorByPluginName(StreamLoggerPlugin::class)
             ->setPluginFactoryClass(FactoryStub::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
@@ -106,29 +116,10 @@ class StreamLoggerPluginTest extends AbstractPluginLoggerTest
 
         $logger->info('foo bar', ['buzz' => 'lorem ipsum']);
 
-        $this->assertLoggerFile('foo bar', 'info', ['buzz' => 'lorem ipsum'], ['memory_peak_usage' => '5 MB']);
-    }
-
-    protected function assertLoggerFile(
-        string $message,
-        string $level,
-        array $context = [],
-        array $extra = [],
-        int $index = 0
-    ): void
-    {
-        $jsonContextString = json_encode($context);
-        $jsonExtraString = json_encode($extra);
-
-        $expected = sprintf(
-            '%s: %s %s %s' . \PHP_EOL,
-            \strtoupper($level),
-            $message,
-            $jsonContextString,
-            $jsonExtraString
-        );
-
-        $this->assertFileExists($this->logFilename);
-        $this->assertEquals($expected, file($this->logFilename)[$index]);
+        $this->assertLogFile((new TestLoggerConfigurator())
+            ->setMessage('foo bar')
+            ->setLevel('info')
+            ->setContext(['buzz' => 'lorem ipsum'])
+            ->setExtra(['memory_peak_usage' => '5 MB']));
     }
 }

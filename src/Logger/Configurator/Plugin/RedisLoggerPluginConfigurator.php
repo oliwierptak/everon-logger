@@ -287,7 +287,7 @@ class RedisLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstract
     }
 
     /**
-     * @return string|null
+     * @return string|null Defines custom plugin factory to be used to create a plugin
      */
     public function getPluginFactoryClass(): ?string
     {
@@ -295,7 +295,7 @@ class RedisLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstract
     }
 
     /**
-     * @param string|null $pluginFactoryClass
+     * @param string|null $pluginFactoryClass Defines custom plugin factory to be used to create a plugin
      *
      * @return RedisLoggerPluginConfigurator
      */
@@ -311,7 +311,7 @@ class RedisLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstract
      *
      * @throws \UnexpectedValueException
      *
-     * @return string
+     * @return string Defines custom plugin factory to be used to create a plugin
      */
     public function requirePluginFactoryClass(): string
     {
@@ -331,7 +331,7 @@ class RedisLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstract
     }
 
     /**
-     * @return string|null
+     * @return string|null The minimum logging level at which this handler will be triggered
      */
     public function getLogLevel(): ?string
     {
@@ -339,7 +339,7 @@ class RedisLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstract
     }
 
     /**
-     * @param string|null $logLevel
+     * @param string|null $logLevel The minimum logging level at which this handler will be triggered
      *
      * @return RedisLoggerPluginConfigurator
      */
@@ -355,7 +355,7 @@ class RedisLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstract
      *
      * @throws \UnexpectedValueException
      *
-     * @return string
+     * @return string The minimum logging level at which this handler will be triggered
      */
     public function requireLogLevel(): string
     {
@@ -375,7 +375,7 @@ class RedisLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstract
     }
 
     /**
-     * @return boolean|null
+     * @return boolean|null Whether the messages that are handled can bubble up the stack or not
      */
     public function shouldBubble(): ?bool
     {
@@ -383,7 +383,7 @@ class RedisLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstract
     }
 
     /**
-     * @param boolean|null $shouldBubble
+     * @param boolean|null $shouldBubble Whether the messages that are handled can bubble up the stack or not
      *
      * @return RedisLoggerPluginConfigurator
      */
@@ -399,7 +399,7 @@ class RedisLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstract
      *
      * @throws \UnexpectedValueException
      *
-     * @return boolean
+     * @return boolean Whether the messages that are handled can bubble up the stack or not
      */
     public function requireShouldBubble(): bool
     {
@@ -507,7 +507,7 @@ class RedisLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstract
     }
 
     /**
-     * @return RedisConnectionConfigurator|null
+     * @return RedisConnectionConfigurator|null Redis connection related settings
      */
     public function getRedisConnection(): ?RedisConnectionConfigurator
     {
@@ -515,7 +515,7 @@ class RedisLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstract
     }
 
     /**
-     * @param RedisConnectionConfigurator|null $redisConnection
+     * @param RedisConnectionConfigurator|null $redisConnection Redis connection related settings
      *
      * @return RedisLoggerPluginConfigurator
      */
@@ -531,7 +531,7 @@ class RedisLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstract
      *
      * @throws \UnexpectedValueException
      *
-     * @return RedisConnectionConfigurator
+     * @return RedisConnectionConfigurator Redis connection related settings
      */
     public function requireRedisConnection(): RedisConnectionConfigurator
     {

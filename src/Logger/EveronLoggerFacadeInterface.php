@@ -2,7 +2,7 @@
 
 namespace Everon\Logger;
 
-use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\LoggerConfigurator;
 use Psr\Log\LoggerInterface;
 
 interface EveronLoggerFacadeInterface
@@ -19,7 +19,7 @@ interface EveronLoggerFacadeInterface
      * - Create instance of logger implementing Psr\Log\LoggerInterface
      * - Return logger instance
      *
-     * @param \Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator $configurator
+     * @param \Everon\Logger\Configurator\Plugin\LoggerConfigurator $configurator
      *
      * @return \Psr\Log\LoggerInterface
      *
@@ -28,5 +28,5 @@ interface EveronLoggerFacadeInterface
      * @throws \Everon\Logger\Exception\ProcessorBuildException
      * @throws \Everon\Logger\Exception\ConfiguratorValidationException
      */
-    public function buildLogger(LoggerPluginConfigurator $configurator): LoggerInterface;
+    public function buildLogger(LoggerConfigurator $configurator): LoggerInterface;
 }

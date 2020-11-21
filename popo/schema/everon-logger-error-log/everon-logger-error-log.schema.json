@@ -1,12 +1,12 @@
 [
     {
-        "name": "SyslogLoggerPluginConfigurator",
+        "name": "ErrorLogLoggerPluginConfigurator",
         "extends": "\\Everon\\Logger\\Configurator\\AbstractPluginConfigurator",
         "schema": [
             {
                 "name": "pluginClass",
                 "type": "string",
-                "default": "\\Everon\\Logger\\Plugin\\Syslog\\SyslogLoggerPlugin::class"
+                "default": "\\Everon\\Logger\\Plugin\\Redis\\RedisLoggerPlugin::class"
             },
             {
                 "name": "pluginFactoryClass",
@@ -26,20 +26,16 @@
                 "docblock": "Whether the messages that are handled can bubble up the stack or not"
             },
             {
-                "name": "ident",
-                "type": "string"
+                "name": "messageType",
+                "type": "int",
+                "default": "\\Monolog\\Handler\\ErrorLogHandler::OPERATING_SYSTEM",
+                "docblock": "Says where the error should go."
             },
             {
-                "name": "facility",
-                "type": "int",
-                "default": "\\LOG_LOCAL0",
-                "docblock": "Either one of the names of the keys in $this->facilities, or a LOG_* facility constant"
-            },
-            {
-                "name": "logopts",
-                "type": "int",
-                "default": "\\LOG_PID",
-                "docblock": "Option flags for the openlog() call, defaults to LOG_PID"
+                "name": "expandNewlines",
+                "type": "bool",
+                "default": false,
+                "docblock": "If set to true, newlines in the message will be expanded to be take multiple log entries"
             }
         ]
     }

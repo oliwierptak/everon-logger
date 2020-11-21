@@ -10,30 +10,36 @@
             },
             {
                 "name": "pluginFactoryClass",
-                "type": "string"
+                "type": "string",
+                "docblock": "Defines custom plugin factory to be used to create a plugin"
             },
             {
                 "name": "logLevel",
                 "type": "string",
-                "default": "debug"
-            },
-            {
-                "name": "streamLocation",
-                "type": "string"
+                "default": "debug",
+                "docblock": "The minimum logging level at which this handler will be triggered"
             },
             {
                 "name": "shouldBubble",
                 "type": "bool",
-                "default": true
+                "default": true,
+                "docblock": "Whether the messages that are handled can bubble up the stack or not"
+            },
+            {
+                "name": "streamLocation",
+                "type": "string",
+                "docblock": "If a missing path can't be created, an UnexpectedValueException will be thrown on first write"
             },
             {
                 "name": "filePermission",
-                "type": "int"
+                "type": "int",
+                "docblock": "Optional file permissions (default (0644) are only for owner read/write)"
             },
             {
                 "name": "useLocking",
                 "type": "bool",
-                "default": false
+                "default": false,
+                "docblock": "Try to lock log file before doing any writes"
             }
         ]
     }

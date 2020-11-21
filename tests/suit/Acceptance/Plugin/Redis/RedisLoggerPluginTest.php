@@ -2,14 +2,17 @@
 
 declare(strict_types = 1);
 
-namespace EveronLoggerTests\Suit\Functional\Plugin\Redis;
+namespace EveronLoggerTests\Suit\Acceptance\Plugin\Redis;
 
 use Everon\Logger\Configurator\Plugin\RedisLoggerPluginConfigurator;
-use EveronLoggerTests\Stub\Plugin\Redis\RedisLoggerPluginStub;
+use Everon\Logger\Plugin\Redis\RedisLoggerPlugin;
 use EveronLoggerTests\Stub\Processor\MemoryUsageProcessorStub;
 use EveronLoggerTests\Suit\Functional\AbstractPluginLoggerTest;
 use Redis;
 
+/**
+ * @group acceptance
+ */
 class RedisLoggerPluginTest extends AbstractPluginLoggerTest
 {
     protected const REDIS_QUEUE = 'everon-redis-queue';
@@ -30,7 +33,7 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
         $this->getRedis()->flushAll();
 
         $redisPluginConfigurator = (new RedisLoggerPluginConfigurator())
-            ->setPluginClass(RedisLoggerPluginStub::class)
+            ->setPluginClass(RedisLoggerPlugin::class)
             ->setLogLevel('debug');
 
         $redisPluginConfigurator
@@ -65,15 +68,11 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
         $this->assertEmptyRedis();
     }
 
-    protected function assertEmptyRedis(): void
-    {
-        $this->assertTrue(true);
-    }
-
     public function test_should_not_log_when_level_too_low(): void
     {
-        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(RedisLoggerPluginStub::class);
-        $pluginConfigurator->setLogLevel('info');
+        $this->configurator
+            ->getPluginConfiguratorByPluginName(RedisLoggerPlugin::class)
+            ->setLogLevel('info');
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -84,8 +83,8 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
 
     public function test_should_log(): void
     {
-        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(RedisLoggerPluginStub::class);
-        $pluginConfigurator
+        $this->configurator
+            ->getPluginConfiguratorByPluginName(RedisLoggerPlugin::class)
             ->setLogLevel('info')
             ->setKey(static::REDIS_QUEUE);
 
@@ -100,8 +99,8 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
 
     public function test_should_log_context(): void
     {
-        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(RedisLoggerPluginStub::class);
-        $pluginConfigurator
+        $this->configurator
+            ->getPluginConfiguratorByPluginName(RedisLoggerPlugin::class)
             ->setLogLevel('info')
             ->setKey(static::REDIS_QUEUE);
 
@@ -114,10 +113,9 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
 
     public function test_should_log_context_and_extra(): void
     {
-        $this->configurator->addProcessorClass(MemoryUsageProcessorStub::class);
-
-        $pluginConfigurator = $this->configurator->getPluginConfiguratorByPluginName(RedisLoggerPluginStub::class);
-        $pluginConfigurator
+        $this->configurator
+            ->addProcessorClass(MemoryUsageProcessorStub::class)
+            ->getPluginConfiguratorByPluginName(RedisLoggerPlugin::class)
             ->setLogLevel('info')
             ->setKey(static::REDIS_QUEUE);
 
@@ -145,5 +143,12 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
         $line = array_pop($data);
 
         $this->assertEquals($expected, $line);
+    }
+
+    protected function assertEmptyRedis(): void
+    {
+        $data = $this->getRedis()->lRange(static::REDIS_QUEUE, 0, -1);
+
+        $this->assertEmpty($data);
     }
 }

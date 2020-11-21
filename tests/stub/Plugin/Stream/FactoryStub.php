@@ -7,12 +7,13 @@ namespace EveronLoggerTests\Stub\Plugin\Stream;
 use Everon\Logger\Configurator\AbstractPluginConfigurator;
 use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
 use Everon\Logger\Contract\Plugin\PluginFactoryInterface;
+use Everon\Logger\Plugin\Stream\StreamLoggerPlugin;
 
 class FactoryStub implements PluginFactoryInterface
 {
     public function create(AbstractPluginConfigurator $configurator): LoggerPluginInterface
     {
         /** @var \Everon\Logger\Configurator\Plugin\StreamLoggerPluginConfigurator $configurator */
-        return new StreamLoggerPluginStub($configurator);
+        return new StreamLoggerPlugin($configurator);
     }
 }

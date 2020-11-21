@@ -12,28 +12,29 @@
                 "name": "verifyPeer",
                 "type": "bool",
                 "default": true,
-                "dockblock": "Enable certificate validation of remote party"
+                "docblock": "Enable certificate validation of remote party"
             },
             {
                 "name": "allowSelfSigned",
                 "type": "bool",
                 "default": false,
-                "dockblock": "Allow self-signed certificates"
+                "docblock": "Allow self-signed certificates"
             },
             {
                 "name": "caFile",
                 "type": "string",
-                "dockblock": "Path to custom CA"
+                "docblock": "Path to custom CA"
             },
             {
                 "name": "ciphers",
                 "type": "string",
-                "dockblock": "List of ciphers the SSL layer may use. Formatted as specified in `ciphers(1)`"
+                "docblock": "List of ciphers the SSL layer may use. Formatted as specified in `ciphers(1)`"
             },
             {
                 "name": "useSsl",
                 "type": "bool",
-                "default": false
+                "default": false,
+                "docblock": "Whenever to use Gelf\\Transport\\SslOptions"
             }
         ]
     }

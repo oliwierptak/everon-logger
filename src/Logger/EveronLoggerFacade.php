@@ -4,14 +4,14 @@ declare(strict_types = 1);
 
 namespace Everon\Logger;
 
-use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\LoggerConfigurator;
 use Psr\Log\LoggerInterface;
 
 class EveronLoggerFacade implements EveronLoggerFacadeInterface
 {
     protected EveronLoggerFactory $factory;
 
-    public function buildLogger(LoggerPluginConfigurator $configurator): LoggerInterface
+    public function buildLogger(LoggerConfigurator $configurator): LoggerInterface
     {
         return $this->getFactory()
             ->createBuilderFromConfigurator($configurator)

@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Everon\Logger\Builder;
 
 use DateTimeZone;
-use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\LoggerConfigurator;
 use Everon\Logger\Exception\ProcessorBuildException;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
@@ -13,7 +13,7 @@ use Throwable;
 
 class FromConfiguratorBuilder
 {
-    protected LoggerPluginConfigurator $configurator;
+    protected LoggerConfigurator $configurator;
 
     protected PluginBuilder $pluginBuilder;
 
@@ -22,7 +22,7 @@ class FromConfiguratorBuilder
     protected ConfiguratorValidator $validator;
 
     public function __construct(
-        LoggerPluginConfigurator $configurator,
+        LoggerConfigurator $configurator,
         PluginBuilder $pluginBuilder,
         HandlerBuilder $handlerBuilder,
         ConfiguratorValidator $validator)

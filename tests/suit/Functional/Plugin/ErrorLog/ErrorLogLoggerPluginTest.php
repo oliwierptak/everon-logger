@@ -2,45 +2,50 @@
 
 declare(strict_types = 1);
 
-namespace EveronLoggerTests\Suit\Functional\Plugin\Syslog;
+namespace EveronLoggerTests\Suit\Functional\Plugin\ErrorLog;
 
-use Everon\Logger\Configurator\Plugin\SyslogLoggerPluginConfigurator;
-use Everon\Logger\Plugin\Syslog\SyslogLoggerPlugin;
+use Everon\Logger\Configurator\Plugin\ErrorLogLoggerPluginConfigurator;
+use Everon\Logger\Plugin\ErrorLog\ErrorLogLoggerPlugin;
 use EveronLoggerTests\Stub\Processor\MemoryUsageProcessorStub;
 use EveronLoggerTests\Suit\Configurator\TestLoggerConfigurator;
 use EveronLoggerTests\Suit\Functional\AbstractPluginLoggerTest;
-use function shell_exec;
 
-class SyslogLoggerPluginTest extends AbstractPluginLoggerTest
+class ErrorLogLoggerPluginTest extends AbstractPluginLoggerTest
 {
     protected function setUp(): void
     {
         parent::setUp();
 
-        $syslogPluginConfigurator = (new SyslogLoggerPluginConfigurator())
-            ->setPluginClass(SyslogLoggerPlugin::class)
-            ->setLogLevel('debug');
+        ini_set('error_log', $this->logFilename);
+
+        $syslogPluginConfigurator = (new ErrorLogLoggerPluginConfigurator())
+            ->setPluginClass(ErrorLogLoggerPlugin::class)
+            ->setLogLevel('debug')
+            ->setMessageType(\Monolog\Handler\ErrorLogHandler::OPERATING_SYSTEM)
+            ->setExpandNewlines(false);
 
         $this->configurator->addPluginConfigurator($syslogPluginConfigurator);
-
-        shell_exec('truncate -s 0 ' . $this->logFilename);
     }
 
-    public function test_should_not_log_without_ident(): void
+    public function test_should_not_log_without_message_type(): void
     {
+        $this->expectException(\Everon\Logger\Exception\HandlerBuildException::class);
+        $this->expectExceptionMessage('Could not build handler in plugin: "Everon\Logger\Plugin\ErrorLog\ErrorLogLoggerPlugin". Error: Required value of "messageType" has not been set');
+
+        $this->configurator
+            ->getPluginConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
+            ->setMessageType(null);
+
         $logger = $this->facade->buildLogger($this->configurator);
 
         $logger->debug('foo bar');
-
-        $this->assertEmptyLogFile();
     }
 
     public function test_should_not_log_when_level_too_low(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(SyslogLoggerPlugin::class)
-            ->setLogLevel('info')
-            ->setIdent('everon-logger-ident');
+            ->getPluginConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
+            ->setLogLevel('info');
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -52,9 +57,8 @@ class SyslogLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_log(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(SyslogLoggerPlugin::class)
-            ->setLogLevel('info')
-            ->setIdent('everon-logger-ident');
+            ->getPluginConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
+            ->setLogLevel('info');
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -72,9 +76,8 @@ class SyslogLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_log_context(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(SyslogLoggerPlugin::class)
-            ->setLogLevel('info')
-            ->setIdent('everon-logger-ident');
+            ->getPluginConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
+            ->setLogLevel('info');
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -90,9 +93,8 @@ class SyslogLoggerPluginTest extends AbstractPluginLoggerTest
     {
         $this->configurator
             ->addProcessorClass(MemoryUsageProcessorStub::class)
-            ->getPluginConfiguratorByPluginName(SyslogLoggerPlugin::class)
-            ->setLogLevel('info')
-            ->setIdent('everon-logger-ident');
+            ->getPluginConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
+            ->setLogLevel('info');
 
         $logger = $this->facade->buildLogger($this->configurator);
 

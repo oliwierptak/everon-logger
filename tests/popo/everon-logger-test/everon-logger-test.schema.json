@@ -1,0 +1,30 @@
+[
+    {
+        "name": "TestLoggerConfigurator",
+        "schema": [
+            {
+                "name": "message",
+                "type": "string"
+            },
+            {
+                "name": "level",
+                "type": "string"
+            },
+            {
+                "name": "context",
+                "type": "array",
+                "default": []
+            },
+            {
+                "name": "extra",
+                "type": "array",
+                "default": []
+            },
+            {
+                "name": "delimiter",
+                "type": "string",
+                "default": "] everon-logger."
+            }
+        ]
+    }
+]

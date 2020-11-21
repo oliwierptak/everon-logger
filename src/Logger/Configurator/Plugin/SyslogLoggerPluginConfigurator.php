@@ -23,9 +23,9 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
   'pluginClass' => \Everon\Logger\Plugin\Syslog\SyslogLoggerPlugin::class,
   'pluginFactoryClass' => NULL,
   'logLevel' => 'debug',
+  'shouldBubble' => true,
   'ident' => NULL,
   'facility' => \LOG_LOCAL0,
-  'shouldBubble' => true,
   'logopts' => \LOG_PID,
 );
 
@@ -33,9 +33,9 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
   'pluginClass' => \Everon\Logger\Plugin\Syslog\SyslogLoggerPlugin::class,
   'pluginFactoryClass' => NULL,
   'logLevel' => 'debug',
+  'shouldBubble' => true,
   'ident' => NULL,
   'facility' => \LOG_LOCAL0,
-  'shouldBubble' => true,
   'logopts' => \LOG_PID,
 );
 
@@ -43,9 +43,9 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
   'pluginClass' => 'string',
   'pluginFactoryClass' => 'string',
   'logLevel' => 'string',
+  'shouldBubble' => 'bool',
   'ident' => 'string',
   'facility' => 'int',
-  'shouldBubble' => 'bool',
   'logopts' => 'int',
 );
 
@@ -287,7 +287,7 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @return string|null
+     * @return string|null Defines custom plugin factory to be used to create a plugin
      */
     public function getPluginFactoryClass(): ?string
     {
@@ -295,7 +295,7 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @param string|null $pluginFactoryClass
+     * @param string|null $pluginFactoryClass Defines custom plugin factory to be used to create a plugin
      *
      * @return SyslogLoggerPluginConfigurator
      */
@@ -311,7 +311,7 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
      *
      * @throws \UnexpectedValueException
      *
-     * @return string
+     * @return string Defines custom plugin factory to be used to create a plugin
      */
     public function requirePluginFactoryClass(): string
     {
@@ -331,7 +331,7 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @return string|null
+     * @return string|null The minimum logging level at which this handler will be triggered
      */
     public function getLogLevel(): ?string
     {
@@ -339,7 +339,7 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @param string|null $logLevel
+     * @param string|null $logLevel The minimum logging level at which this handler will be triggered
      *
      * @return SyslogLoggerPluginConfigurator
      */
@@ -355,7 +355,7 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
      *
      * @throws \UnexpectedValueException
      *
-     * @return string
+     * @return string The minimum logging level at which this handler will be triggered
      */
     public function requireLogLevel(): string
     {
@@ -372,6 +372,50 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     public function hasLogLevel(): bool
     {
         return $this->updateMap['logLevel'] ?? false;
+    }
+
+    /**
+     * @return boolean|null Whether the messages that are handled can bubble up the stack or not
+     */
+    public function shouldBubble(): ?bool
+    {
+        return $this->popoGetValue('shouldBubble');
+    }
+
+    /**
+     * @param boolean|null $shouldBubble Whether the messages that are handled can bubble up the stack or not
+     *
+     * @return SyslogLoggerPluginConfigurator
+     */
+    public function setShouldBubble(?bool $shouldBubble): SyslogLoggerPluginConfigurator
+    {
+        $this->popoSetValue('shouldBubble', $shouldBubble);
+
+        return $this;
+    }
+
+    /**
+     * Throws exception if value is null.
+     *
+     * @throws \UnexpectedValueException
+     *
+     * @return boolean Whether the messages that are handled can bubble up the stack or not
+     */
+    public function requireShouldBubble(): bool
+    {
+        $this->assertPropertyValue('shouldBubble');
+
+        return (bool)$this->popoGetValue('shouldBubble');
+    }
+
+    /**
+     * Returns true if value was set to any value, ignores defaults.
+     *
+     * @return bool
+     */
+    public function hasShouldBubble(): bool
+    {
+        return $this->updateMap['shouldBubble'] ?? false;
     }
 
     /**
@@ -419,7 +463,7 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @return integer|null
+     * @return integer|null Either one of the names of the keys in $this->facilities, or a LOG_* facility constant
      */
     public function getFacility(): ?int
     {
@@ -427,7 +471,7 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @param integer|null $facility
+     * @param integer|null $facility Either one of the names of the keys in $this->facilities, or a LOG_* facility constant
      *
      * @return SyslogLoggerPluginConfigurator
      */
@@ -443,7 +487,7 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
      *
      * @throws \UnexpectedValueException
      *
-     * @return integer
+     * @return integer Either one of the names of the keys in $this->facilities, or a LOG_* facility constant
      */
     public function requireFacility(): int
     {
@@ -463,51 +507,7 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @return boolean|null
-     */
-    public function shouldBubble(): ?bool
-    {
-        return $this->popoGetValue('shouldBubble');
-    }
-
-    /**
-     * @param boolean|null $shouldBubble
-     *
-     * @return SyslogLoggerPluginConfigurator
-     */
-    public function setShouldBubble(?bool $shouldBubble): SyslogLoggerPluginConfigurator
-    {
-        $this->popoSetValue('shouldBubble', $shouldBubble);
-
-        return $this;
-    }
-
-    /**
-     * Throws exception if value is null.
-     *
-     * @throws \UnexpectedValueException
-     *
-     * @return boolean
-     */
-    public function requireShouldBubble(): bool
-    {
-        $this->assertPropertyValue('shouldBubble');
-
-        return (bool)$this->popoGetValue('shouldBubble');
-    }
-
-    /**
-     * Returns true if value was set to any value, ignores defaults.
-     *
-     * @return bool
-     */
-    public function hasShouldBubble(): bool
-    {
-        return $this->updateMap['shouldBubble'] ?? false;
-    }
-
-    /**
-     * @return integer|null
+     * @return integer|null Option flags for the openlog() call, defaults to LOG_PID
      */
     public function getLogopts(): ?int
     {
@@ -515,7 +515,7 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @param integer|null $logopts
+     * @param integer|null $logopts Option flags for the openlog() call, defaults to LOG_PID
      *
      * @return SyslogLoggerPluginConfigurator
      */
@@ -531,7 +531,7 @@ class SyslogLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
      *
      * @throws \UnexpectedValueException
      *
-     * @return integer
+     * @return integer Option flags for the openlog() call, defaults to LOG_PID
      */
     public function requireLogopts(): int
     {

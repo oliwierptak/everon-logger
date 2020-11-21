@@ -8,11 +8,11 @@ use Everon\Logger\Builder\HandlerBuilder;
 use Everon\Logger\Builder\PluginBuilder;
 use Everon\Logger\Builder\ConfiguratorValidator;
 use Everon\Logger\Builder\FromConfiguratorBuilder;
-use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\LoggerConfigurator;
 
 class EveronLoggerFactory
 {
-    public function createBuilderFromConfigurator(LoggerPluginConfigurator $configurator): FromConfiguratorBuilder
+    public function createBuilderFromConfigurator(LoggerConfigurator $configurator): FromConfiguratorBuilder
     {
         return new FromConfiguratorBuilder(
             $configurator,

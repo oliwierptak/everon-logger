@@ -4,20 +4,20 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Builder;
 
-use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\LoggerConfigurator;
 use Everon\Logger\Exception\ConfiguratorValidationException;
 use InvalidArgumentException;
 
 class ConfiguratorValidator
 {
     /**
-     * @param \Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator $configurator
+     * @param \Everon\Logger\Configurator\Plugin\LoggerConfigurator $configurator
      *
      * @return void
      *
      * @throws \Everon\Logger\Exception\ConfiguratorValidationException
      */
-    public function validate(LoggerPluginConfigurator $configurator): void
+    public function validate(LoggerConfigurator $configurator): void
     {
         try {
             $configurator->requireName();

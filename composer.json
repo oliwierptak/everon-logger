@@ -33,7 +33,10 @@
         "tests": [
             "vendor/bin/phpunit --testdox --no-coverage"
         ],
-        "tests-coverage": "@tests"
+        "tests-ac": [
+            "vendor/bin/phpunit --testdox --no-coverage --group-acceptance tests/suit/Acceptance/"
+        ],
+        "tests-coverage": "vendor/bin/phpunit --testdox --group-acceptance,default"
     },
     "scripts-descriptions": {
         "popo": "Generate POPO files",

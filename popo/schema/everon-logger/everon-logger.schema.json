@@ -1,6 +1,6 @@
 [
     {
-        "name": "LoggerPluginConfigurator",
+        "name": "LoggerConfigurator",
         "extends": "\\Everon\\Logger\\Configurator\\AbstractConfigurator",
         "schema": [
             {

@@ -6,9 +6,9 @@ PSR-3 compliant logger, with pluggable architecture and simple configuration.
 
 
  - Pluggable architecture, contracts, semantically versioned
- - One unified plugin schema (JSON)
- - Simple value object based configuration (POPO) 
- - Logger handlers and processors are created and configured via plugins
+ - One unified plugin schema
+ - Simple value object based configuration 
+ - Logger handlers and processors created and configured via plugins
  - Plugins can be grouped into sets to easily create customized and very specific loggers instances
  - Based on Monolog 
  
@@ -22,7 +22,7 @@ $streamPluginConfigurator = (new StreamLoggerPluginConfigurator)
     ->setLogLevel('info')
     ->setStreamLocation('/tmp/example.log');
 
-$configurator = (new LoggerPluginConfigurator)
+$configurator = (new LoggerConfigurator)
     ->addPluginConfigurator($streamPluginConfigurator);
 
 $logger = (new EveronLoggerFacade)->buildLogger($configurator);
@@ -40,10 +40,10 @@ Content of `/tmp/example.log`.
 The configuration is done by simple value objects called `configurators`.
 Each plugin configurator has only plugin specific settings.
 
-For example: setup syslog and file logging.
+For example, setup syslog and file logging.
 
 ```php
-$configurator = (new LoggerPluginConfigurator)
+$configurator = (new LoggerConfigurator)
     ->addPluginConfigurator(
         (new StreamLoggerPluginConfigurator)
             ->setLogLevel('debug')
@@ -65,16 +65,16 @@ in which case the custom formatter provided by the plugin will be used.
 
 ### Handler / Plugin setup
 
-To setup a plugin add it to the collection in `LoggerPluginConfigurator` with `addPluginConfigurator()`.
+To setup a plugin add it to the collection in `LoggerConfigurator` with `addPluginConfigurator()`.
   
-For example: setup logging to a redis server and enable memory usage processor.
+For example, setup logging to a redis server and enable memory usage processor.
 
 ```php
-$configurator = (new LoggerPluginConfigurator)
+$configurator = (new LoggerConfigurator)
     ->setName('everon-logger-example')
     ->addProcessorClass(MemoryUsageProcessor::class)
     ->addPluginConfigurator(
-        (new RedisLoggerPluginConfigurator)
+        (new RedisLoggerConfigurator)
             ->setLogLevel('info')
             ->setKey('redis-queue-test')
             ->getRedisConnection()
@@ -97,7 +97,7 @@ Content of `redis-queue-test` in redis.
 Add required processor classes to logger configurator with `addProcessorClass()`.
 
 ```php
-$configurator = (new LoggerPluginConfigurator)
+$configurator = (new LoggerConfigurator)
     ->addProcessorClass(MemoryUsageProcessor::class)
     ->addProcessorClass(HostnameProcessor::class)
     ->addPluginConfigurator(

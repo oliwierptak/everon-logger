@@ -10,17 +10,20 @@
             },
             {
                 "name": "pluginFactoryClass",
-                "type": "string"
+                "type": "string",
+                "docblock": "Defines custom plugin factory to be used to create a plugin"
             },
             {
                 "name": "logLevel",
                 "type": "string",
-                "default": "debug"
+                "default": "debug",
+                "docblock": "The minimum logging level at which this handler will be triggered"
             },
             {
                 "name": "shouldBubble",
                 "type": "bool",
-                "default": true
+                "default": true,
+                "docblock": "Whether the messages that are handled can bubble up the stack or not"
             },
             {
                 "name": "key",
@@ -35,7 +38,8 @@
             },
             {
                 "name": "redisConnection",
-                "type": "RedisConnectionConfigurator"
+                "type": "RedisConnectionConfigurator",
+                "docblock": "Redis connection related settings"
             }
         ]
     },

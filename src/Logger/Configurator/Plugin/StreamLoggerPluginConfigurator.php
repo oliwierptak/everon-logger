@@ -23,8 +23,8 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
   'pluginClass' => \Everon\Logger\Plugin\Stream\StreamLoggerPlugin::class,
   'pluginFactoryClass' => NULL,
   'logLevel' => 'debug',
-  'streamLocation' => NULL,
   'shouldBubble' => true,
+  'streamLocation' => NULL,
   'filePermission' => NULL,
   'useLocking' => false,
 );
@@ -33,8 +33,8 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
   'pluginClass' => \Everon\Logger\Plugin\Stream\StreamLoggerPlugin::class,
   'pluginFactoryClass' => NULL,
   'logLevel' => 'debug',
-  'streamLocation' => NULL,
   'shouldBubble' => true,
+  'streamLocation' => NULL,
   'filePermission' => NULL,
   'useLocking' => false,
 );
@@ -43,8 +43,8 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
   'pluginClass' => 'string',
   'pluginFactoryClass' => 'string',
   'logLevel' => 'string',
-  'streamLocation' => 'string',
   'shouldBubble' => 'bool',
+  'streamLocation' => 'string',
   'filePermission' => 'int',
   'useLocking' => 'bool',
 );
@@ -287,7 +287,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @return string|null
+     * @return string|null Defines custom plugin factory to be used to create a plugin
      */
     public function getPluginFactoryClass(): ?string
     {
@@ -295,7 +295,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @param string|null $pluginFactoryClass
+     * @param string|null $pluginFactoryClass Defines custom plugin factory to be used to create a plugin
      *
      * @return StreamLoggerPluginConfigurator
      */
@@ -311,7 +311,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
      *
      * @throws \UnexpectedValueException
      *
-     * @return string
+     * @return string Defines custom plugin factory to be used to create a plugin
      */
     public function requirePluginFactoryClass(): string
     {
@@ -331,7 +331,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @return string|null
+     * @return string|null The minimum logging level at which this handler will be triggered
      */
     public function getLogLevel(): ?string
     {
@@ -339,7 +339,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @param string|null $logLevel
+     * @param string|null $logLevel The minimum logging level at which this handler will be triggered
      *
      * @return StreamLoggerPluginConfigurator
      */
@@ -355,7 +355,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
      *
      * @throws \UnexpectedValueException
      *
-     * @return string
+     * @return string The minimum logging level at which this handler will be triggered
      */
     public function requireLogLevel(): string
     {
@@ -375,51 +375,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @return string|null
-     */
-    public function getStreamLocation(): ?string
-    {
-        return $this->popoGetValue('streamLocation');
-    }
-
-    /**
-     * @param string|null $streamLocation
-     *
-     * @return StreamLoggerPluginConfigurator
-     */
-    public function setStreamLocation(?string $streamLocation): StreamLoggerPluginConfigurator
-    {
-        $this->popoSetValue('streamLocation', $streamLocation);
-
-        return $this;
-    }
-
-    /**
-     * Throws exception if value is null.
-     *
-     * @throws \UnexpectedValueException
-     *
-     * @return string
-     */
-    public function requireStreamLocation(): string
-    {
-        $this->assertPropertyValue('streamLocation');
-
-        return (string)$this->popoGetValue('streamLocation');
-    }
-
-    /**
-     * Returns true if value was set to any value, ignores defaults.
-     *
-     * @return bool
-     */
-    public function hasStreamLocation(): bool
-    {
-        return $this->updateMap['streamLocation'] ?? false;
-    }
-
-    /**
-     * @return boolean|null
+     * @return boolean|null Whether the messages that are handled can bubble up the stack or not
      */
     public function shouldBubble(): ?bool
     {
@@ -427,7 +383,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @param boolean|null $shouldBubble
+     * @param boolean|null $shouldBubble Whether the messages that are handled can bubble up the stack or not
      *
      * @return StreamLoggerPluginConfigurator
      */
@@ -443,7 +399,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
      *
      * @throws \UnexpectedValueException
      *
-     * @return boolean
+     * @return boolean Whether the messages that are handled can bubble up the stack or not
      */
     public function requireShouldBubble(): bool
     {
@@ -463,7 +419,51 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @return integer|null
+     * @return string|null If a missing path can't be created, an UnexpectedValueException will be thrown on first write
+     */
+    public function getStreamLocation(): ?string
+    {
+        return $this->popoGetValue('streamLocation');
+    }
+
+    /**
+     * @param string|null $streamLocation If a missing path can't be created, an UnexpectedValueException will be thrown on first write
+     *
+     * @return StreamLoggerPluginConfigurator
+     */
+    public function setStreamLocation(?string $streamLocation): StreamLoggerPluginConfigurator
+    {
+        $this->popoSetValue('streamLocation', $streamLocation);
+
+        return $this;
+    }
+
+    /**
+     * Throws exception if value is null.
+     *
+     * @throws \UnexpectedValueException
+     *
+     * @return string If a missing path can't be created, an UnexpectedValueException will be thrown on first write
+     */
+    public function requireStreamLocation(): string
+    {
+        $this->assertPropertyValue('streamLocation');
+
+        return (string)$this->popoGetValue('streamLocation');
+    }
+
+    /**
+     * Returns true if value was set to any value, ignores defaults.
+     *
+     * @return bool
+     */
+    public function hasStreamLocation(): bool
+    {
+        return $this->updateMap['streamLocation'] ?? false;
+    }
+
+    /**
+     * @return integer|null Optional file permissions (default (0644) are only for owner read/write)
      */
     public function getFilePermission(): ?int
     {
@@ -471,7 +471,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @param integer|null $filePermission
+     * @param integer|null $filePermission Optional file permissions (default (0644) are only for owner read/write)
      *
      * @return StreamLoggerPluginConfigurator
      */
@@ -487,7 +487,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
      *
      * @throws \UnexpectedValueException
      *
-     * @return integer
+     * @return integer Optional file permissions (default (0644) are only for owner read/write)
      */
     public function requireFilePermission(): int
     {
@@ -507,7 +507,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @return boolean|null
+     * @return boolean|null Try to lock log file before doing any writes
      */
     public function useLocking(): ?bool
     {
@@ -515,7 +515,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
     }
 
     /**
-     * @param boolean|null $useLocking
+     * @param boolean|null $useLocking Try to lock log file before doing any writes
      *
      * @return StreamLoggerPluginConfigurator
      */
@@ -531,7 +531,7 @@ class StreamLoggerPluginConfigurator extends \Everon\Logger\Configurator\Abstrac
      *
      * @throws \UnexpectedValueException
      *
-     * @return boolean
+     * @return boolean Try to lock log file before doing any writes
      */
     public function requireUseLocking(): bool
     {

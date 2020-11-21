@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace EveronLoggerTests\Suit\Acceptance\Plugin;
+namespace EveronLoggerTests\Suit\Acceptance\Plugin\Gelf;
 
 use Everon\Logger\Configurator\Plugin\GelfLoggerPluginConfigurator;
-use Everon\Logger\Configurator\Plugin\LoggerPluginConfigurator;
+use Everon\Logger\Configurator\Plugin\LoggerConfigurator;
 use Everon\Logger\EveronLoggerFacade;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -30,7 +30,7 @@ class GelfTest extends TestCase
             ->setHost($this->graylogHost)
             ->setPort(12202);
 
-        $configurator = (new LoggerPluginConfigurator())
+        $configurator = (new LoggerConfigurator())
             ->addPluginConfigurator($gelfPluginConfigurator);
 
         $logger = (new EveronLoggerFacade())->buildLogger($configurator);
@@ -54,7 +54,7 @@ class GelfTest extends TestCase
             ->getSslOptions()
             ->setUseSsl(true);
 
-        $configurator = (new LoggerPluginConfigurator())
+        $configurator = (new LoggerConfigurator())
             ->addPluginConfigurator($gelfPluginConfigurator);
 
         $logger = (new EveronLoggerFacade())->buildLogger($configurator);
@@ -70,7 +70,7 @@ class GelfTest extends TestCase
             ->setLogLevel('info')
             ->setHost($this->graylogHost);
 
-        $configurator = (new LoggerPluginConfigurator())
+        $configurator = (new LoggerConfigurator())
             ->addPluginConfigurator($gelfPluginConfigurator);
 
         $logger = (new EveronLoggerFacade())->buildLogger($configurator);
@@ -87,7 +87,7 @@ class GelfTest extends TestCase
             ->setHost($this->graylogHost)
             ->setPort(5555);
 
-        $configurator = (new LoggerPluginConfigurator())
+        $configurator = (new LoggerConfigurator())
             ->addPluginConfigurator($gelfPluginConfigurator);
 
 

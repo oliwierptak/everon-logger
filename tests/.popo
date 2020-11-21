@@ -1,0 +1,4 @@
+[everon-logger-test]
+schema = tests/popo/
+output = tests/suit/Configurator/
+namespace = EveronLoggerTests\Suit\Configurator

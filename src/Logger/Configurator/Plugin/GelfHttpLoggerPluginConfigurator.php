@@ -22,9 +22,9 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     protected array $data = array (
   'pluginClass' => \Everon\Logger\Plugin\GelfHttp\GelfHttpLoggerPlugin::class,
   'pluginFactoryClass' => NULL,
-  'ignoreTransportErrors' => true,
   'logLevel' => 'debug',
   'shouldBubble' => true,
+  'ignoreTransportErrors' => true,
   'host' => \Gelf\Transport\HttpTransport::DEFAULT_HOST,
   'port' => \Gelf\Transport\HttpTransport::DEFAULT_PORT,
   'path' => \Gelf\Transport\HttpTransport::DEFAULT_PATH,
@@ -34,9 +34,9 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     protected array $default = array (
   'pluginClass' => \Everon\Logger\Plugin\GelfHttp\GelfHttpLoggerPlugin::class,
   'pluginFactoryClass' => NULL,
-  'ignoreTransportErrors' => true,
   'logLevel' => 'debug',
   'shouldBubble' => true,
+  'ignoreTransportErrors' => true,
   'host' => \Gelf\Transport\HttpTransport::DEFAULT_HOST,
   'port' => \Gelf\Transport\HttpTransport::DEFAULT_PORT,
   'path' => \Gelf\Transport\HttpTransport::DEFAULT_PATH,
@@ -46,9 +46,9 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     protected array $propertyMapping = array (
   'pluginClass' => 'string',
   'pluginFactoryClass' => 'string',
-  'ignoreTransportErrors' => 'bool',
   'logLevel' => 'string',
   'shouldBubble' => 'bool',
+  'ignoreTransportErrors' => 'bool',
   'host' => 'string',
   'port' => 'int',
   'path' => 'string',
@@ -293,7 +293,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @return string|null
+     * @return string|null Defines custom plugin factory to be used to create a plugin
      */
     public function getPluginFactoryClass(): ?string
     {
@@ -301,7 +301,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @param string|null $pluginFactoryClass
+     * @param string|null $pluginFactoryClass Defines custom plugin factory to be used to create a plugin
      *
      * @return GelfHttpLoggerPluginConfigurator
      */
@@ -317,7 +317,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
      *
      * @throws \UnexpectedValueException
      *
-     * @return string
+     * @return string Defines custom plugin factory to be used to create a plugin
      */
     public function requirePluginFactoryClass(): string
     {
@@ -337,51 +337,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @return boolean|null
-     */
-    public function ignoreTransportErrors(): ?bool
-    {
-        return $this->popoGetValue('ignoreTransportErrors');
-    }
-
-    /**
-     * @param boolean|null $ignoreTransportErrors
-     *
-     * @return GelfHttpLoggerPluginConfigurator
-     */
-    public function setIgnoreTransportErrors(?bool $ignoreTransportErrors): GelfHttpLoggerPluginConfigurator
-    {
-        $this->popoSetValue('ignoreTransportErrors', $ignoreTransportErrors);
-
-        return $this;
-    }
-
-    /**
-     * Throws exception if value is null.
-     *
-     * @throws \UnexpectedValueException
-     *
-     * @return boolean
-     */
-    public function requireIgnoreTransportErrors(): bool
-    {
-        $this->assertPropertyValue('ignoreTransportErrors');
-
-        return (bool)$this->popoGetValue('ignoreTransportErrors');
-    }
-
-    /**
-     * Returns true if value was set to any value, ignores defaults.
-     *
-     * @return bool
-     */
-    public function hasIgnoreTransportErrors(): bool
-    {
-        return $this->updateMap['ignoreTransportErrors'] ?? false;
-    }
-
-    /**
-     * @return string|null
+     * @return string|null The minimum logging level at which this handler will be triggered
      */
     public function getLogLevel(): ?string
     {
@@ -389,7 +345,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @param string|null $logLevel
+     * @param string|null $logLevel The minimum logging level at which this handler will be triggered
      *
      * @return GelfHttpLoggerPluginConfigurator
      */
@@ -405,7 +361,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
      *
      * @throws \UnexpectedValueException
      *
-     * @return string
+     * @return string The minimum logging level at which this handler will be triggered
      */
     public function requireLogLevel(): string
     {
@@ -425,7 +381,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @return boolean|null
+     * @return boolean|null Whether the messages that are handled can bubble up the stack or not
      */
     public function shouldBubble(): ?bool
     {
@@ -433,7 +389,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @param boolean|null $shouldBubble
+     * @param boolean|null $shouldBubble Whether the messages that are handled can bubble up the stack or not
      *
      * @return GelfHttpLoggerPluginConfigurator
      */
@@ -449,7 +405,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
      *
      * @throws \UnexpectedValueException
      *
-     * @return boolean
+     * @return boolean Whether the messages that are handled can bubble up the stack or not
      */
     public function requireShouldBubble(): bool
     {
@@ -469,7 +425,51 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @return string|null
+     * @return boolean|null A wrapper for any AbstractTransport to ignore any kind of errors
+     */
+    public function ignoreTransportErrors(): ?bool
+    {
+        return $this->popoGetValue('ignoreTransportErrors');
+    }
+
+    /**
+     * @param boolean|null $ignoreTransportErrors A wrapper for any AbstractTransport to ignore any kind of errors
+     *
+     * @return GelfHttpLoggerPluginConfigurator
+     */
+    public function setIgnoreTransportErrors(?bool $ignoreTransportErrors): GelfHttpLoggerPluginConfigurator
+    {
+        $this->popoSetValue('ignoreTransportErrors', $ignoreTransportErrors);
+
+        return $this;
+    }
+
+    /**
+     * Throws exception if value is null.
+     *
+     * @throws \UnexpectedValueException
+     *
+     * @return boolean A wrapper for any AbstractTransport to ignore any kind of errors
+     */
+    public function requireIgnoreTransportErrors(): bool
+    {
+        $this->assertPropertyValue('ignoreTransportErrors');
+
+        return (bool)$this->popoGetValue('ignoreTransportErrors');
+    }
+
+    /**
+     * Returns true if value was set to any value, ignores defaults.
+     *
+     * @return bool
+     */
+    public function hasIgnoreTransportErrors(): bool
+    {
+        return $this->updateMap['ignoreTransportErrors'] ?? false;
+    }
+
+    /**
+     * @return string|null when NULL or empty default-host is used
      */
     public function getHost(): ?string
     {
@@ -477,7 +477,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @param string|null $host
+     * @param string|null $host when NULL or empty default-host is used
      *
      * @return GelfHttpLoggerPluginConfigurator
      */
@@ -493,7 +493,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
      *
      * @throws \UnexpectedValueException
      *
-     * @return string
+     * @return string when NULL or empty default-host is used
      */
     public function requireHost(): string
     {
@@ -513,7 +513,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @return integer|null
+     * @return integer|null when NULL or empty default-port is used
      */
     public function getPort(): ?int
     {
@@ -521,7 +521,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @param integer|null $port
+     * @param integer|null $port when NULL or empty default-port is used
      *
      * @return GelfHttpLoggerPluginConfigurator
      */
@@ -537,7 +537,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
      *
      * @throws \UnexpectedValueException
      *
-     * @return integer
+     * @return integer when NULL or empty default-port is used
      */
     public function requirePort(): int
     {
@@ -557,7 +557,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @return string|null
+     * @return string|null when NULL or empty default-path is used
      */
     public function getPath(): ?string
     {
@@ -565,7 +565,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @param string|null $path
+     * @param string|null $path when NULL or empty default-path is used
      *
      * @return GelfHttpLoggerPluginConfigurator
      */
@@ -581,7 +581,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
      *
      * @throws \UnexpectedValueException
      *
-     * @return string
+     * @return string when NULL or empty default-path is used
      */
     public function requirePath(): string
     {
@@ -601,7 +601,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @return GelfLoggerPluginSslOptions|null
+     * @return GelfLoggerPluginSslOptions|null when useSsl is false, the SSL is not used
      */
     public function getSslOptions(): ?GelfLoggerPluginSslOptions
     {
@@ -609,7 +609,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
     }
 
     /**
-     * @param GelfLoggerPluginSslOptions|null $sslOptions
+     * @param GelfLoggerPluginSslOptions|null $sslOptions when useSsl is false, the SSL is not used
      *
      * @return GelfHttpLoggerPluginConfigurator
      */
@@ -625,7 +625,7 @@ class GelfHttpLoggerPluginConfigurator extends \Everon\Logger\Plugin\Gelf\Abstra
      *
      * @throws \UnexpectedValueException
      *
-     * @return GelfLoggerPluginSslOptions
+     * @return GelfLoggerPluginSslOptions when useSsl is false, the SSL is not used
      */
     public function requireSslOptions(): GelfLoggerPluginSslOptions
     {
