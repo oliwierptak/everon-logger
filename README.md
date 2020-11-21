@@ -63,7 +63,7 @@ Besides `LoggerPluginInterface` a plugin can also implement `PluginFormatterInte
 in which case the custom formatter provided by the plugin will be used.
 
 
-### Handler / Plugin setup
+### Plugin setup
 
 To setup a plugin add it to the collection in `LoggerConfigurator` with `addPluginConfigurator()`.
   
