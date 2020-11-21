@@ -51,8 +51,7 @@ $configurator = (new LoggerConfigurator)
     )->addPluginConfigurator(
         (new SyslogLoggerPluginConfigurator)
             ->setLogLevel('info')
-            ->setIdent('everon-logger-ident')
-    );
+            ->setIdent('everon-logger-ident'));
 ```  
 
 ## Plugins
@@ -79,8 +78,7 @@ $configurator = (new LoggerConfigurator)
             ->setKey('redis-queue-test')
             ->getRedisConnection()
                 ->setHost('redis.host')
-                ->setTimeout(10)
-    );
+                ->setTimeout(10));
 
 $logger = (new EveronLoggerFacade)->buildLogger($configurator);
 
@@ -100,6 +98,7 @@ Add required processor classes to logger configurator with `addProcessorClass()`
 $configurator = (new LoggerConfigurator)
     ->addProcessorClass(MemoryUsageProcessor::class)
     ->addProcessorClass(HostnameProcessor::class)
+    ->addProcessorClass(...)
     ->addPluginConfigurator(
     ...
 ```
