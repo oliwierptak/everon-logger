@@ -37,7 +37,7 @@ Content of `/tmp/example.log`.
   
 ## Configuration
 
-The configuration is done by simple value objects called `configurators`.
+The configuration is done by [simple value objects](https://github.com/oliwierptak/popo/) called `configurators`.
 Each plugin configurator has only plugin specific settings.
 
 For example, setup syslog and file logging.
