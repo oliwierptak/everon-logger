@@ -31,7 +31,7 @@ abstract class AbstractGelfLoggerPlugin implements LoggerPluginInterface
 
         return new GelfHandler(
             $publisher,
-            $this->configurator->getLogLevel(),
+            $this->configurator->requireLogLevel(),
             $this->configurator->shouldBubble()
         );
     }

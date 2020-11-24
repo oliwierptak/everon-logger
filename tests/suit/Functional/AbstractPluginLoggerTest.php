@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace EveronLoggerTests\Suit\Functional;
 
 use Everon\Logger\Configurator\Plugin\LoggerConfigurator;
+use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
 use Everon\Logger\EveronLoggerFacade;
 use EveronLoggerTests\Suit\Configurator\TestLoggerConfigurator;
 use PHPUnit\Framework\TestCase;
@@ -13,7 +14,7 @@ abstract class AbstractPluginLoggerTest extends TestCase
 {
     protected string $logFilename = '/tmp/everon-logger-plugin-logfile.log';
 
-    protected LoggerConfigurator $configurator;
+    protected LoggerConfiguratorInterface $configurator;
 
     protected EveronLoggerFacade $facade;
 

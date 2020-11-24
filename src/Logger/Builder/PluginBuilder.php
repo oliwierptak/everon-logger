@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Builder;
 
-use Everon\Logger\Configurator\AbstractConfigurator;
+use Everon\Logger\Contract\Configurator\PluginConfiguratorInterface;
 use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
 use Everon\Logger\Exception\PluginBuildException;
 use Throwable;
@@ -12,20 +12,20 @@ use Throwable;
 class PluginBuilder
 {
     /**
-     * @param \Everon\Logger\Configurator\AbstractConfigurator $pluginConfigurator
+     * @param \Everon\Logger\Contract\Configurator\PluginConfiguratorInterface $pluginConfigurator
      *
      * @return \Everon\Logger\Contract\Plugin\LoggerPluginInterface
      * @throws \Everon\Logger\Exception\PluginBuildException
      */
-    public function buildPlugin(AbstractConfigurator $pluginConfigurator): LoggerPluginInterface
+    public function buildPlugin(PluginConfiguratorInterface $pluginConfigurator): LoggerPluginInterface
     {
         try {
             $pluginFactoryClass = $pluginConfigurator->getPluginFactoryClass();
-            if ($pluginFactoryClass !== null && class_exists($pluginFactoryClass)) {
+            if ($pluginFactoryClass !== null) {
                 return (new $pluginFactoryClass())->create($pluginConfigurator);
             }
 
-            $pluginClassName = $pluginConfigurator->getPluginClass();
+            $pluginClassName = $pluginConfigurator->requirePluginClass();
 
             return new $pluginClassName($pluginConfigurator);
         }

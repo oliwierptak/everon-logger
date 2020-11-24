@@ -33,7 +33,7 @@ class ErrorLogLoggerPluginTest extends AbstractPluginLoggerTest
         $this->expectExceptionMessage('Could not build handler in plugin: "Everon\Logger\Plugin\ErrorLog\ErrorLogLoggerPlugin". Error: Required value of "messageType" has not been set');
 
         $this->configurator
-            ->getPluginConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
+            ->getConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
             ->setMessageType(null);
 
         $logger = $this->facade->buildLogger($this->configurator);
@@ -44,7 +44,7 @@ class ErrorLogLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_not_log_when_level_too_low(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
+            ->getConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
             ->setLogLevel('info');
 
         $logger = $this->facade->buildLogger($this->configurator);
@@ -57,7 +57,7 @@ class ErrorLogLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_log(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
+            ->getConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
             ->setLogLevel('info');
 
         $logger = $this->facade->buildLogger($this->configurator);
@@ -76,7 +76,7 @@ class ErrorLogLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_log_context(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
+            ->getConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
             ->setLogLevel('info');
 
         $logger = $this->facade->buildLogger($this->configurator);
@@ -93,7 +93,7 @@ class ErrorLogLoggerPluginTest extends AbstractPluginLoggerTest
     {
         $this->configurator
             ->addProcessorClass(MemoryUsageProcessorStub::class)
-            ->getPluginConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
+            ->getConfiguratorByPluginName(ErrorLogLoggerPlugin::class)
             ->setLogLevel('info');
 
         $logger = $this->facade->buildLogger($this->configurator);

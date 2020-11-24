@@ -38,7 +38,7 @@ class SyslogLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_not_log_when_level_too_low(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(SyslogLoggerPlugin::class)
+            ->getConfiguratorByPluginName(SyslogLoggerPlugin::class)
             ->setLogLevel('info')
             ->setIdent('everon-logger-ident');
 
@@ -52,7 +52,7 @@ class SyslogLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_log(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(SyslogLoggerPlugin::class)
+            ->getConfiguratorByPluginName(SyslogLoggerPlugin::class)
             ->setLogLevel('info')
             ->setIdent('everon-logger-ident');
 
@@ -72,7 +72,7 @@ class SyslogLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_log_context(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(SyslogLoggerPlugin::class)
+            ->getConfiguratorByPluginName(SyslogLoggerPlugin::class)
             ->setLogLevel('info')
             ->setIdent('everon-logger-ident');
 
@@ -90,7 +90,7 @@ class SyslogLoggerPluginTest extends AbstractPluginLoggerTest
     {
         $this->configurator
             ->addProcessorClass(MemoryUsageProcessorStub::class)
-            ->getPluginConfiguratorByPluginName(SyslogLoggerPlugin::class)
+            ->getConfiguratorByPluginName(SyslogLoggerPlugin::class)
             ->setLogLevel('info')
             ->setIdent('everon-logger-ident');
 

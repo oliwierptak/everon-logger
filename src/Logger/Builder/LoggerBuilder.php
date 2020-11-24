@@ -5,15 +5,15 @@ declare(strict_types = 1);
 namespace Everon\Logger\Builder;
 
 use DateTimeZone;
-use Everon\Logger\Configurator\Plugin\LoggerConfigurator;
+use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
 use Everon\Logger\Exception\ProcessorBuildException;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
-class FromConfiguratorBuilder
+class LoggerBuilder
 {
-    protected LoggerConfigurator $configurator;
+    protected LoggerConfiguratorInterface $configurator;
 
     protected PluginBuilder $pluginBuilder;
 
@@ -22,7 +22,7 @@ class FromConfiguratorBuilder
     protected ConfiguratorValidator $validator;
 
     public function __construct(
-        LoggerConfigurator $configurator,
+        LoggerConfiguratorInterface $configurator,
         PluginBuilder $pluginBuilder,
         HandlerBuilder $handlerBuilder,
         ConfiguratorValidator $validator)
@@ -48,10 +48,10 @@ class FromConfiguratorBuilder
         $processors = $this->buildProcessors();
 
         return new Logger(
-            $this->configurator->getName(),
+            $this->configurator->requireName(),
             $handlers,
             $processors,
-            new DateTimeZone($this->configurator->getTimezone())
+            new DateTimeZone($this->configurator->requireTimezone())
         );
     }
 

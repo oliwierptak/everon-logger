@@ -1,7 +1,7 @@
 [
     {
         "name": "LoggerConfigurator",
-        "extends": "\\Everon\\Logger\\Configurator\\AbstractConfigurator",
+        "extends": "\\Everon\\Logger\\Configurator\\AbstractLoggerConfigurator",
         "schema": [
             {
                 "name": "name",
@@ -15,6 +15,7 @@
             },
             {
                 "name": "processorClassCollection",
+                "collectionItem": "string",
                 "singular": "processorClass",
                 "type": "array",
                 "default": []

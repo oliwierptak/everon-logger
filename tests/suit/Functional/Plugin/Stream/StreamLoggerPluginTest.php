@@ -36,7 +36,7 @@ class StreamLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_not_log_when_level_too_low(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(StreamLoggerPlugin::class)
+            ->getConfiguratorByPluginName(StreamLoggerPlugin::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
 
@@ -50,7 +50,7 @@ class StreamLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_log(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(StreamLoggerPlugin::class)
+            ->getConfiguratorByPluginName(StreamLoggerPlugin::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
 
@@ -70,7 +70,7 @@ class StreamLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_log_context(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(StreamLoggerPlugin::class)
+            ->getConfiguratorByPluginName(StreamLoggerPlugin::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
 
@@ -88,7 +88,7 @@ class StreamLoggerPluginTest extends AbstractPluginLoggerTest
     {
         $this->configurator
             ->addProcessorClass(MemoryUsageProcessorStub::class)
-            ->getPluginConfiguratorByPluginName(StreamLoggerPlugin::class)
+            ->getConfiguratorByPluginName(StreamLoggerPlugin::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
 
@@ -107,7 +107,7 @@ class StreamLoggerPluginTest extends AbstractPluginLoggerTest
     {
         $this->configurator
             ->addProcessorClass(MemoryUsageProcessorStub::class)
-            ->getPluginConfiguratorByPluginName(StreamLoggerPlugin::class)
+            ->getConfiguratorByPluginName(StreamLoggerPlugin::class)
             ->setPluginFactoryClass(FactoryStub::class)
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);

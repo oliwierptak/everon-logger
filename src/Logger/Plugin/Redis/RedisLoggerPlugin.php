@@ -32,7 +32,7 @@ class RedisLoggerPlugin implements LoggerPluginInterface
         return new RedisHandler(
             $this->buildRedis(),
             $this->configurator->getKey(),
-            Logger::toMonologLevel($this->configurator->getLogLevel()),
+            Logger::toMonologLevel($this->configurator->requireLogLevel()),
             $this->configurator->shouldBubble(),
             $this->configurator->getCapSize(),
         );

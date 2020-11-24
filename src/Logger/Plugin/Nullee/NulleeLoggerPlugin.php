@@ -27,7 +27,7 @@ class NulleeLoggerPlugin implements LoggerPluginInterface
     {
         $this->validate();
 
-        return new NullHandler($this->configurator->getLogLevel());
+        return new NullHandler($this->configurator->requireLogLevel());
     }
 
     protected function validate(): void

@@ -45,7 +45,7 @@
     },
     {
         "name": "RedisConnectionConfigurator",
-        "extends": "\\Everon\\Logger\\Configurator\\AbstractConfigurator",
+        "extends": "\\Everon\\Logger\\Configurator\\AbstractArrayableConfigurator",
         "schema": [
             {
                 "name": "host",

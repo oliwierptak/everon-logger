@@ -30,7 +30,7 @@ class ErrorLogLoggerPlugin implements LoggerPluginInterface
 
         return new ErrorLogHandler(
             $this->configurator->getMessageType(),
-            Logger::toMonologLevel($this->configurator->getLogLevel()),
+            Logger::toMonologLevel($this->configurator->requireLogLevel()),
             $this->configurator->shouldBubble(),
             $this->configurator->expandNewlines()
         );

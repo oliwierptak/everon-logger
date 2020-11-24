@@ -4,24 +4,22 @@ declare(strict_types = 1);
 
 namespace Everon\Logger\Configurator;
 
+use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
+use Everon\Logger\Contract\Configurator\PluginConfiguratorInterface;
 use InvalidArgumentException;
 use function array_key_exists;
 
-abstract class AbstractConfigurator
+abstract class AbstractLoggerConfigurator implements LoggerConfiguratorInterface
 {
-    abstract public function fromArray(array $data): AbstractConfigurator;
-
-    abstract public function toArray(): array;
-
     /**
-     * @var \Everon\Logger\Configurator\AbstractPluginConfigurator[]
+     * @var \Everon\Logger\Contract\Configurator\PluginConfiguratorInterface[]
      */
     protected array $pluginConfiguratorCollection = [];
 
     /**
      * [pluginClassName => configurator]
      *
-     * @return \Everon\Logger\Configurator\AbstractPluginConfigurator[]
+     * @return \Everon\Logger\Contract\Configurator\PluginConfiguratorInterface[]
      */
     public function getPluginConfiguratorCollection(): array
     {
@@ -31,25 +29,25 @@ abstract class AbstractConfigurator
     /**
      * [pluginClass => configurator]
      *
-     * @param \Everon\Logger\Configurator\AbstractPluginConfigurator[] $pluginConfiguratorCollection
+     * @param \Everon\Logger\Contract\Configurator\PluginConfiguratorInterface[] $pluginConfiguratorCollection
      *
-     * @return $this
+     * @return \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface
      */
-    public function setPluginConfiguratorCollection(array $pluginConfiguratorCollection): AbstractConfigurator
+    public function setPluginConfiguratorCollection(array $pluginConfiguratorCollection): LoggerConfiguratorInterface
     {
         $this->pluginConfiguratorCollection = $pluginConfiguratorCollection;
 
         return $this;
     }
 
-    public function addPluginConfigurator(AbstractPluginConfigurator $pluginConfigurator): AbstractConfigurator
+    public function addPluginConfigurator(PluginConfiguratorInterface $pluginConfigurator): LoggerConfiguratorInterface
     {
         $this->pluginConfiguratorCollection[$pluginConfigurator->getPluginClass()] = $pluginConfigurator;
 
         return $this;
     }
 
-    public function getPluginConfiguratorByPluginName(string $pluginClass): AbstractPluginConfigurator
+    public function getConfiguratorByPluginName(string $pluginClass): PluginConfiguratorInterface
     {
         if (!array_key_exists($pluginClass, $this->pluginConfiguratorCollection)) {
             throw new InvalidArgumentException(sprintf(

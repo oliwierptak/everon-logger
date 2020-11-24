@@ -2,18 +2,18 @@
 
 namespace Everon\Logger\Contract\Plugin;
 
-use Everon\Logger\Configurator\AbstractPluginConfigurator;
+use Everon\Logger\Contract\Configurator\PluginConfiguratorInterface;
 
 interface PluginFactoryInterface
 {
     /**
      * Specification:
-     * - Create plugin using custom logic
+     * - Create plugin using custom logic or external dependencies
      * - Return logger plugin instance
      *
-     * @param \Everon\Logger\Configurator\AbstractPluginConfigurator $configurator
+     * @param \Everon\Logger\Contract\Configurator\PluginConfiguratorInterface $configurator
      *
      * @return \Everon\Logger\Contract\Plugin\LoggerPluginInterface
      */
-    public function create(AbstractPluginConfigurator $configurator): LoggerPluginInterface;
+    public function create(PluginConfiguratorInterface $configurator): LoggerPluginInterface;
 }

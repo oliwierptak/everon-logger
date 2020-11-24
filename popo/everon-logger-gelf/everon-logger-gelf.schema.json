@@ -1,12 +1,12 @@
 [
     {
         "name": "GelfLoggerPluginConfigurator",
-        "extends": "\\Everon\\Logger\\Configurator\\AbstractConfigurator",
+        "extends": "\\Everon\\Logger\\Configurator\\AbstractArrayableConfigurator",
         "schema": []
     },
     {
         "name": "GelfLoggerPluginSslOptions",
-        "extends": "\\Everon\\Logger\\Configurator\\AbstractConfigurator",
+        "extends": "\\Everon\\Logger\\Configurator\\AbstractArrayableConfigurator",
         "schema": [
             {
                 "name": "verifyPeer",

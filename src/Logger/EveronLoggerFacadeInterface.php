@@ -2,7 +2,7 @@
 
 namespace Everon\Logger;
 
-use Everon\Logger\Configurator\Plugin\LoggerConfigurator;
+use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
 use Psr\Log\LoggerInterface;
 
 interface EveronLoggerFacadeInterface
@@ -12,14 +12,14 @@ interface EveronLoggerFacadeInterface
      * - Validate configurator, throw exception on error
      * - Build plugins and resolve their configurators, throw exception on error
      * - Check if plugins can be executed
-     * - Run plugins and build monolog handlers
+     * - Run plugins and build monolog handlers, throw exception on error
      * - Build and set formatters when the plugins implement Everon\Logger\Contract\Plugin\PluginFormatterInterface
-     * - Build and set processors when the container implements Everon\Logger\Contract\Container\Plugin\LoggerProcessorContainerInterface
+     * - Build and set processors, specified in the configurator
      * - Configure timezone
      * - Create instance of logger implementing Psr\Log\LoggerInterface
      * - Return logger instance
      *
-     * @param \Everon\Logger\Configurator\Plugin\LoggerConfigurator $configurator
+     * @param \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface $configurator
      *
      * @return \Psr\Log\LoggerInterface
      *
@@ -28,5 +28,5 @@ interface EveronLoggerFacadeInterface
      * @throws \Everon\Logger\Exception\ProcessorBuildException
      * @throws \Everon\Logger\Exception\ConfiguratorValidationException
      */
-    public function buildLogger(LoggerConfigurator $configurator): LoggerInterface;
+    public function buildLogger(LoggerConfiguratorInterface $configurator): LoggerInterface;
 }

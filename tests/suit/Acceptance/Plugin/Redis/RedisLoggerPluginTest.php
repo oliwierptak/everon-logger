@@ -71,7 +71,7 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_not_log_when_level_too_low(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(RedisLoggerPlugin::class)
+            ->getConfiguratorByPluginName(RedisLoggerPlugin::class)
             ->setLogLevel('info');
 
         $logger = $this->facade->buildLogger($this->configurator);
@@ -84,7 +84,7 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_log(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(RedisLoggerPlugin::class)
+            ->getConfiguratorByPluginName(RedisLoggerPlugin::class)
             ->setLogLevel('info')
             ->setKey(static::REDIS_QUEUE);
 
@@ -100,7 +100,7 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
     public function test_should_log_context(): void
     {
         $this->configurator
-            ->getPluginConfiguratorByPluginName(RedisLoggerPlugin::class)
+            ->getConfiguratorByPluginName(RedisLoggerPlugin::class)
             ->setLogLevel('info')
             ->setKey(static::REDIS_QUEUE);
 
@@ -115,7 +115,7 @@ class RedisLoggerPluginTest extends AbstractPluginLoggerTest
     {
         $this->configurator
             ->addProcessorClass(MemoryUsageProcessorStub::class)
-            ->getPluginConfiguratorByPluginName(RedisLoggerPlugin::class)
+            ->getConfiguratorByPluginName(RedisLoggerPlugin::class)
             ->setLogLevel('info')
             ->setKey(static::REDIS_QUEUE);
 
