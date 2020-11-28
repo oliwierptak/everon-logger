@@ -32,9 +32,12 @@ abstract class AbstractPluginLoggerTest extends TestCase
         $this->assertNull($syslogData);
     }
 
-    //protected function assertLogFile(string $message, string $level, array $context = [], array $extra = []): void
     protected function assertLogFile(TestLoggerConfigurator $configurator): void
     {
+        if (!\is_file($this->logFilename)) {
+            return;
+        }
+        
         $logData = shell_exec('tail --lines=1 ' . $this->logFilename);
         if ($logData === null) {
             $this->assertFalse(false);
