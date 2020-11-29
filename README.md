@@ -7,7 +7,7 @@ PSR-3 compliant logger, with pluggable architecture and simple configuration.
 
  - Pluggable architecture, semanticaly versioned
  - Simple value object based configuration 
- - One unified configuration plugin schema
+ - One unified plugin configuration schema
  - Logger handlers and processors created and configured via plugins
  - Using configurators, plugins can be grouped into sets to easily create customized and very specific loggers instances
  - Based on [Monolog v2.x](https://github.com/Seldaek/monolog) 
