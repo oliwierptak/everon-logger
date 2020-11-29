@@ -2,19 +2,21 @@
 
 declare(strict_types = 1);
 
-namespace Everon\Logger\Plugin\Stream;
+namespace EveronLoggerTests\Stub\Plugin\Stream;
 
-use Everon\Logger\Configurator\Plugin\StreamLoggerPluginConfigurator;
 use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
+use Everon\Logger\Contract\Plugin\PluginFormatterInterface;
+use Monolog\Formatter\FormatterInterface;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
-class StreamLoggerPlugin implements LoggerPluginInterface
+class StreamLoggerPluginStub implements LoggerPluginInterface, PluginFormatterInterface
 {
-    protected StreamLoggerPluginConfigurator $configurator;
+    protected StreamLoggerPluginConfiguratorStub $configurator;
 
-    public function __construct(StreamLoggerPluginConfigurator $configurator)
+    public function __construct(StreamLoggerPluginConfiguratorStub $configurator)
     {
         $this->configurator = $configurator;
     }
@@ -41,5 +43,10 @@ class StreamLoggerPlugin implements LoggerPluginInterface
     {
         $this->configurator->requireStreamLocation();
         $this->configurator->requireLogLevel();
+    }
+
+    public function buildFormatter(): FormatterInterface
+    {
+        return new LineFormatter();
     }
 }

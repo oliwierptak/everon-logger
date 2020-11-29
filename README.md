@@ -5,12 +5,12 @@ PSR-3 compliant logger, with pluggable architecture and simple configuration.
 ## Features
 
 
- - Pluggable architecture, contracts, semantically versioned
- - One unified plugin schema
+ - Pluggable architecture, semanticaly versioned
  - Simple value object based configuration 
+ - One unified configuration plugin schema
  - Logger handlers and processors created and configured via plugins
- - Plugins can be grouped into sets to easily create customized and very specific loggers instances
- - Based on Monolog 
+ - Using configurators, plugins can be grouped into sets to easily create customized and very specific loggers instances
+ - Based on [Monolog v2.x](https://github.com/Seldaek/monolog) 
  
  
 #### Simple Usage
@@ -54,7 +54,7 @@ $configurator = (new LoggerConfigurator)
             ->setIdent('everon-logger-ident'));
 ```  
 
-## Plugins
+### Logger Handler / Plugin
 
 A logger plugin is used to create and configure corresponding monolog handler.
 
@@ -62,23 +62,25 @@ Besides `LoggerPluginInterface` a plugin can also implement `PluginFormatterInte
 in which case the custom formatter provided by the plugin will be used.
 
 
-### Plugin setup
+### Setup with LoggerConfigurator
 
-To setup a plugin add it to the collection in `LoggerConfigurator` with `addPluginConfigurator()`.
+To setup a plugin with given handler, add it to the collection in `LoggerConfigurator` with `addPluginConfigurator()`.
   
 For example, setup logging to a redis server and enable memory usage processor.
 
 ```php
+$redisPluginConfigurator = new RedisLoggerPluginConfigurator;
+$redisPluginConfigurator
+    ->setLogLevel('info')
+    ->setKey('redis-queue-test')
+    ->getRedisConnection()
+        ->setHost('redis.host')
+        ->setTimeout(10);
+
 $configurator = (new LoggerConfigurator)
     ->setName('everon-logger-example')
     ->addProcessorClass(MemoryUsageProcessor::class)
-    ->addPluginConfigurator(
-        (new RedisLoggerConfigurator)
-            ->setLogLevel('info')
-            ->setKey('redis-queue-test')
-            ->getRedisConnection()
-                ->setHost('redis.host')
-                ->setTimeout(10));
+    ->addPluginConfigurator($redisPluginConfigurator);
 
 $logger = (new EveronLoggerFacade)->buildLogger($configurator);
 
@@ -99,12 +101,54 @@ $configurator = (new LoggerConfigurator)
     ->addProcessorClass(MemoryUsageProcessor::class)
     ->addProcessorClass(HostnameProcessor::class)
     ->addProcessorClass(...)
-    ->addPluginConfigurator(
     ...
 ```
+
+## Plugins
+
+### Basic
+
+Set of plugins that require no extra vendor dependencies.
+
+```
+composer require everon/logger-basic
+```
+ 
+[Repository](https://github.com/oliwierptak/everon-logger-basic) 
+
+
+### Gelf
+
+Set of plugins for Graylog2 handlers.
+
+```
+composer require everon/logger-gelf
+```
+ 
+[Repository](https://github.com/oliwierptak/everon-logger-gelf) 
+
+
+### Redis
+
+Set of plugins for Redis handler.
+ 
+[Repository](https://github.com/oliwierptak/everon-logger-redis)
+
+```
+composer require everon/logger-redis
+```
+
+## Requirements
+
+- PHP v7.4
+- [Monolog v2.x](https://github.com/Seldaek/monolog) 
+ 
 
 ## Installation
 
 ```
 composer require everon/logger
 ```
+
+_Note:_ You only need to install this package if you want to develop a plugin for `EveronLogger`.
+Otherwise, install specific plugins. See above.

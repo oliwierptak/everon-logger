@@ -32,7 +32,7 @@ class PluginBuilder
         catch (Throwable $exception) {
             throw new PluginBuildException(sprintf(
                 'Could not build plugin: "%s". Error: %s',
-                $pluginConfigurator,
+                $pluginConfigurator->requirePluginClass(),
                 $exception->getMessage()
             ), $exception->getCode(), $exception);
         }

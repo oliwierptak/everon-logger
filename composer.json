@@ -5,14 +5,12 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
-        "ext-redis": "*",
-        "monolog/monolog": "^2.1",
-        "graylog2/gelf-php": "^1.6"
+        "monolog/monolog": "^2.1"
     },
     "require-dev": {
         "ext-json": "*",
         "phpunit/phpunit": "^9.4",
-        "popo/generator": "^3.0",
+        "popo/generator": "^3",
         "symfony/var-dumper": "^5.1"
     },
     "autoload": {
@@ -34,12 +32,19 @@
             "vendor/bin/phpunit --testdox --no-coverage"
         ],
         "tests-ac": [
-            "vendor/bin/phpunit --testdox --no-coverage --group-acceptance tests/suit/Acceptance/"
+            "vendor/bin/phpunit --testdox --no-coverage --group acceptance tests/suit/Acceptance/"
         ],
-        "tests-coverage": "vendor/bin/phpunit --testdox --group-acceptance,default"
+        "tests-coverage": "vendor/bin/phpunit --testdox --group acceptance,default"
     },
     "scripts-descriptions": {
         "popo": "Generate POPO files",
-        "tests": "Test suits"
+        "tests": "Quick tests",
+        "tests-ac": "Quick AC tests",
+        "tests-coverage": "Tests with coverage"
+    },
+    "suggest": {
+        "everon-logger-basic": "Set of basic plugins that require no extra vendor dependencies",
+        "everon-logger-gelf": "Plugin that allows to send messages to Graylog2 servers",
+        "everon-logger-redis": "Plugin that allows to send messages to Redis servers"
     }
 }

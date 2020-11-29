@@ -6,7 +6,7 @@ namespace Everon\Logger\Builder;
 
 use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
 use Everon\Logger\Exception\ConfiguratorValidationException;
-use InvalidArgumentException;
+use UnexpectedValueException;
 
 class ConfiguratorValidator
 {
@@ -24,7 +24,7 @@ class ConfiguratorValidator
             $configurator->requireName();
             $configurator->requireTimezone();
         }
-        catch (InvalidArgumentException $exception) {
+        catch (UnexpectedValueException $exception) {
             throw new ConfiguratorValidationException(
                 $exception->getMessage(),
                 $exception->getCode(),

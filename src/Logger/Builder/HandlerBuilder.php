@@ -31,7 +31,7 @@ class HandlerBuilder
         }
         catch (Throwable $exception) {
             throw new HandlerBuildException(sprintf(
-                'Could not build handler in plugin: "%s". Error: %s',
+                'Could not build handler for plugin: "%s". Error: %s',
                 get_class($plugin),
                 $exception->getMessage()
             ), $exception->getCode(), $exception);
