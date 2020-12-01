@@ -5,7 +5,7 @@ PSR-3 compliant logger, with pluggable architecture and simple configuration.
 ## Features
 
 
- - Pluggable architecture, semanticaly versioned
+ - Pluggable architecture, semantically versioned
  - Simple value object based configuration 
  - One unified plugin configuration schema
  - Logger handlers and processors created and configured via plugins
