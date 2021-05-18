@@ -4,14 +4,14 @@
     "minimum-stability": "stable",
     "license": "MIT",
     "require": {
-        "php": "^7.4",
-        "monolog/monolog": "^2.1"
+        "php": "^8",
+        "monolog/monolog": "^2"
     },
     "require-dev": {
         "ext-json": "*",
-        "phpunit/phpunit": "^9.4",
-        "popo/generator": "^3",
-        "symfony/var-dumper": "^5.1"
+        "phpunit/phpunit": "^9",
+        "popo/generator": "^4",
+        "symfony/var-dumper": "^5"
     },
     "autoload": {
         "psr-4": {
