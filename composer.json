@@ -10,7 +10,7 @@
     "require-dev": {
         "ext-json": "*",
         "phpunit/phpunit": "^9",
-        "popo/generator": "^4",
+        "popo/generator": "dev-yaml-support-5.0",
         "symfony/var-dumper": "^5"
     },
     "autoload": {
@@ -26,7 +26,7 @@
     },
     "scripts": {
         "popo": [
-            "vendor/bin/popo generate -c .popo"
+            "vendor/bin/popo generate -s popo/everon-logger.popo.yml -p popo"
         ],
         "tests": [
             "vendor/bin/phpunit --testdox --no-coverage"

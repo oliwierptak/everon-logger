@@ -79,7 +79,7 @@ $redisPluginConfigurator
 
 $configurator = (new LoggerConfigurator)
     ->setName('everon-logger-example')
-    ->addProcessorClass(MemoryUsageProcessor::class)
+    ->addProcessorClassItem(MemoryUsageProcessor::class)
     ->addPluginConfigurator($redisPluginConfigurator);
 
 $logger = (new EveronLoggerFacade)->buildLogger($configurator);
@@ -94,13 +94,13 @@ Content of `redis-queue-test` in redis.
 
 ## Logger processors
 
-Add required processor classes to logger configurator with `addProcessorClass()`.
+Add required processor classes to logger configurator with `addProcessorClassItem()`.
 
 ```php
 $configurator = (new LoggerConfigurator)
-    ->addProcessorClass(MemoryUsageProcessor::class)
-    ->addProcessorClass(HostnameProcessor::class)
-    ->addProcessorClass(...)
+    ->addProcessorClassItem(MemoryUsageProcessor::class)
+    ->addProcessorClassItem(HostnameProcessor::class)
+    ->addProcessorClassItem(...)
     ...
 ```
 

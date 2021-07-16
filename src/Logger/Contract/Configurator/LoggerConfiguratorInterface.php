@@ -74,5 +74,5 @@ interface LoggerConfiguratorInterface extends ArrayableInterface
      *
      * @return \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface
      */
-    public function addProcessorClass(string $item): LoggerConfiguratorInterface;
+    public function addProcessorClassItem(string $item): LoggerConfiguratorInterface;
 }

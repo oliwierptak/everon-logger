@@ -2,3 +2,6 @@
 schema = popo/
 output = src/Logger/Configurator/Plugin/
 namespace = Everon\Logger\Configurator\Plugin
+output = src/
+namespace = Everon\Logger\Configurator\Plugin
+namespaceRoot = Everon\
