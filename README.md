@@ -1,18 +1,18 @@
 # EveronLogger
 
 PSR-3 compliant logger, with pluggable architecture and simple configuration.
- 
+
 ## Features
 
 
- - Pluggable architecture, semantically versioned
- - Simple value object based configuration 
- - One unified plugin configuration schema
- - Logger handlers and processors created and configured via plugins
- - Using configurators, plugins can be grouped into sets to easily create customized and very specific loggers instances
- - Based on [Monolog v2.x](https://github.com/Seldaek/monolog) 
- 
- 
+- Pluggable architecture, semantically versioned
+- Simple data structure based configuration
+- One unified plugin configuration schema
+- Logger handlers and processors created and configured via plugins
+- Using configurators, plugins can be grouped into sets to easily create customized and very specific loggers instances
+- Based on [Monolog v2.x](https://github.com/Seldaek/monolog)
+
+
 #### Simple Usage
 
 Log everything at level `info` and above to `/tmp/example.log`.
@@ -30,11 +30,11 @@ $logger = (new EveronLoggerFacade)->buildLogger($configurator);
 $logger->info('lorem ipsum');
 ```
 
-Content of `/tmp/example.log`. 
+Content of `/tmp/example.log`.
 ```
 [2020-11-15T16:29:16.400318+00:00] everon-logger.INFO: lorem ipsum [] []
 ```
-  
+
 ## Configuration
 
 The configuration is done by [simple value objects](https://github.com/oliwierptak/popo/) called `configurators`.
@@ -65,7 +65,7 @@ in which case the custom formatter provided by the plugin will be used.
 ### Setup with LoggerConfigurator
 
 To setup a plugin with given handler, add it to the collection in `LoggerConfigurator` with `addPluginConfigurator()`.
-  
+
 For example, setup logging to a redis server and enable memory usage processor.
 
 ```php
@@ -79,7 +79,7 @@ $redisPluginConfigurator
 
 $configurator = (new LoggerConfigurator)
     ->setName('everon-logger-example')
-    ->addProcessorClassItem(MemoryUsageProcessor::class)
+    ->addProcessorClass(MemoryUsageProcessor::class)
     ->addPluginConfigurator($redisPluginConfigurator);
 
 $logger = (new EveronLoggerFacade)->buildLogger($configurator);
@@ -94,13 +94,13 @@ Content of `redis-queue-test` in redis.
 
 ## Logger processors
 
-Add required processor classes to logger configurator with `addProcessorClassItem()`.
+Add required processor classes to logger configurator with `addProcessorClass()`.
 
 ```php
 $configurator = (new LoggerConfigurator)
-    ->addProcessorClassItem(MemoryUsageProcessor::class)
-    ->addProcessorClassItem(HostnameProcessor::class)
-    ->addProcessorClassItem(...)
+    ->addProcessorClass(MemoryUsageProcessor::class)
+    ->addProcessorClass(HostnameProcessor::class)
+    ->addProcessorClass(...)
     ...
 ```
 
@@ -113,8 +113,8 @@ Set of plugins that require no extra vendor dependencies.
 ```
 composer require everon/logger-basic
 ```
- 
-[Repository](https://github.com/oliwierptak/everon-logger-basic) 
+
+[Repository](https://github.com/oliwierptak/everon-logger-basic)
 
 
 ### Gelf
@@ -124,14 +124,14 @@ Set of plugins for Graylog2 handlers.
 ```
 composer require everon/logger-gelf
 ```
- 
-[Repository](https://github.com/oliwierptak/everon-logger-gelf) 
+
+[Repository](https://github.com/oliwierptak/everon-logger-gelf)
 
 
 ### Redis
 
 Set of plugins for Redis handler.
- 
+
 [Repository](https://github.com/oliwierptak/everon-logger-redis)
 
 ```
@@ -144,7 +144,7 @@ composer require everon/logger-redis
 - [Monolog v2.x](https://github.com/Seldaek/monolog)
 
 _Note_: Use v1.x for compatibility with PHP v7.4.
- 
+
 
 ## Installation
 

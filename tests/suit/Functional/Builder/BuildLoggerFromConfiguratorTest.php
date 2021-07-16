@@ -64,7 +64,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
 
         $this->configurator
             ->addPluginConfigurator($streamPluginConfigurator)
-            ->addProcessorClassItem(MemoryUsageProcessorStub::class);
+            ->addProcessorClass(MemoryUsageProcessorStub::class);
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -90,7 +90,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
 
         $this->configurator
             ->addPluginConfigurator($streamPluginConfigurator)
-            ->addProcessorClassItem(MemoryUsageProcessorStub::class);
+            ->addProcessorClass(MemoryUsageProcessorStub::class);
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -151,7 +151,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
 
         $this->configurator
             ->addPluginConfigurator($streamPluginConfigurator)
-            ->addProcessorClassItem(ProcessorExceptionStub::class);
+            ->addProcessorClass(ProcessorExceptionStub::class);
 
         $logger = $this->facade->buildLogger($this->configurator);
 

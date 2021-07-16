@@ -88,7 +88,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
         }
 
         if ($this->timezone === null) {
-            throw new UnexpectedValueException('Required property "timezone" is not set');
+            throw new UnexpectedValueException('Required value of "timezone" has not been set');
         }
         return $this->timezone;
     }
@@ -125,7 +125,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
         }
 
         if (empty($this->processorClassCollection)) {
-            throw new UnexpectedValueException('Required property "processorClassCollection" is not set');
+            throw new UnexpectedValueException('Required value of "processorClassCollection" has not been set');
         }
         return $this->processorClassCollection;
     }
@@ -135,7 +135,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
         return !empty($this->processorClassCollection);
     }
 
-    public function addProcessorClassItem(string $item): self
+    public function addProcessorClass(string $item): self
     {
         $this->processorClassCollection[] = $item;
 
