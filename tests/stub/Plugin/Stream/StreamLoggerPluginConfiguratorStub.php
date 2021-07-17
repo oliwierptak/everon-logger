@@ -252,7 +252,7 @@ class StreamLoggerPluginConfiguratorStub extends \Everon\Logger\Configurator\Abs
     /**
      * @return string|null
      */
-    public function getPluginClass(): ?string
+    public function getPluginClass(): string
     {
         return $this->popoGetValue('pluginClass');
     }
@@ -337,10 +337,8 @@ class StreamLoggerPluginConfiguratorStub extends \Everon\Logger\Configurator\Abs
         return $this->updateMap['pluginFactoryClass'] ?? false;
     }
 
-    /**
-     * @return string|null The minimum logging level at which this handler will be triggered
-     */
-    public function getLogLevel(): ?string
+
+    public function getLogLevel(): string
     {
         return $this->popoGetValue('logLevel');
     }
@@ -381,10 +379,7 @@ class StreamLoggerPluginConfiguratorStub extends \Everon\Logger\Configurator\Abs
         return $this->updateMap['logLevel'] ?? false;
     }
 
-    /**
-     * @return boolean|null Whether the messages that are handled can bubble up the stack or not
-     */
-    public function shouldBubble(): ?bool
+    public function shouldBubble(): bool
     {
         return $this->popoGetValue('shouldBubble');
     }
