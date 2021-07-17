@@ -9,10 +9,6 @@ use Everon\Logger\Contract\Configurator\PluginConfiguratorInterface;
 abstract class AbstractPluginConfigurator implements PluginConfiguratorInterface
 {
     /**
-     * Name of the plugin class
-     */
-    protected string $pluginClass;
-    /**
      * Defines custom plugin factory to be used to create a plugin
      */
     protected ?string $pluginFactoryClass = null;
@@ -25,30 +21,9 @@ abstract class AbstractPluginConfigurator implements PluginConfiguratorInterface
      */
     protected bool $shouldBubble = true;
 
-    public function getPluginClass(): string
-    {
-        return $this->pluginClass;
-    }
-
-    public function setPluginClass(string $pluginClass): self
-    {
-        $this->pluginClass = $pluginClass;
-
-        return $this;
-    }
-
     public function getPluginFactoryClass(): ?string
     {
         return $this->pluginFactoryClass;
-    }
-
-    public function requirePluginClass(): string
-    {
-        if (trim($this->pluginClass) === '') {
-            throw new \UnexpectedValueException('Required value of "pluginClass" has not been set');
-        }
-
-        return $this->pluginClass;
     }
 
     public function setPluginFactoryClass(?string $pluginFactoryClass): self
