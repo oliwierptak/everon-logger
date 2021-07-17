@@ -42,7 +42,7 @@ abstract class AbstractLoggerConfigurator implements LoggerConfiguratorInterface
 
     public function addPluginConfigurator(PluginConfiguratorInterface $pluginConfigurator): LoggerConfiguratorInterface
     {
-        $this->pluginConfiguratorCollection[$pluginConfigurator->getPluginClass()] = $pluginConfigurator;
+        $this->pluginConfiguratorCollection[$pluginConfigurator->requirePluginClass()] = $pluginConfigurator;
 
         return $this;
     }
