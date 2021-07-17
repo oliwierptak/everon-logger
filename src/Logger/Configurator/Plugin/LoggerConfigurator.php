@@ -14,23 +14,23 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
 {
     protected const SHAPE_PROPERTIES = [
         'name' => 'null|string',
-        'timezone' => 'null|string',
         'processorClassCollection' => 'array',
+        'timezone' => 'null|string',
     ];
 
     protected const METADATA = [
         'name' => ['type' => 'string', 'default' => 'everon-logger'],
-        'timezone' => ['type' => 'string', 'default' => 'UTC'],
         'processorClassCollection' => ['type' => 'array', 'default' => null],
+        'timezone' => ['type' => 'string', 'default' => 'UTC'],
     ];
 
     protected ?string $name = 'everon-logger';
 
-    /** Logger's timezone */
-    protected ?string $timezone = 'UTC';
-
     /** Monolog processor's collection */
     protected array $processorClassCollection = [];
+
+    /** Logger's timezone */
+    protected ?string $timezone = 'UTC';
     protected array $updateMap = [];
 
     public function setName(?string $name): self
@@ -59,43 +59,6 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
     public function hasName(): bool
     {
         return $this->name !== null;
-    }
-
-    /**
-     * Logger's timezone
-     */
-    public function setTimezone(?string $timezone): self
-    {
-        $this->timezone = $timezone; $this->updateMap['timezone'] = true; return $this;
-    }
-
-    /**
-     * Logger's timezone
-     */
-    public function getTimezone(): ?string
-    {
-        return $this->timezone;
-    }
-
-    /**
-     * Logger's timezone
-     */
-    public function requireTimezone(): string
-    {
-        if (static::METADATA['timezone']['type'] === 'popo' && $this->timezone === null) {
-            $popo = static::METADATA['timezone']['default'];
-            $this->timezone = new $popo;
-        }
-
-        if ($this->timezone === null) {
-            throw new UnexpectedValueException('Required value of "timezone" has not been set');
-        }
-        return $this->timezone;
-    }
-
-    public function hasTimezone(): bool
-    {
-        return $this->timezone !== null;
     }
 
     /**
@@ -144,13 +107,50 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
         return $this;
     }
 
+    /**
+     * Logger's timezone
+     */
+    public function setTimezone(?string $timezone): self
+    {
+        $this->timezone = $timezone; $this->updateMap['timezone'] = true; return $this;
+    }
+
+    /**
+     * Logger's timezone
+     */
+    public function getTimezone(): ?string
+    {
+        return $this->timezone;
+    }
+
+    /**
+     * Logger's timezone
+     */
+    public function requireTimezone(): string
+    {
+        if (static::METADATA['timezone']['type'] === 'popo' && $this->timezone === null) {
+            $popo = static::METADATA['timezone']['default'];
+            $this->timezone = new $popo;
+        }
+
+        if ($this->timezone === null) {
+            throw new UnexpectedValueException('Required value of "timezone" has not been set');
+        }
+        return $this->timezone;
+    }
+
+    public function hasTimezone(): bool
+    {
+        return $this->timezone !== null;
+    }
+
     #[\JetBrains\PhpStorm\ArrayShape(self::SHAPE_PROPERTIES)]
     public function toArray(): array
     {
         $data = [
             'name' => $this->name,
-            'timezone' => $this->timezone,
             'processorClassCollection' => $this->processorClassCollection,
+            'timezone' => $this->timezone,
         ];
 
         array_walk(
@@ -205,16 +205,16 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
             $errors['name'] = $throwable->getMessage();
         }
         try {
-            $this->requireTimezone();
-        }
-        catch (\Throwable $throwable) {
-            $errors['timezone'] = $throwable->getMessage();
-        }
-        try {
             $this->requireProcessorClassCollection();
         }
         catch (\Throwable $throwable) {
             $errors['processorClassCollection'] = $throwable->getMessage();
+        }
+        try {
+            $this->requireTimezone();
+        }
+        catch (\Throwable $throwable) {
+            $errors['timezone'] = $throwable->getMessage();
         }
 
         if (empty($errors) === false) {
