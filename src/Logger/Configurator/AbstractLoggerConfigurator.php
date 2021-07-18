@@ -13,11 +13,12 @@ abstract class AbstractLoggerConfigurator implements LoggerConfiguratorInterface
 {
     /**
      * Validate builder's configuration and throw exception on error.
-     * Disabled by default
+     * Disabled by default, canRun() should determine without throwing exception, if the handler can be built
      *
      * @var bool
      */
     protected bool $validateConfiguration = false;
+
     /**
      * @var \Everon\Logger\Contract\Configurator\PluginConfiguratorInterface[]
      */
