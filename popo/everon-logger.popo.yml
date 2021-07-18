@@ -6,7 +6,7 @@ $:
   implement: \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface::class
   comment: Everon logger configuration file. Auto-generated.
 
-Everon:
+EveronLogger:
   LoggerConfigurator:
     default:
       name: everon-logger
