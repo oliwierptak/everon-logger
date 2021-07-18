@@ -28,18 +28,16 @@ class StreamLoggerPluginStub implements LoggerPluginInterface, PluginFormatterIn
 
     public function buildHandler(): HandlerInterface
     {
-        $this->validate();
-
         return new StreamHandler(
             $this->configurator->getStreamLocation(),
             Logger::toMonologLevel($this->configurator->requireLogLevel()),
-            $this->configurator->isShouldBubble(),
+            $this->configurator->shouldBubble(),
             $this->configurator->getFilePermission(),
             $this->configurator->useLocking()
         );
     }
 
-    protected function validate(): void
+    public function validate(): void
     {
         $this->configurator->requireStreamLocation();
         $this->configurator->requireLogLevel();

@@ -57,6 +57,7 @@ class LoggerBuilder
 
     /**
      * @return array
+     * @throws \Exception
      * @throws \Everon\Logger\Exception\PluginBuildException
      * @throws \Everon\Logger\Exception\HandlerBuildException
      */
@@ -65,6 +66,10 @@ class LoggerBuilder
         $handlers = [];
         foreach ($this->configurator->getPluginConfiguratorCollection() as $pluginClass => $pluginConfigurator) {
             $plugin = $this->pluginBuilder->buildPlugin($pluginConfigurator);
+
+            if ($this->configurator->validateConfiguration()) {
+                $plugin->validate();
+            }
 
             if (!$plugin->canRun()) {
                 continue;

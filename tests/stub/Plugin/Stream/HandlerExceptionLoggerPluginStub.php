@@ -26,4 +26,9 @@ class HandlerExceptionLoggerPluginStub implements LoggerPluginInterface
     {
         throw new InvalidArgumentException('Invalid value for foo bar');
     }
+
+    public function validate(): void
+    {
+
+    }
 }

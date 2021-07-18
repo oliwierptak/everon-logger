@@ -17,6 +17,7 @@ use EveronLoggerTests\Stub\Processor\MemoryUsageProcessorStub;
 use EveronLoggerTests\Suit\Configurator\TestLoggerConfigurator;
 use EveronLoggerTests\Suit\Functional\AbstractPluginLoggerTest;
 use Psr\Log\LoggerInterface;
+use UnexpectedValueException;
 
 class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
 {
@@ -27,12 +28,34 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
         $this->assertInstanceOf(LoggerInterface::class, $logger);
     }
 
+    public function test_should_validate_builder_configuration(): void
+    {
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionMessage('Required value of "streamLocation" has not been set');
+
+        $streamPluginConfigurator = (new StreamLoggerPluginConfiguratorStub())
+            ->setPluginClass(StreamLoggerPluginStub::class);
+
+        $this->configurator
+            ->setValidateConfiguration(true)
+            ->addPluginConfigurator($streamPluginConfigurator);
+
+        $logger = $this->facade->buildLogger($this->configurator);
+
+        $logger->debug('foo bar');
+
+        $this->assertFileDoesNotExist($this->logFilename);
+    }
+
     public function test_should_not_log_without_logFile(): void
     {
         $streamPluginConfigurator = (new StreamLoggerPluginConfiguratorStub())
             ->setPluginClass(StreamLoggerPluginStub::class);
 
-        $this->configurator->addPluginConfigurator($streamPluginConfigurator);
+        $this->configurator
+            ->setValidateConfiguration(false)
+            ->addPluginConfigurator($streamPluginConfigurator);
+
         $logger = $this->facade->buildLogger($this->configurator);
 
         $logger->debug('foo bar');

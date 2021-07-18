@@ -6,6 +6,25 @@ interface LoggerConfiguratorInterface extends ArrayableInterface
 {
     /**
      * Specification:
+     * - Set the value to true to validate builder's configuration
+     *
+     * @param bool $validateConfiguration
+     *
+     * @return \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface
+     */
+    public function setValidateConfiguration(bool $validateConfiguration): LoggerConfiguratorInterface;
+
+    /**
+     * Specification:
+     * - Return true to validate builder's configuration
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    public function validateConfiguration(): bool;
+
+    /**
+     * Specification:
      * - Check value and throw exception if value is null.
      * - Return logger's name
      *

@@ -10,6 +10,16 @@ interface LoggerPluginInterface
 {
     /**
      * Specification:
+     * - Check if all the required data is set
+     * - Throw exception on error
+     *
+     * @return void
+     * @throws \Exception
+     */
+    public function validate(): void;
+
+    /**
+     * Specification:
      * - Return true if plugin should be executed, false otherwise
      *
      * @return bool

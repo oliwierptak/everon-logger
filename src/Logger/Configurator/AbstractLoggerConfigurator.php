@@ -12,6 +12,10 @@ use function array_key_exists;
 abstract class AbstractLoggerConfigurator implements LoggerConfiguratorInterface
 {
     /**
+     * @var bool Validate builder's configuration and throw exception on error
+     */
+    protected bool $validateConfiguration = true;
+    /**
      * @var \Everon\Logger\Contract\Configurator\PluginConfiguratorInterface[]
      */
     protected array $pluginConfiguratorCollection = [];
@@ -47,13 +51,27 @@ abstract class AbstractLoggerConfigurator implements LoggerConfiguratorInterface
         return $this;
     }
 
+    public function setValidateConfiguration(bool $validateConfiguration): LoggerConfiguratorInterface
+    {
+        $this->validateConfiguration = $validateConfiguration;
+
+        return $this;
+    }
+
+    public function validateConfiguration(): bool
+    {
+        return $this->validateConfiguration;
+    }
+
     public function getConfiguratorByPluginName(string $pluginClass): PluginConfiguratorInterface
     {
         if (!array_key_exists($pluginClass, $this->pluginConfiguratorCollection)) {
-            throw new InvalidArgumentException(sprintf(
-                'Could not find plugin configurator for plugin: "%s"',
-                $pluginClass
-            ));
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Could not find plugin configurator for plugin: "%s"',
+                    $pluginClass
+                )
+            );
         }
 
         return $this->pluginConfiguratorCollection[$pluginClass];

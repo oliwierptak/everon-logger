@@ -96,7 +96,7 @@ class StreamLoggerPluginConfiguratorStub implements PluginConfiguratorInterface
      */
     protected function assertPropertyValue(string $property): void
     {
-        if (!isset($this->data[$property])) {
+        if (empty($this->data[$property])) {
             throw new UnexpectedValueException(sprintf(
                 'Required value of "%s" has not been set',
                 $property
@@ -380,7 +380,7 @@ class StreamLoggerPluginConfiguratorStub implements PluginConfiguratorInterface
         return $this->updateMap['logLevel'] ?? false;
     }
 
-    public function isShouldBubble(): bool
+    public function shouldBubble(): bool
     {
         return $this->popoGetValue('shouldBubble');
     }

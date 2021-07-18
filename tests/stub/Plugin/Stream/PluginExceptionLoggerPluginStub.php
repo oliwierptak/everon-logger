@@ -24,6 +24,11 @@ class PluginExceptionLoggerPluginStub implements LoggerPluginInterface
 
     public function buildHandler(): HandlerInterface
     {
+
+    }
+
+    public function validate(): void
+    {
         throw new InvalidArgumentException('Invalid value for foo bar');
     }
 }

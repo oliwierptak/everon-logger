@@ -1253,12 +1253,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/oliwierptak/popo.git",
-                "reference": "a00733fd8fb419d3a9566282cbf4661c7c576573"
+                "reference": "3a172ab91f9efa2b16c9b2aea8ceb33bdfd0f619"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oliwierptak/popo/zipball/a00733fd8fb419d3a9566282cbf4661c7c576573",
-                "reference": "a00733fd8fb419d3a9566282cbf4661c7c576573",
+                "url": "https://api.github.com/repos/oliwierptak/popo/zipball/3a172ab91f9efa2b16c9b2aea8ceb33bdfd0f619",
+                "reference": "3a172ab91f9efa2b16c9b2aea8ceb33bdfd0f619",
                 "shasum": ""
             },
             "require": {
@@ -1297,7 +1297,7 @@
                 "issues": "https://github.com/oliwierptak/popo/issues",
                 "source": "https://github.com/oliwierptak/popo/tree/yaml-support-5.0"
             },
-            "time": "2021-07-18T10:41:19+00:00"
+            "time": "2021-07-18T12:29:24+00:00"
         },
         {
             "name": "psr/container",
