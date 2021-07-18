@@ -58,7 +58,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
 
     public function hasName(): bool
     {
-        return $this->name !== null;
+        return $this->name !== null || ($this->name !== null && array_key_exists('name', $this->updateMap));
     }
 
     /**
@@ -95,7 +95,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
 
     public function hasProcessorClassCollection(): bool
     {
-        return !empty($this->processorClassCollection);
+        return !empty($this->processorClassCollection) && array_key_exists('processorClassCollection', $this->updateMap);
     }
 
     public function addProcessorClass(string $item): self
@@ -141,7 +141,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
 
     public function hasTimezone(): bool
     {
-        return $this->timezone !== null;
+        return $this->timezone !== null || ($this->timezone !== null && array_key_exists('timezone', $this->updateMap));
     }
 
     #[\JetBrains\PhpStorm\ArrayShape(self::SHAPE_PROPERTIES)]

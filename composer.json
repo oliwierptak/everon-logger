@@ -38,9 +38,9 @@
     },
     "scripts-descriptions": {
         "popo": "Generate POPO files",
-        "tests": "Quick tests",
-        "tests-ac": "Quick AC tests",
-        "tests-coverage": "Tests with coverage"
+        "test": "Quick tests",
+        "test-ac": "Quick AC tests",
+        "test-coverage": "Tests with coverage"
     },
     "suggest": {
         "everon-logger-basic": "Set of basic plugins that require no extra vendor dependencies",
