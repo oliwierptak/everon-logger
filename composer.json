@@ -28,13 +28,13 @@
         "popo": [
             "vendor/bin/popo generate -s popo/everon-logger.popo.yml -p popo"
         ],
-        "tests": [
+        "test": [
             "vendor/bin/phpunit --testdox --no-coverage"
         ],
-        "tests-ac": [
+        "test-ac": [
             "vendor/bin/phpunit --testdox --no-coverage --group acceptance tests/suit/Acceptance/"
         ],
-        "tests-coverage": "vendor/bin/phpunit --testdox --group acceptance,default"
+        "test-coverage": "vendor/bin/phpunit --testdox --group acceptance,default"
     },
     "scripts-descriptions": {
         "popo": "Generate POPO files",
