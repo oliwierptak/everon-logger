@@ -14,7 +14,7 @@ interface LoggerPluginInterface
      * - Throw exception on error
      *
      * @return void
-     * @throws \Exception
+     * @throws \UnexpectedValueException
      */
     public function validate(): void;
 

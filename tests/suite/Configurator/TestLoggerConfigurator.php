@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace EveronLoggerTests\Suit\Configurator;
+namespace EveronLoggerTests\Suite\Configurator;
 
 use InvalidArgumentException;
 use UnexpectedValueException;

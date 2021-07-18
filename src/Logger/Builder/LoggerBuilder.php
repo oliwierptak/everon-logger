@@ -6,6 +6,8 @@ namespace Everon\Logger\Builder;
 
 use DateTimeZone;
 use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
+use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
+use Everon\Logger\Exception\ConfiguratorValidationException;
 use Everon\Logger\Exception\ProcessorBuildException;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
@@ -14,19 +16,16 @@ use Throwable;
 class LoggerBuilder
 {
     protected LoggerConfiguratorInterface $configurator;
-
     protected PluginBuilder $pluginBuilder;
-
     protected HandlerBuilder $handlerBuilder;
-
     protected ConfiguratorValidator $validator;
 
     public function __construct(
         LoggerConfiguratorInterface $configurator,
         PluginBuilder $pluginBuilder,
         HandlerBuilder $handlerBuilder,
-        ConfiguratorValidator $validator)
-    {
+        ConfiguratorValidator $validator
+    ) {
         $this->configurator = $configurator;
         $this->pluginBuilder = $pluginBuilder;
         $this->handlerBuilder = $handlerBuilder;
@@ -60,6 +59,7 @@ class LoggerBuilder
      * @throws \Exception
      * @throws \Everon\Logger\Exception\PluginBuildException
      * @throws \Everon\Logger\Exception\HandlerBuildException
+     * @throws \Everon\Logger\Exception\ConfiguratorValidationException
      */
     protected function buildHandlers(): array
     {
@@ -67,9 +67,7 @@ class LoggerBuilder
         foreach ($this->configurator->getPluginConfiguratorCollection() as $pluginClass => $pluginConfigurator) {
             $plugin = $this->pluginBuilder->buildPlugin($pluginConfigurator);
 
-            if ($this->configurator->validateConfiguration()) {
-                $plugin->validate();
-            }
+            $this->validateConfiguration($plugin);
 
             if (!$plugin->canRun()) {
                 continue;
@@ -79,6 +77,24 @@ class LoggerBuilder
         }
 
         return $handlers;
+    }
+
+    /**
+     * @param \Everon\Logger\Contract\Plugin\LoggerPluginInterface $plugin
+     *
+     * @return void
+     * @throws \Everon\Logger\Exception\ConfiguratorValidationException
+     */
+    protected function validateConfiguration(LoggerPluginInterface $plugin): void
+    {
+        if ($this->configurator->validateConfiguration()) {
+            try {
+                $plugin->validate();
+            }
+            catch (\UnexpectedValueException $exception) {
+                throw new ConfiguratorValidationException($exception->getMessage());
+            }
+        }
     }
 
     /**
@@ -94,11 +110,13 @@ class LoggerBuilder
                 $processors[] = $processor;
             }
             catch (Throwable $exception) {
-                throw new ProcessorBuildException(sprintf(
-                    'Could not build processor: "%s". Error: %s',
-                    $processorClass,
-                    $exception->getMessage()
-                ));
+                throw new ProcessorBuildException(
+                    sprintf(
+                        'Could not build processor: "%s". Error: %s',
+                        $processorClass,
+                        $exception->getMessage()
+                    )
+                );
             }
         }
 

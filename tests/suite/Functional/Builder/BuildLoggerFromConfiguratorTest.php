@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace EveronLoggerTests\Suit\Functional\Builder;
+namespace EveronLoggerTests\Suite\Functional\Builder;
 
 use Everon\Logger\Exception\ConfiguratorValidationException;
 use Everon\Logger\Exception\HandlerBuildException;
@@ -14,10 +14,9 @@ use EveronLoggerTests\Stub\Plugin\Stream\ProcessorExceptionStub;
 use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginConfiguratorStub;
 use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginStub;
 use EveronLoggerTests\Stub\Processor\MemoryUsageProcessorStub;
-use EveronLoggerTests\Suit\Configurator\TestLoggerConfigurator;
-use EveronLoggerTests\Suit\Functional\AbstractPluginLoggerTest;
+use EveronLoggerTests\Suite\Configurator\TestLoggerConfigurator;
+use EveronLoggerTests\Suite\Functional\AbstractPluginLoggerTest;
 use Psr\Log\LoggerInterface;
-use UnexpectedValueException;
 
 class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
 {
@@ -30,7 +29,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
 
     public function test_should_validate_builder_configuration(): void
     {
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(ConfiguratorValidationException::class);
         $this->expectExceptionMessage('Required value of "streamLocation" has not been set');
 
         $streamPluginConfigurator = (new StreamLoggerPluginConfiguratorStub())
@@ -126,7 +125,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
             ->setExtra(['memory_peak_usage' => '5 MB']));
     }
 
-    public function test_build_should_throw_handler_exception(): void
+    public function test_build_should_throw_exception_when_validation_fails(): void
     {
         $this->expectException(HandlerBuildException::class);
         $this->expectExceptionMessage('Could not build handler for plugin: "EveronLoggerTests\Stub\Plugin\Stream\HandlerExceptionLoggerPluginStub". Error: Invalid value for foo bar');

@@ -19,7 +19,6 @@ interface LoggerConfiguratorInterface extends ArrayableInterface
      * - Return true to validate builder's configuration
      *
      * @return bool
-     * @throws \Exception
      */
     public function validateConfiguration(): bool;
 

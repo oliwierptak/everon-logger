@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace EveronLoggerTests\Suit\Functional;
+namespace EveronLoggerTests\Suite\Functional;
 
 use Everon\Logger\Configurator\Plugin\LoggerConfigurator;
 use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
 use Everon\Logger\EveronLoggerFacade;
-use EveronLoggerTests\Suit\Configurator\TestLoggerConfigurator;
+use EveronLoggerTests\Suite\Configurator\TestLoggerConfigurator;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractPluginLoggerTest extends TestCase

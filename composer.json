@@ -20,7 +20,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "EveronLoggerTests\\Suit\\": "tests/suit/",
+            "EveronLoggerTests\\Suite\\": "tests/suite/",
             "EveronLoggerTests\\Stub\\": "tests/stub/"
         }
     },
@@ -32,7 +32,7 @@
             "vendor/bin/phpunit --testdox --no-coverage"
         ],
         "test-ac": [
-            "vendor/bin/phpunit --testdox --no-coverage --group acceptance tests/suit/Acceptance/"
+            "vendor/bin/phpunit --testdox --no-coverage --group acceptance tests/suite/Acceptance/"
         ],
         "test-coverage": "vendor/bin/phpunit --testdox --group acceptance,default"
     },
