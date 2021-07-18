@@ -380,7 +380,7 @@ class StreamLoggerPluginConfiguratorStub implements PluginConfiguratorInterface
         return $this->updateMap['logLevel'] ?? false;
     }
 
-    public function shouldBubble(): bool
+    public function isShouldBubble(): bool
     {
         return $this->popoGetValue('shouldBubble');
     }

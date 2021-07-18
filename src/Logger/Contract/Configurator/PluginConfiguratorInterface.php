@@ -44,5 +44,5 @@ interface PluginConfiguratorInterface extends ArrayableInterface
      *
      * @return bool|null
      */
-    public function shouldBubble(): ?bool;
+    public function isShouldBubble(): ?bool;
 }
