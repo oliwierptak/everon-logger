@@ -12,9 +12,12 @@ use function array_key_exists;
 abstract class AbstractLoggerConfigurator implements LoggerConfiguratorInterface
 {
     /**
-     * @var bool Validate builder's configuration and throw exception on error
+     * Validate builder's configuration and throw exception on error.
+     * Disabled by default
+     *
+     * @var bool
      */
-    protected bool $validateConfiguration = true;
+    protected bool $validateConfiguration = false;
     /**
      * @var \Everon\Logger\Contract\Configurator\PluginConfiguratorInterface[]
      */
