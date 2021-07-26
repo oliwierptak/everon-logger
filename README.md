@@ -73,7 +73,7 @@ $redisPluginConfigurator = new RedisLoggerPluginConfigurator;
 $redisPluginConfigurator
     ->setLogLevel('info')
     ->setKey('redis-queue-test')
-    ->getRedisConnection()
+    ->requireRedisConnection()
         ->setHost('redis.host')
         ->setTimeout(10);
 
