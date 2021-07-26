@@ -10,7 +10,7 @@
     "require-dev": {
         "ext-json": "*",
         "phpunit/phpunit": "^9",
-        "popo/generator": "dev-yaml-support-5.0",
+        "popo/generator": "^5",
         "symfony/var-dumper": "^5"
     },
     "autoload": {
