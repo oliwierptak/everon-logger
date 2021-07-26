@@ -1253,12 +1253,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/oliwierptak/popo.git",
-                "reference": "63e8f52014d1833b4a152e87ad2f50f33b050909"
+                "reference": "4ed2f5bbb626d7857f244ab91f822ce0a4ed2401"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oliwierptak/popo/zipball/63e8f52014d1833b4a152e87ad2f50f33b050909",
-                "reference": "63e8f52014d1833b4a152e87ad2f50f33b050909",
+                "url": "https://api.github.com/repos/oliwierptak/popo/zipball/4ed2f5bbb626d7857f244ab91f822ce0a4ed2401",
+                "reference": "4ed2f5bbb626d7857f244ab91f822ce0a4ed2401",
                 "shasum": ""
             },
             "require": {
@@ -1297,7 +1297,7 @@
                 "issues": "https://github.com/oliwierptak/popo/issues",
                 "source": "https://github.com/oliwierptak/popo/tree/5.0.0"
             },
-            "time": "2021-07-26T17:39:40+00:00"
+            "time": "2021-07-26T20:34:14+00:00"
         },
         {
             "name": "psr/container",
