@@ -31,9 +31,6 @@
         "test": [
             "vendor/bin/phpunit --testdox --no-coverage"
         ],
-        "test-ac": [
-            "vendor/bin/phpunit --testdox --no-coverage --group acceptance tests/suite/Acceptance/"
-        ],
         "test-coverage": "vendor/bin/phpunit --testdox --group acceptance,default"
     },
     "scripts-descriptions": {
