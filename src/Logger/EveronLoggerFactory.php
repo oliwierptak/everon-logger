@@ -9,10 +9,11 @@ use Everon\Logger\Builder\PluginBuilder;
 use Everon\Logger\Builder\ConfiguratorValidator;
 use Everon\Logger\Builder\LoggerBuilder;
 use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
+use JetBrains\PhpStorm\Pure;
 
 class EveronLoggerFactory
 {
-    public function createBuilderFromConfigurator(LoggerConfiguratorInterface $configurator): LoggerBuilder
+    #[Pure] public function createBuilderFromConfigurator(LoggerConfiguratorInterface $configurator): LoggerBuilder
     {
         return new LoggerBuilder(
             $configurator,
@@ -22,17 +23,17 @@ class EveronLoggerFactory
         );
     }
 
-    protected function createValidator(): ConfiguratorValidator
+    #[Pure] protected function createValidator(): ConfiguratorValidator
     {
         return new ConfiguratorValidator();
     }
 
-    protected function createPluginBuilder(): PluginBuilder
+    #[Pure] protected function createPluginBuilder(): PluginBuilder
     {
         return new PluginBuilder();
     }
 
-    protected function createHandlerBuilder(): HandlerBuilder
+    #[Pure] protected function createHandlerBuilder(): HandlerBuilder
     {
         return new HandlerBuilder();
     }

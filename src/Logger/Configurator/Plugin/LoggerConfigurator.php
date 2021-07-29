@@ -45,10 +45,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
 
     public function requireName(): string
     {
-        if (static::METADATA['name']['type'] === 'popo' && $this->name === null) {
-            $popo = static::METADATA['name']['default'];
-            $this->name = new $popo;
-        }
+        $this->setupPopoProperty('name');
 
         if ($this->name === null) {
             throw new UnexpectedValueException('Required value of "name" has not been set');
@@ -58,7 +55,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
 
     public function hasName(): bool
     {
-        return $this->name !== null || ($this->name !== null && array_key_exists('name', $this->updateMap));
+        return $this->name !== null;
     }
 
     /**
@@ -82,10 +79,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
      */
     public function requireProcessorClassCollection(): array
     {
-        if (static::METADATA['processorClassCollection']['type'] === 'popo' && $this->processorClassCollection === null) {
-            $popo = static::METADATA['processorClassCollection']['default'];
-            $this->processorClassCollection = new $popo;
-        }
+        $this->setupPopoProperty('processorClassCollection');
 
         if (empty($this->processorClassCollection)) {
             throw new UnexpectedValueException('Required value of "processorClassCollection" has not been set');
@@ -95,7 +89,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
 
     public function hasProcessorClassCollection(): bool
     {
-        return !empty($this->processorClassCollection) && array_key_exists('processorClassCollection', $this->updateMap);
+        return !empty($this->processorClassCollection);
     }
 
     public function addProcessorClass(string $item): self
@@ -128,10 +122,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
      */
     public function requireTimezone(): string
     {
-        if (static::METADATA['timezone']['type'] === 'popo' && $this->timezone === null) {
-            $popo = static::METADATA['timezone']['default'];
-            $this->timezone = new $popo;
-        }
+        $this->setupPopoProperty('timezone');
 
         if ($this->timezone === null) {
             throw new UnexpectedValueException('Required value of "timezone" has not been set');
@@ -141,7 +132,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
 
     public function hasTimezone(): bool
     {
-        return $this->timezone !== null || ($this->timezone !== null && array_key_exists('timezone', $this->updateMap));
+        return $this->timezone !== null;
     }
 
     #[\JetBrains\PhpStorm\ArrayShape(self::SHAPE_PROPERTIES)]
@@ -194,6 +185,11 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
         return empty($this->updateMap) === true;
     }
 
+    public function listModifiedProperties(): array
+    {
+        return array_keys($this->updateMap);
+    }
+
     public function requireAll(): self
     {
         $errors = [];
@@ -224,5 +220,13 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
         }
 
         return $this;
+    }
+
+    protected function setupPopoProperty($propertyName): void
+    {
+        if (static::METADATA[$propertyName]['type'] === 'popo' && $this->$propertyName === null) {
+            $popo = static::METADATA[$propertyName]['default'];
+            $this->$propertyName = new $popo;
+        }
     }
 }

@@ -14,7 +14,7 @@
         </report>
     </coverage>
     <testsuites>
-        <testsuite name="FunctionalSuit">
+        <testsuite name="FunctionalSuite">
             <directory>tests/suite/Functional</directory>
         </testsuite>
     </testsuites>

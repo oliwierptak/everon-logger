@@ -26,12 +26,16 @@
     },
     "scripts": {
         "popo": [
-            "vendor/bin/popo generate -s popo/everon-logger.popo.yml -p popo"
+            "vendor/bin/popo generate -q -s popo/everon-logger.popo.yml -p popo"
         ],
         "test": [
+            "@popo",
             "vendor/bin/phpunit --testdox --no-coverage"
         ],
-        "test-coverage": "vendor/bin/phpunit --testdox --group acceptance,default"
+        "test-c": [
+            "@popo",
+            "vendor/bin/phpunit --testdox --group acceptance,default"
+        ]
     },
     "scripts-descriptions": {
         "popo": "Generate POPO files",

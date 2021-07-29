@@ -15,21 +15,12 @@ use Throwable;
 
 class LoggerBuilder
 {
-    protected LoggerConfiguratorInterface $configurator;
-    protected PluginBuilder $pluginBuilder;
-    protected HandlerBuilder $handlerBuilder;
-    protected ConfiguratorValidator $validator;
-
     public function __construct(
-        LoggerConfiguratorInterface $configurator,
-        PluginBuilder $pluginBuilder,
-        HandlerBuilder $handlerBuilder,
-        ConfiguratorValidator $validator
+        protected LoggerConfiguratorInterface $configurator,
+        protected PluginBuilder $pluginBuilder,
+        protected HandlerBuilder $handlerBuilder,
+        protected ConfiguratorValidator $validator
     ) {
-        $this->configurator = $configurator;
-        $this->pluginBuilder = $pluginBuilder;
-        $this->handlerBuilder = $handlerBuilder;
-        $this->validator = $validator;
     }
 
     /**
