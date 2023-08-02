@@ -4,14 +4,12 @@ PSR-3 compliant logger, with pluggable architecture and simple configuration.
 
 ## Features
 
-
 - Pluggable architecture, semantically versioned
 - Simple data structure based configuration
 - One unified plugin configuration schema
 - Logger handlers and processors created and configured via plugins
 - Using configurators, plugins can be grouped into sets to easily create customized and very specific loggers instances
-- Based on [Monolog v2.x](https://github.com/Seldaek/monolog)
-
+- Based on [Monolog v3.x](https://github.com/Seldaek/monolog)
 
 #### Simple Usage
 
@@ -31,6 +29,7 @@ $logger->info('lorem ipsum');
 ```
 
 Content of `/tmp/example.log`.
+
 ```
 [2020-11-15T16:29:16.400318+00:00] everon-logger.INFO: lorem ipsum [] []
 ```
@@ -61,7 +60,6 @@ A logger plugin is used to create and configure corresponding monolog handler.
 Besides `LoggerPluginInterface` a plugin can also implement `PluginFormatterInterface`,
 in which case the custom formatter provided by the plugin will be used.
 
-
 ### Setup with LoggerConfigurator
 
 To setup a plugin with given handler, add it to the collection in `LoggerConfigurator` with `addPluginConfigurator()`.
@@ -88,6 +86,7 @@ $logger->info('lorem ipsum');
 ```
 
 Content of `redis-queue-test` in redis.
+
 ```
 [2020-11-15T16:39:12.495319+00:00] everon-logger.INFO: lorem ipsum [] {"memory_usage":"6 MB"}
 ```
@@ -116,7 +115,6 @@ composer require everon/logger-basic
 
 [Repository](https://github.com/oliwierptak/everon-logger-basic)
 
-
 ### Gelf
 
 Set of plugins for Graylog2 handlers.
@@ -126,7 +124,6 @@ composer require everon/logger-gelf
 ```
 
 [Repository](https://github.com/oliwierptak/everon-logger-gelf)
-
 
 ### Redis
 
@@ -140,11 +137,10 @@ composer require everon/logger-redis
 
 ## Requirements
 
-- PHP v8.x
-- [Monolog v2.x](https://github.com/Seldaek/monolog)
+- PHP v8.1.x
+- [Monolog v3.x](https://github.com/Seldaek/monolog)
 
-_Note_: Use v3.x for compatibility with PHP v7.4.
-
+_Note_: Use v2.x for compatibility with PHP v7.4.
 
 ## Installation
 
