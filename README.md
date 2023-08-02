@@ -142,8 +142,6 @@ composer require everon/logger-redis
 - PHP v8.1.x
 - [Monolog v3.x](https://github.com/Seldaek/monolog)
 
-_Note_: Use v2.x for compatibility with PHP v7.4.
-
 ## Installation
 
 ```
