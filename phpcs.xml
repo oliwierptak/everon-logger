@@ -14,11 +14,5 @@
                       value="php"/>
         </properties>
     </rule>
-    <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming.SuperfluousSuffix">
-        <exclude-pattern>src/*</exclude-pattern>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal">
-        <exclude-pattern>src/*</exclude-pattern>
-    </rule>
 
 </ruleset>
