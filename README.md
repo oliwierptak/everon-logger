@@ -1,5 +1,7 @@
 # EveronLogger
 
+[![Build and run tests](https://github.com/oliwierptak/everon-logger/actions/workflows/main.yml/badge.svg)](https://github.com/oliwierptak/everon-logger/actions/workflows/main.yml)
+
 PSR-3 compliant logger, with pluggable architecture and simple configuration.
 
 ## Features
