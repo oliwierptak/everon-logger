@@ -11,10 +11,11 @@ interface ArrayableInterface
      * - Instantiate any configurator defied as property with default values
      * - Return instance of updated configurator
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Everon\Logger\Contract\Configurator\ArrayableInterface
      */
+
     public function fromArray(array $data): ArrayableInterface;
 
     /**
@@ -22,7 +23,7 @@ interface ArrayableInterface
      * - Convert any property containing a configurator to an array as well
      * - Return (nested) array
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray(): array;
 }

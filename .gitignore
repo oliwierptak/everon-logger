@@ -1,6 +1,8 @@
 !.gitignore
 .idea
 vendor
+.phpcs-cache
+.phpunit.cache
 .php_cs.cache
 .phpunit.result.cache
 .DS_Store

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ruleset name="Everon">
+    <exclude-pattern>*/tests/App/*</exclude-pattern>
+    <exclude-pattern>*/tests/logs/*</exclude-pattern>
+
+    <rule ref="Everon"/>
+    <rule ref="Everon.Files.TypeNameMatchesFileName">
+        <properties>
+            <property name="rootNamespaces" type="array"
+                      value="src=>Everon,tests/suite=>EveronLoggerTests\Suite"/>
+            <property name="skipDirs" type="array"
+                      value="tests/App/"/>
+            <property name="extensions" type="array"
+                      value="php"/>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming.SuperfluousSuffix">
+        <exclude-pattern>src/*</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal">
+        <exclude-pattern>src/*</exclude-pattern>
+    </rule>
+
+</ruleset>

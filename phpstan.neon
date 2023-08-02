@@ -1,0 +1,10 @@
+parameters:
+	level: 8
+	paths:
+		- src
+		- tests/suite
+	bootstrapFiles:
+		- tests/bootstrap.php
+	excludePaths:
+		- tests/*
+		- src/Logger/Configurator/Plugin/*

@@ -20,11 +20,13 @@ class PluginBuilder
     public function buildPlugin(PluginConfiguratorInterface $pluginConfigurator): LoggerPluginInterface
     {
         try {
+            /** @var \Everon\Logger\Contract\Plugin\PluginFactoryInterface $pluginFactoryClass */
             $pluginFactoryClass = $pluginConfigurator->getPluginFactoryClass();
             if ($pluginFactoryClass !== null) {
                 return (new $pluginFactoryClass())->create($pluginConfigurator);
             }
 
+            /* @phpstan-ignore-next-line */
             $pluginClassName = $pluginConfigurator->requirePluginClass();
 
             return new $pluginClassName($pluginConfigurator);

@@ -42,6 +42,9 @@ interface LoggerConfiguratorInterface extends ArrayableInterface
      */
     public function requireTimezone(): string;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function fromArray(array $data): LoggerConfiguratorInterface;
 
     /**
@@ -93,4 +96,9 @@ interface LoggerConfiguratorInterface extends ArrayableInterface
      * @return \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface
      */
     public function addProcessorClass(string $item): LoggerConfiguratorInterface;
+
+    /**
+     * @return string[]
+     */
+    public function getProcessorClassCollection(): array;
 }

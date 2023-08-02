@@ -4,6 +4,9 @@ namespace Everon\Logger\Contract\Configurator;
 
 interface PluginConfiguratorInterface extends ArrayableInterface
 {
+    /**
+     * @param array<string, mixed> $data
+     */
     public function fromArray(array $data): PluginConfiguratorInterface;
 
     /**

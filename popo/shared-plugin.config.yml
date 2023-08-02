@@ -1,8 +1,12 @@
 $:
-  namespace: Everon\Logger\Configurator\Plugin
-  outputPath: src/
-  namespaceRoot: Everon\
-  comment: Everon logger configuration file. Auto-generated.
+  config:
+    namespace: Everon\Logger\Configurator\Plugin
+    outputPath: src/
+    namespaceRoot: Everon\
+    phpComment: |
+      @SuppressWarnings(PHPMD)
+      @phpcs:ignoreFile    
+      Everon logger configuration file. Auto-generated.
 
 EveronLogger:
   $:

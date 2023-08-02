@@ -9,7 +9,13 @@ use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
 use Everon\Logger\EveronLoggerFacade;
 use EveronLoggerTests\Suite\Configurator\TestLoggerConfigurator;
 use PHPUnit\Framework\TestCase;
+use function addslashes;
+use function is_file;
+use function preg_split;
 
+/**
+ * @group skip
+ */
 abstract class AbstractPluginLoggerTest extends TestCase
 {
     protected string $logFilename = '/tmp/everon-logger-plugin-logfile.log';
@@ -28,17 +34,17 @@ abstract class AbstractPluginLoggerTest extends TestCase
 
     protected function assertEmptyLogFile(): void
     {
-        $syslogData = shell_exec('tail --lines=1 ' . $this->logFilename);
+        $syslogData = shell_exec('tail -n 1 ' . $this->logFilename);
         $this->assertNull($syslogData);
     }
 
     protected function assertLogFile(TestLoggerConfigurator $configurator): void
     {
-        if (!\is_file($this->logFilename)) {
+        if (!is_file($this->logFilename)) {
             return;
         }
         
-        $logData = shell_exec('tail --lines=1 ' . $this->logFilename);
+        $logData = shell_exec('tail -n 1 ' . $this->logFilename);
         if ($logData === null) {
             $this->assertFalse(false);
 
@@ -51,7 +57,7 @@ abstract class AbstractPluginLoggerTest extends TestCase
 
         foreach ($data as $line) {
             //[2020-11-21T14:25:08.720572+00:00] everon-logger.INFO: foo bar [] []
-            $tokens = \preg_split('@' . \addslashes($configurator->getDelimiter()) . '@', trim($line));
+            $tokens = preg_split('@' . addslashes($configurator->getDelimiter()) . '@', trim($line));
             if (count($tokens) < 2) {
                 continue;
             }

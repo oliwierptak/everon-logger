@@ -24,6 +24,7 @@ class HandlerBuilder
             $handler = $plugin->buildHandler();
             if ($plugin instanceof PluginFormatterInterface) {
                 $formatter = $plugin->buildFormatter();
+                /* @phpstan-ignore-next-line */
                 $handler->setFormatter($formatter);
             }
 

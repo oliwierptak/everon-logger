@@ -9,6 +9,7 @@ use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
 use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
 use Everon\Logger\Exception\ConfiguratorValidationException;
 use Everon\Logger\Exception\ProcessorBuildException;
+use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -46,7 +47,7 @@ class LoggerBuilder
     }
 
     /**
-     * @return array
+     * @return array<HandlerInterface>
      * @throws \Exception
      * @throws \Everon\Logger\Exception\PluginBuildException
      * @throws \Everon\Logger\Exception\HandlerBuildException
@@ -97,6 +98,7 @@ class LoggerBuilder
         $processors = [];
         foreach ($this->configurator->getProcessorClassCollection() as $processorClass) {
             try {
+                /** @var \Monolog\Processor\ProcessorInterface $processor */
                 $processor = new $processorClass();
                 $processors[] = $processor;
             }

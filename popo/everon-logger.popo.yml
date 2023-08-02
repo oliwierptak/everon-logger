@@ -1,10 +1,14 @@
 $:
-  namespace: Everon\Logger\Configurator\Plugin
-  outputPath: src/
-  namespaceRoot: Everon\
-  extend: \Everon\Logger\Configurator\AbstractLoggerConfigurator::class
-  implement: \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface::class
-  comment: Everon logger configuration file. Auto-generated.
+  config:
+    namespace: Everon\Logger\Configurator\Plugin
+    outputPath: src/
+    namespaceRoot: Everon\
+    extend: \Everon\Logger\Configurator\AbstractLoggerConfigurator::class
+    implement: \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface::class
+    phpComment: |
+      @SuppressWarnings(PHPMD)
+      @phpcs:ignoreFile    
+      Everon logger configuration file. Auto-generated.
 
 EveronLogger:
   LoggerConfigurator:
@@ -12,7 +16,7 @@ EveronLogger:
       name: everon-logger
       timezone: UTC
     property: [
-      {name: name, commment: Logger's name},
+      {name: name, comment: Logger's name},
       {name: timezone, comment: Logger's timezone},
       {
         name: processorClassCollection,

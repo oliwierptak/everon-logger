@@ -20,7 +20,7 @@ class EveronLoggerFacade implements EveronLoggerFacadeInterface
 
     protected function getFactory(): EveronLoggerFactory
     {
-        if (empty($this->factory)) {
+        if (!isset($this->factory)) {
             $this->factory = new EveronLoggerFactory();
         }
 

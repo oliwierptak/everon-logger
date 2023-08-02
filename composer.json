@@ -4,14 +4,16 @@
     "minimum-stability": "stable",
     "license": "MIT",
     "require": {
-        "php": "^8",
-        "monolog/monolog": "^2"
+        "php": ">=8.1",
+        "monolog/monolog": "^3"
     },
     "require-dev": {
         "ext-json": "*",
-        "phpunit/phpunit": "^9",
-        "popo/generator": "^5",
-        "symfony/var-dumper": "^5"
+        "phpunit/phpunit": "^10",
+        "popo/generator": "^6",
+        "symfony/var-dumper": "^6",
+        "phpstan/phpstan": "^1.10",
+        "everon/coding-standard": "^3.0"
     },
     "autoload": {
         "psr-4": {
@@ -25,14 +27,26 @@
         }
     },
     "scripts": {
-        "popo": [
-            "vendor/bin/popo generate -q -s popo/everon-logger.popo.yml -p popo"
+        "phpstan": [
+            "vendor/bin/phpstan analyse -c phpstan.neon"
         ],
-        "test": [
+        "cs-fix": [
+            "vendor/bin/phpcbf -q --standard=phpcs.xml ${1-src}"
+        ],
+        "cs-check": [
+            "vendor/bin/phpcs --colors -p -s --report-width=120 --extensions=php --standard=phpcs.xml ${1-src}"
+        ],
+        "cs-list": [
+            "vendor/bin/phpcs -e --standard=phpcs.xml"
+        ],
+        "popo": [
+            "vendor/bin/popo generate -s popo"
+        ],
+        "tests": [
             "@popo",
             "vendor/bin/phpunit --testdox --no-coverage"
         ],
-        "test-c": [
+        "tests-c": [
             "@popo",
             "vendor/bin/phpunit --testdox --group acceptance,default"
         ]
@@ -47,5 +61,10 @@
         "everon-logger-basic": "Set of basic plugins that require no extra vendor dependencies",
         "everon-logger-gelf": "Plugin that allows to send messages to Graylog2 servers",
         "everon-logger-redis": "Plugin that allows to send messages to Redis servers"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

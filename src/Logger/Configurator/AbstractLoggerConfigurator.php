@@ -80,4 +80,14 @@ abstract class AbstractLoggerConfigurator implements LoggerConfiguratorInterface
 
         return $this->pluginConfiguratorCollection[$pluginClass];
     }
+
+    public function toArray(): array
+    {
+        return [];
+    }
+
+    public function fromArray(array $data): self
+    {
+        return $this;
+    }
 }

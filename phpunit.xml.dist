@@ -1,13 +1,9 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false"
-         colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="true" stopOnError="true"
-         stopOnIncomplete="false" stopOnSkipped="false" bootstrap="tests/bootstrap.php"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">./src/</directory>
-        </include>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true"
+         stopOnFailure="true" stopOnError="true"
+         bootstrap="tests/bootstrap.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd"
+         cacheDirectory=".phpunit.cache">
+    <coverage>
         <report>
             <clover outputFile="./tests/logs/coverage.xml"/>
             <html outputDirectory="./tests/logs/coverage"/>
@@ -16,6 +12,7 @@
     <testsuites>
         <testsuite name="FunctionalSuite">
             <directory>tests/suite/Functional</directory>
+            <exclude>./tests/suite/Functional/AbstractPluginLoggerTest.php</exclude>
         </testsuite>
     </testsuites>
     <logging>
@@ -24,11 +21,17 @@
     <groups>
         <exclude>
             <group>acceptance</group>
+            <group>skip</group>
         </exclude>
     </groups>
     <php>
-        <env name="TEST_GELF_HOST" value="" />
-        <env name="TEST_REDIS_HOST" value="" />
-        <env name="TEST_REDIS_PORT" value="6379" />
+        <env name="TEST_GELF_HOST" value=""/>
+        <env name="TEST_REDIS_HOST" value=""/>
+        <env name="TEST_REDIS_PORT" value="6379"/>
     </php>
+    <source>
+        <include>
+            <directory>./src/</directory>
+        </include>
+    </source>
 </phpunit>
