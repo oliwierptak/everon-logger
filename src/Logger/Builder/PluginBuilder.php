@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Everon\Logger\Builder;
 
@@ -11,19 +9,16 @@ use Throwable;
 
 class PluginBuilder
 {
-    /**
-     * @param \Everon\Logger\Contract\Configurator\PluginConfiguratorInterface $pluginConfigurator
-     *
-     * @return \Everon\Logger\Contract\Plugin\LoggerPluginInterface
-     * @throws \Everon\Logger\Exception\PluginBuildException
-     */
+
+    /** @throws \Everon\Logger\Exception\PluginBuildException */
     public function buildPlugin(PluginConfiguratorInterface $pluginConfigurator): LoggerPluginInterface
     {
         try {
-            /** @var \Everon\Logger\Contract\Plugin\PluginFactoryInterface $pluginFactoryClass */
             $pluginFactoryClass = $pluginConfigurator->getPluginFactoryClass();
+            \assert($pluginFactoryClass instanceof \Everon\Logger\Contract\Plugin\PluginFactoryInterface);
+
             if ($pluginFactoryClass !== null) {
-                return (new $pluginFactoryClass())->create($pluginConfigurator);
+                return (new $pluginFactoryClass)->create($pluginConfigurator);
             }
 
             /* @phpstan-ignore-next-line */
@@ -32,11 +27,14 @@ class PluginBuilder
             return new $pluginClassName($pluginConfigurator);
         }
         catch (Throwable $exception) {
-            throw new PluginBuildException(sprintf(
-                'Could not build plugin: "%s". Error: %s',
-                $pluginConfigurator->requirePluginClass(),
-                $exception->getMessage()
-            ), $exception->getCode(), $exception);
+            throw new PluginBuildException(
+                \sprintf(
+                    'Could not build plugin: "%s". Error: %s',
+                    $pluginConfigurator->requirePluginClass(),
+                    $exception->getMessage(),
+                ), $exception->getCode(), $exception
+            );
         }
     }
+
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Everon\Logger;
 
@@ -7,6 +7,7 @@ use Psr\Log\LoggerInterface;
 
 interface EveronLoggerFacadeInterface
 {
+
     /**
      * Specification:
      * - Validate configurator, throw exception on error
@@ -19,14 +20,11 @@ interface EveronLoggerFacadeInterface
      * - Create instance of logger implementing Psr\Log\LoggerInterface
      * - Return logger instance
      *
-     * @param \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface $configurator
-     *
-     * @return \Psr\Log\LoggerInterface
-     *
      * @throws \Everon\Logger\Exception\HandlerBuildException
      * @throws \Everon\Logger\Exception\PluginBuildException
      * @throws \Everon\Logger\Exception\ProcessorBuildException
      * @throws \Everon\Logger\Exception\ConfiguratorValidationException
      */
     public function buildLogger(LoggerConfiguratorInterface $configurator): LoggerInterface;
+
 }

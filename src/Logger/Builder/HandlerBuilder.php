@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Everon\Logger\Builder;
 
@@ -31,11 +29,13 @@ class HandlerBuilder
             return $handler;
         }
         catch (Throwable $exception) {
-            throw new HandlerBuildException(sprintf(
-                'Could not build handler for plugin: "%s". Error: %s',
-                get_class($plugin),
-                $exception->getMessage()
-            ), $exception->getCode(), $exception);
+            throw new HandlerBuildException(
+                sprintf(
+                    'Could not build handler for plugin: "%s". Error: %s',
+                    get_class($plugin),
+                    $exception->getMessage(),
+                ), $exception->getCode(), $exception
+            );
         }
     }
 }

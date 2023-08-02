@@ -1,13 +1,11 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Everon\Logger;
 
-use Everon\Logger\Builder\HandlerBuilder;
-use Everon\Logger\Builder\PluginBuilder;
 use Everon\Logger\Builder\ConfiguratorValidator;
+use Everon\Logger\Builder\HandlerBuilder;
 use Everon\Logger\Builder\LoggerBuilder;
+use Everon\Logger\Builder\PluginBuilder;
 use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
 
 class EveronLoggerFactory

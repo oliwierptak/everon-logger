@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Everon\Logger\Contract\Configurator;
 
 interface ArrayableInterface
 {
+
     /**
      * Specification:
      * - Reset state to defaults
@@ -12,11 +13,9 @@ interface ArrayableInterface
      * - Return instance of updated configurator
      *
      * @param array<string, mixed> $data
-     *
-     * @return \Everon\Logger\Contract\Configurator\ArrayableInterface
      */
 
-    public function fromArray(array $data): ArrayableInterface;
+    public function fromArray(array $data): self;
 
     /**
      * Specification:
@@ -26,4 +25,5 @@ interface ArrayableInterface
      * @return array<string, mixed>
      */
     public function toArray(): array;
+
 }

@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Everon\Logger\Configurator;
 
@@ -73,7 +71,7 @@ abstract class AbstractLoggerConfigurator implements LoggerConfiguratorInterface
             throw new InvalidArgumentException(
                 sprintf(
                     'Could not find plugin configurator for plugin: "%s"',
-                    $pluginClass
+                    $pluginClass,
                 )
             );
         }

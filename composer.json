@@ -13,7 +13,7 @@
         "popo/generator": "^6",
         "symfony/var-dumper": "^6",
         "phpstan/phpstan": "^1.10",
-        "everon/coding-standard": "^3.0"
+        "everon/coding-standard": "@dev"
     },
     "autoload": {
         "psr-4": {
@@ -66,5 +66,14 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../sources/coding-standard/",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
 }

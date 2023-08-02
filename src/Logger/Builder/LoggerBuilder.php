@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Everon\Logger\Builder;
 
@@ -20,9 +18,8 @@ class LoggerBuilder
         protected LoggerConfiguratorInterface $configurator,
         protected PluginBuilder $pluginBuilder,
         protected HandlerBuilder $handlerBuilder,
-        protected ConfiguratorValidator $validator
-    ) {
-    }
+        protected ConfiguratorValidator $validator,
+    ) {}
 
     /**
      * @return \Psr\Log\LoggerInterface
@@ -107,7 +104,7 @@ class LoggerBuilder
                     sprintf(
                         'Could not build processor: "%s". Error: %s',
                         $processorClass,
-                        $exception->getMessage()
+                        $exception->getMessage(),
                     )
                 );
             }

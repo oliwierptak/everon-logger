@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Everon\Logger\Exception;
 
@@ -8,4 +6,5 @@ use Exception;
 
 class ProcessorBuildException extends Exception
 {
+
 }
