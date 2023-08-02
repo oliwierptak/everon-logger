@@ -6,7 +6,6 @@ use Everon\Logger\Contract\Configurator\PluginConfiguratorInterface;
 use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
 use Everon\Logger\Exception\PluginBuildException;
 use Throwable;
-use function assert;
 use function sprintf;
 
 class PluginBuilder
@@ -19,13 +18,13 @@ class PluginBuilder
             $pluginFactoryClass = $pluginConfigurator->getPluginFactoryClass();
 
             if ($pluginFactoryClass !== null) {
-                assert($pluginFactoryClass instanceof \Everon\Logger\Contract\Plugin\PluginFactoryInterface);
+                /* @phpstan-ignore-next-line */
                 return (new $pluginFactoryClass)->create($pluginConfigurator);
             }
 
-            /* @phpstan-ignore-next-line */
             $pluginClassName = $pluginConfigurator->requirePluginClass();
 
+            /* @phpstan-ignore-next-line */
             return new $pluginClassName($pluginConfigurator);
         }
         catch (Throwable $exception) {
