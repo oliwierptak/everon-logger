@@ -6,6 +6,8 @@ use Everon\Logger\Contract\Configurator\PluginConfiguratorInterface;
 use Everon\Logger\Contract\Plugin\LoggerPluginInterface;
 use Everon\Logger\Exception\PluginBuildException;
 use Throwable;
+use function assert;
+use function sprintf;
 
 class PluginBuilder
 {
@@ -15,9 +17,9 @@ class PluginBuilder
     {
         try {
             $pluginFactoryClass = $pluginConfigurator->getPluginFactoryClass();
-            \assert($pluginFactoryClass instanceof \Everon\Logger\Contract\Plugin\PluginFactoryInterface);
 
             if ($pluginFactoryClass !== null) {
+                assert($pluginFactoryClass instanceof \Everon\Logger\Contract\Plugin\PluginFactoryInterface);
                 return (new $pluginFactoryClass)->create($pluginConfigurator);
             }
 
@@ -28,7 +30,7 @@ class PluginBuilder
         }
         catch (Throwable $exception) {
             throw new PluginBuildException(
-                \sprintf(
+                sprintf(
                     'Could not build plugin: "%s". Error: %s',
                     $pluginConfigurator->requirePluginClass(),
                     $exception->getMessage(),

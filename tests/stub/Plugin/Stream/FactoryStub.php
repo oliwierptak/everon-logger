@@ -12,7 +12,6 @@ class FactoryStub implements PluginFactoryInterface
 {
     public function create(PluginConfiguratorInterface $configurator): LoggerPluginInterface
     {
-        /** @var StreamLoggerPluginConfiguratorStub $configurator */
         return new StreamLoggerPluginStub($configurator);
     }
 }

@@ -1,4 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+/**
+ * @SuppressWarnings(PHPMD)
+ * @phpcs:ignoreFile
+ * Everon logger configuration file. Auto-generated.
+ */
+
+declare(strict_types=1);
 
 namespace Everon\Logger\Configurator\Plugin;
 
@@ -6,20 +14,18 @@ use DateTime;
 use DateTimeZone;
 use Throwable;
 use UnexpectedValueException;
+
 use function array_filter;
 use function array_key_exists;
 use function array_keys;
 use function array_replace_recursive;
 use function in_array;
 use function sort;
+
 use const ARRAY_FILTER_USE_KEY;
 use const SORT_STRING;
 
-/**
- * Everon logger configuration file. Auto-generated.
- */
-class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfigurator
-    implements \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface
+class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfigurator implements \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface
 {
     public const NAME = 'name';
     public const TIMEZONE = 'timezone';
@@ -273,9 +279,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
 
             if (self::METADATA[$name]['type'] === 'popo') {
                 $popo = self::METADATA[$name]['default'];
-                $value = $this->$name !== null ? $this->$name->toMappedArray(...$mappings) : (new $popo)->toMappedArray(
-                    ...$mappings,
-                );
+                $value = $this->$name !== null ? $this->$name->toMappedArray(...$mappings) : (new $popo)->toMappedArray(...$mappings);
             }
 
             $key = $this->mapKeyName($mappings, $propertyMetadata['mappingPolicyValue']);
@@ -309,22 +313,22 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
             $mappingPolicy['snake-to-camel'] =
                 static function (string $key): string {
                     $stringTokens = explode('_', mb_strtolower($key));
-                    $camelizedString = array_shift($stringTokens);
-                    foreach ($stringTokens as $token) {
-                        $camelizedString .= ucfirst($token);
-                    }
+                $camelizedString = array_shift($stringTokens);
+                foreach ($stringTokens as $token) {
+                    $camelizedString .= ucfirst($token);
+                }
 
-                    return $camelizedString;
+                return $camelizedString;
                 };
 
             $mappingPolicy['camel-to-snake'] =
                 static function (string $key): string {
                     $camelizedStringTokens = preg_split('/(?<=[^A-Z])(?=[A-Z])/', $key);
-                    if ($camelizedStringTokens !== false && count($camelizedStringTokens) > 0) {
-                        $key = mb_strtolower(implode('_', $camelizedStringTokens));
-                    }
+                if ($camelizedStringTokens !== false && count($camelizedStringTokens) > 0) {
+                    $key = mb_strtolower(implode('_', $camelizedStringTokens));
+                }
 
-                    return $key;
+                return $key;
                 };
 
         }
@@ -392,9 +396,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
      */
     public function setName(?string $name): self
     {
-        $this->name = $name;
-        $this->updateMap['name'] = true;
-        return $this;
+        $this->name = $name; $this->updateMap['name'] = true; return $this;
     }
 
     /**
@@ -429,9 +431,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
      */
     public function setTimezone(?string $timezone): self
     {
-        $this->timezone = $timezone;
-        $this->updateMap['timezone'] = true;
-        return $this;
+        $this->timezone = $timezone; $this->updateMap['timezone'] = true; return $this;
     }
 
     public function addProcessorClass(string $item): self
@@ -475,8 +475,6 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
      */
     public function setProcessorClassCollection(array $processorClassCollection): self
     {
-        $this->processorClassCollection = $processorClassCollection;
-        $this->updateMap['processorClassCollection'] = true;
-        return $this;
+        $this->processorClassCollection = $processorClassCollection; $this->updateMap['processorClassCollection'] = true; return $this;
     }
 }
