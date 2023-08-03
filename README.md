@@ -2,15 +2,15 @@
 
 [![Build and run tests](https://github.com/oliwierptak/everon-logger/actions/workflows/main.yml/badge.svg)](https://github.com/oliwierptak/everon-logger/actions/workflows/main.yml)
 
-PSR-3 compliant logger, with pluggable architecture and simple configuration.
+Monolog based, PSR-3 compliant logger, with pluggable architecture and simple configuration.
 
 ## Features
 
 - Pluggable architecture, semantically versioned
-- Simple data structure based configuration
-- One unified plugin configuration schema
-- Logger handlers and processors created and configured via plugins
-- Using configurators, plugins can be grouped into sets to easily create customized and very specific loggers instances
+- Simple setup, with autocompletion
+- One unified configuration schema
+- Plugins can be grouped into sets to easily create customized and very specific loggers instances
+- Monolog's handlers and processors constructors details and dependencies are never exposed
 - Based on [Monolog v3.x](https://github.com/Seldaek/monolog)
 
 #### Simple Usage
@@ -38,31 +38,34 @@ Content of `/tmp/example.log`.
 
 ## Configuration
 
-The configuration is done by [simple data classes](https://github.com/oliwierptak/popo/) called `configurators`.
-Each plugin configurator has only plugin specific settings.
+The configuration is done by [simple data structures](https://github.com/oliwierptak/popo/) called `configurators`.
+Each plugin configurator has its plugin specific settings.
 
-For example, setup syslog and file logging.
+For example, to use syslog and file logging, setup the `StreamLoggerPluginConfigurator`
+and `SyslogLoggerPluginConfigurator`.
 
 ```php
 $configurator = (new LoggerConfigurator)
-    ->add((new StreamLoggerPluginConfigurator)
-        ->setLogLevel('debug')
-        ->setStreamLocation('/tmp/example.log')
-    )->add((new SyslogLoggerPluginConfigurator)
-        ->setLogLevel('info')
-        ->setIdent('everon-logger-ident'));
+    ->add(
+        (new StreamLoggerPluginConfigurator)
+            ->setLogLevel('debug')
+            ->setStreamLocation('/tmp/example.log')
+    )->add(
+        (new SyslogLoggerPluginConfigurator)
+            ->setLogLevel('info')
+            ->setIdent('everon-logger-ident'));
 ```  
 
 ### Logger Handler / Plugin
 
-A logger plugin is used to create and configure corresponding monolog handler.
+A logger plugin is used to create and configure corresponding Monolog's handler.
 
 Besides `LoggerPluginInterface` a plugin can also implement `PluginFormatterInterface`,
 in which case the custom formatter provided by the plugin will be used.
 
 ### Setup with LoggerConfigurator
 
-To setup a plugin with given handler, add it to the collection in `LoggerConfigurator` with `add()`.
+To set up a plugin with given handler, add it to the collection in `LoggerConfigurator` with `add()`.
 
 For example, setup logging to a redis server and enable memory usage processor.
 
@@ -77,8 +80,8 @@ $redisPluginConfigurator
 
 $configurator = (new LoggerConfigurator)
     ->setName('everon-logger-example')
-    ->addProcessor(MemoryUsageProcessor::class)
-    ->add($redisPluginConfigurator);
+    ->add($redisPluginConfigurator)
+    ->addProcessor(MemoryUsageProcessor::class);
 
 $logger = (new EveronLoggerFacade)->buildLogger($configurator);
 
