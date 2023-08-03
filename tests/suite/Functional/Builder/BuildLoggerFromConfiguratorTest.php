@@ -8,6 +8,7 @@ use Everon\Logger\Exception\ConfiguratorValidationException;
 use Everon\Logger\Exception\HandlerBuildException;
 use Everon\Logger\Exception\PluginBuildException;
 use Everon\Logger\Exception\ProcessorBuildException;
+use Everon\Shared\Testify\Logger\LoggerHelperTrait;
 use EveronLoggerTests\Stub\Plugin\Stream\HandlerExceptionLoggerPluginStub;
 use EveronLoggerTests\Stub\Plugin\Stream\PluginExceptionLoggerPluginStub;
 use EveronLoggerTests\Stub\Plugin\Stream\ProcessorExceptionStub;
@@ -15,11 +16,13 @@ use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginConfiguratorStub;
 use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginStub;
 use EveronLoggerTests\Stub\Processor\MemoryUsageProcessorStub;
 use EveronLoggerTests\Suite\Configurator\TestLoggerConfigurator;
-use EveronLoggerTests\Suite\Functional\AbstractPluginLoggerTest;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
-class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
+class BuildLoggerFromConfiguratorTest extends TestCase
 {
+    use LoggerHelperTrait;
+
     public function test_build_empty_logger(): void
     {
         $logger = $this->facade->buildLogger($this->configurator);

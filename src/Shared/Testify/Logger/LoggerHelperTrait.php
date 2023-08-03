@@ -1,22 +1,13 @@
-<?php
+<?php declare(strict_types = 1);
 
-declare(strict_types = 1);
-
-namespace EveronLoggerTests\Suite\Functional;
+namespace Everon\Shared\Testify\Logger;
 
 use Everon\Logger\Configurator\Plugin\LoggerConfigurator;
 use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
 use Everon\Logger\EveronLoggerFacade;
 use EveronLoggerTests\Suite\Configurator\TestLoggerConfigurator;
-use PHPUnit\Framework\TestCase;
-use function addslashes;
-use function is_file;
-use function preg_split;
 
-/**
- * @group skip
- */
-abstract class AbstractPluginLoggerTest extends TestCase
+trait LoggerHelperTrait
 {
     protected string $logFilename = '/tmp/everon-logger-plugin-logfile.log';
 
@@ -43,7 +34,7 @@ abstract class AbstractPluginLoggerTest extends TestCase
         if (!is_file($this->logFilename)) {
             return;
         }
-        
+
         $logData = shell_exec('tail -n 1 ' . $this->logFilename);
         if ($logData === null) {
             $this->assertFalse(false);
@@ -67,7 +58,7 @@ abstract class AbstractPluginLoggerTest extends TestCase
                 strtoupper($configurator->getLevel()),
                 $configurator->getMessage(),
                 $jsonContextString,
-                $jsonExtraString
+                $jsonExtraString,
             );
             $this->assertEquals($expected, trim($tokens[1]));
         }
