@@ -25,7 +25,7 @@ trait LoggerHelperTrait
 
     protected function assertEmptyLogFile(): void
     {
-        $syslogData = shell_exec('tail -n 1 ' . $this->logFilename);
+        $syslogData = (is_file($this->logFilename)) ? shell_exec('tail -n 1 ' . $this->logFilename) : null;
         $this->assertNull($syslogData);
     }
 
