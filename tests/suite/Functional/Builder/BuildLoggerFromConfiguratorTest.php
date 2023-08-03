@@ -23,6 +23,13 @@ class BuildLoggerFromConfiguratorTest extends TestCase
 {
     use LoggerHelperTrait;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->init();
+    }
+
     public function test_build_empty_logger(): void
     {
         $logger = $this->facade->buildLogger($this->configurator);

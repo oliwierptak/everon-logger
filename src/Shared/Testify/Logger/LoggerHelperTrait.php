@@ -15,7 +15,7 @@ trait LoggerHelperTrait
 
     protected EveronLoggerFacade $facade;
 
-    protected function setUp(): void
+    protected function init(): void
     {
         $this->configurator = new LoggerConfigurator();
         $this->facade = new EveronLoggerFacade();
