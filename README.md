@@ -44,13 +44,13 @@ Each plugin configurator has only plugin specific settings.
 For example, setup syslog and file logging.
 
 ```php
-$configurator = (new LoggerConfigurator)->addPluginConfigurator(
-        (new StreamLoggerPluginConfigurator)
-            ->setLogLevel('debug')
-            ->setStreamLocation('/tmp/example.log')
+$configurator = (new LoggerConfigurator)
+    ->addPluginConfigurator((new StreamLoggerPluginConfigurator)
+        ->setLogLevel('debug')
+        ->setStreamLocation('/tmp/example.log')
     )->addPluginConfigurator((new SyslogLoggerPluginConfigurator)
-            ->setLogLevel('info')
-            ->setIdent('everon-logger-ident'));
+        ->setLogLevel('info')
+        ->setIdent('everon-logger-ident'));
 ```  
 
 ### Logger Handler / Plugin
