@@ -1,7 +1,14 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true"
-         stopOnFailure="true" stopOnError="true"
-         bootstrap="tests/bootstrap.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd"
+         colors="true"
+         stopOnFailure="true"
+         stopOnError="true"
+         stopOnWarning="true"
+         failOnWarning="true"
+         failOnNotice="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         bootstrap="tests/bootstrap.php"
          cacheDirectory=".phpunit.cache">
     <coverage>
         <report>
@@ -12,7 +19,6 @@
     <testsuites>
         <testsuite name="FunctionalSuite">
             <directory>tests/suite/Functional</directory>
-            <exclude>./tests/suite/Functional/AbstractPluginLoggerTest.php</exclude>
         </testsuite>
     </testsuites>
     <logging>
@@ -24,11 +30,6 @@
             <group>skip</group>
         </exclude>
     </groups>
-    <php>
-        <env name="TEST_GELF_HOST" value=""/>
-        <env name="TEST_REDIS_HOST" value=""/>
-        <env name="TEST_REDIS_PORT" value="6379"/>
-    </php>
     <source>
         <include>
             <directory>./src/</directory>

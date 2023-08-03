@@ -2,6 +2,8 @@
 
 namespace Everon\Logger\Contract\Configurator;
 
+use Monolog\Level;
+
 interface PluginConfiguratorInterface extends ArrayableInterface
 {
 
@@ -31,7 +33,7 @@ interface PluginConfiguratorInterface extends ArrayableInterface
      *
      * @throws \UnexpectedValueException
      */
-    public function requireLogLevel(): string;
+    public function requireLogLevel(): Level;
 
     /**
      * Specification:

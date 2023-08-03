@@ -2,9 +2,9 @@
 
 namespace Everon\Shared\Testify\Logger;
 
-use Everon\Logger\Configurator\Plugin\LoggerConfigurator;
 use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
 use Everon\Logger\EveronLoggerFacade;
+use Everon\Shared\Logger\Configurator\Plugin\LoggerConfigurator;
 use EveronLoggerTests\Suite\Configurator\TestLoggerConfigurator;
 
 trait LoggerHelperTrait
@@ -55,7 +55,7 @@ trait LoggerHelperTrait
 
             $expected = sprintf(
                 '%s: %s %s %s',
-                strtoupper($configurator->getLevel()),
+                strtoupper($configurator->getLogLevel()->getName()),
                 $configurator->getMessage(),
                 $jsonContextString,
                 $jsonExtraString,

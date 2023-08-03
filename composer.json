@@ -40,7 +40,7 @@
       "vendor/bin/phpcs -e --standard=phpcs.xml"
     ],
     "popo": [
-      "vendor/bin/popo generate -q -s popo"
+      "vendor/bin/popo generate -s popo/everon-logger.popo.yml -c popo/shared-plugin.config.yml"
     ],
     "tests": [
       "@popo",

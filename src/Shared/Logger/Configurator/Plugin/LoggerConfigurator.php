@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Everon\Logger\Configurator\Plugin;
+namespace Everon\Shared\Logger\Configurator\Plugin;
 
 use DateTime;
 use DateTimeZone;
@@ -25,13 +25,36 @@ use function sort;
 use const ARRAY_FILTER_USE_KEY;
 use const SORT_STRING;
 
-class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfigurator implements \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface
+class LoggerConfigurator extends \Everon\Shared\Logger\Configurator\AbstractLoggerConfigurator implements \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface
 {
+    use \Everon\Shared\Logger\Configurator\MonologLevelConfiguratorTrait;
+
+    public const PLUGIN_CLASS = 'pluginClass';
+    public const PLUGIN_FACTORY_CLASS = 'pluginFactoryClass';
+    public const SHOULD_BUBBLE = 'shouldBubble';
     public const NAME = 'name';
     public const TIMEZONE = 'timezone';
     public const PROCESSOR_CLASS_COLLECTION = 'processorClassCollection';
 
     protected const METADATA = [
+        'pluginClass' => [
+            'type' => 'string',
+            'default' => null,
+            'mappingPolicy' => [],
+            'mappingPolicyValue' => 'pluginClass',
+        ],
+        'pluginFactoryClass' => [
+            'type' => 'string',
+            'default' => null,
+            'mappingPolicy' => [],
+            'mappingPolicyValue' => 'pluginFactoryClass',
+        ],
+        'shouldBubble' => [
+            'type' => 'bool',
+            'default' => true,
+            'mappingPolicy' => [],
+            'mappingPolicyValue' => 'shouldBubble',
+        ],
         'name' => ['type' => 'string', 'default' => 'everon-logger', 'mappingPolicy' => [], 'mappingPolicyValue' => 'name'],
         'timezone' => ['type' => 'string', 'default' => 'UTC', 'mappingPolicy' => [], 'mappingPolicyValue' => 'timezone'],
         'processorClassCollection' => [
@@ -43,6 +66,13 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
     ];
 
     protected array $updateMap = [];
+    protected ?string $pluginClass = null;
+
+    /** Defines custom plugin factory to be used to create a plugin */
+    protected ?string $pluginFactoryClass = null;
+
+    /** Whether the messages that are handled can bubble up the stack or not */
+    protected bool $shouldBubble = true;
 
     /** Logger's name */
     protected ?string $name = 'everon-logger';
@@ -102,6 +132,24 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
         $errors = [];
 
         try {
+            $this->requirePluginClass();
+        }
+        catch (Throwable $throwable) {
+            $errors['pluginClass'] = $throwable->getMessage();
+        }
+        try {
+            $this->requirePluginFactoryClass();
+        }
+        catch (Throwable $throwable) {
+            $errors['pluginFactoryClass'] = $throwable->getMessage();
+        }
+        try {
+            $this->requireShouldBubble();
+        }
+        catch (Throwable $throwable) {
+            $errors['shouldBubble'] = $throwable->getMessage();
+        }
+        try {
             $this->requireName();
         }
         catch (Throwable $throwable) {
@@ -132,6 +180,9 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
     public function fromArray(array $data): self
     {
         $metadata = [
+            'pluginClass' => 'pluginClass',
+            'pluginFactoryClass' => 'pluginFactoryClass',
+            'shouldBubble' => 'shouldBubble',
             'name' => 'name',
             'timezone' => 'timezone',
             'processorClassCollection' => 'processorClassCollection',
@@ -218,6 +269,9 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
     public function toArray(): array
     {
         $metadata = [
+            'pluginClass' => 'pluginClass',
+            'pluginFactoryClass' => 'pluginFactoryClass',
+            'shouldBubble' => 'shouldBubble',
             'name' => 'name',
             'timezone' => 'timezone',
             'processorClassCollection' => 'processorClassCollection',
@@ -362,6 +416,102 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
     public function toArrayCamelToSnake(): array
     {
         return $this->toMappedArray('camel-to-snake');
+    }
+
+    public function getPluginClass(): ?string
+    {
+        return $this->pluginClass;
+    }
+
+    public function hasPluginClass(): bool
+    {
+        return $this->pluginClass !== null;
+    }
+
+    public function requirePluginClass(): string
+    {
+        $this->setupPopoProperty('pluginClass');
+        $this->setupDateTimeProperty('pluginClass');
+
+        if ($this->pluginClass === null) {
+            throw new UnexpectedValueException('Required value of "pluginClass" has not been set');
+        }
+        return $this->pluginClass;
+    }
+
+    public function setPluginClass(?string $pluginClass): self
+    {
+        $this->pluginClass = $pluginClass; $this->updateMap['pluginClass'] = true; return $this;
+    }
+
+    /**
+     * Defines custom plugin factory to be used to create a plugin
+     */
+    public function getPluginFactoryClass(): ?string
+    {
+        return $this->pluginFactoryClass;
+    }
+
+    public function hasPluginFactoryClass(): bool
+    {
+        return $this->pluginFactoryClass !== null;
+    }
+
+    /**
+     * Defines custom plugin factory to be used to create a plugin
+     */
+    public function requirePluginFactoryClass(): string
+    {
+        $this->setupPopoProperty('pluginFactoryClass');
+        $this->setupDateTimeProperty('pluginFactoryClass');
+
+        if ($this->pluginFactoryClass === null) {
+            throw new UnexpectedValueException('Required value of "pluginFactoryClass" has not been set');
+        }
+        return $this->pluginFactoryClass;
+    }
+
+    /**
+     * Defines custom plugin factory to be used to create a plugin
+     */
+    public function setPluginFactoryClass(?string $pluginFactoryClass): self
+    {
+        $this->pluginFactoryClass = $pluginFactoryClass; $this->updateMap['pluginFactoryClass'] = true; return $this;
+    }
+
+    /**
+     * Whether the messages that are handled can bubble up the stack or not
+     */
+    public function shouldBubble(): ?bool
+    {
+        return $this->shouldBubble;
+    }
+
+    public function hasShouldBubble(): bool
+    {
+        return $this->shouldBubble !== null;
+    }
+
+    /**
+     * Whether the messages that are handled can bubble up the stack or not
+     */
+    public function requireShouldBubble(): bool
+    {
+        $this->setupPopoProperty('shouldBubble');
+        $this->setupDateTimeProperty('shouldBubble');
+
+        if ($this->shouldBubble === null) {
+            throw new UnexpectedValueException('Required value of "shouldBubble" has not been set');
+        }
+        return $this->shouldBubble;
+    }
+
+    /**
+     * Whether the messages that are handled can bubble up the stack or not
+     */
+    public function setShouldBubble(bool $shouldBubble): self
+    {
+        $this->shouldBubble = $shouldBubble; $this->updateMap['shouldBubble'] = true; return $this;
     }
 
     /**

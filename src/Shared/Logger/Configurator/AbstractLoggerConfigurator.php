@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Everon\Logger\Configurator;
+namespace Everon\Shared\Logger\Configurator;
 
 use Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface;
 use Everon\Logger\Contract\Configurator\PluginConfiguratorInterface;
@@ -9,6 +9,8 @@ use function array_key_exists;
 
 abstract class AbstractLoggerConfigurator implements LoggerConfiguratorInterface
 {
+    use MonologLevelConfiguratorTrait;
+
     /**
      * Validate builder's configuration and throw exception on error.
      * Disabled by default, canRun() should determine without throwing exception, if the handler can be built
@@ -72,7 +74,7 @@ abstract class AbstractLoggerConfigurator implements LoggerConfiguratorInterface
                 sprintf(
                     'Could not find plugin configurator for plugin: "%s"',
                     $pluginClass,
-                )
+                ),
             );
         }
 

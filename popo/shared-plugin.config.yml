@@ -1,6 +1,6 @@
 $:
   config:
-    namespace: Everon\Logger\Configurator\Plugin
+    namespace: Everon\Shared\Logger\Configurator\Plugin
     outputPath: src/
     namespaceRoot: Everon\
     phpComment: |
@@ -10,13 +10,15 @@ $:
 
 EveronLogger:
   $:
-    implement: \Everon\Logger\Contract\Configurator\PluginConfiguratorInterface::class
+    config:
+      implement: \Everon\Logger\Contract\Configurator\PluginConfiguratorInterface
+      trait:
+        - \Everon\Shared\Logger\Configurator\MonologLevelConfiguratorTrait
     default:
       logLevel: debug
       shouldBubble: true
     property: [
       {name: pluginClass},
       {name: pluginFactoryClass, comment: "Defines custom plugin factory to be used to create a plugin"},
-      {name: logLevel, comment: "The minimum logging level at which this handler will be triggered"},
       {name: shouldBubble, type: bool, comment: "Whether the messages that are handled can bubble up the stack or not"},
     ]}}

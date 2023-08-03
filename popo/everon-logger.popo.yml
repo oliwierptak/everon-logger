@@ -1,9 +1,9 @@
 $:
   config:
-    namespace: Everon\Logger\Configurator\Plugin
+    namespace: Everon\Shared\Logger\Configurator\Plugin
     outputPath: src/
     namespaceRoot: Everon\
-    extend: \Everon\Logger\Configurator\AbstractLoggerConfigurator::class
+    extend: \Everon\Shared\Logger\Configurator\AbstractLoggerConfigurator::class
     implement: \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface::class
     phpComment: |
       @SuppressWarnings(PHPMD)
