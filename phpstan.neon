@@ -7,4 +7,4 @@ parameters:
 		- tests/bootstrap.php
 	excludePaths:
 		- tests/*
-		- src/Logger/Configurator/Plugin/*
+		- src/Shared/Logger/Configurator/Plugin/*
