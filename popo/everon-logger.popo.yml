@@ -22,7 +22,7 @@ EveronLogger:
         name: processorClassCollection,
         type: array,
         itemType: string,
-        itemName: processorClass,
+        itemName: processor,
         comment: Monolog processor's collection
       },
     ]}}

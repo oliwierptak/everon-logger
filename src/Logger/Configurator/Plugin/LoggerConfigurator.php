@@ -434,7 +434,7 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
         $this->timezone = $timezone; $this->updateMap['timezone'] = true; return $this;
     }
 
-    public function addProcessorClass(string $item): self
+    public function addProcessor(string $item): self
     {
         $this->processorClassCollection[] = $item;
 
@@ -451,9 +451,9 @@ class LoggerConfigurator extends \Everon\Logger\Configurator\AbstractLoggerConfi
         return $this->processorClassCollection;
     }
 
-    public function hasProcessorClassCollection(): bool
+    public function hasProcessorCollection(): bool
     {
-        return !empty($this->processorClassCollection);
+        return !empty($this->processorCollection);
     }
 
     /**

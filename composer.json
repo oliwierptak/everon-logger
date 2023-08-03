@@ -40,7 +40,7 @@
       "vendor/bin/phpcs -e --standard=phpcs.xml"
     ],
     "popo": [
-      "vendor/bin/popo generate -s popo"
+      "vendor/bin/popo generate -q -s popo"
     ],
     "tests": [
       "@popo",
