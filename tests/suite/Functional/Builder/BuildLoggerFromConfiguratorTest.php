@@ -37,7 +37,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
 
         $this->configurator
             ->setValidateConfiguration(true)
-            ->addPluginConfigurator($streamPluginConfigurator);
+            ->add($streamPluginConfigurator);
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -53,7 +53,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
 
         $this->configurator
             ->setValidateConfiguration(false)
-            ->addPluginConfigurator($streamPluginConfigurator);
+            ->add($streamPluginConfigurator);
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -69,7 +69,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
             ->setLogLevel('info')
             ->setStreamLocation($this->logFilename);
 
-        $this->configurator->addPluginConfigurator($streamPluginConfigurator);
+        $this->configurator->add($streamPluginConfigurator);
         $logger = $this->facade->buildLogger($this->configurator);
 
         $logger->debug('foo bar');
@@ -85,22 +85,26 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
             ->setStreamLocation($this->logFilename);
 
         $this->configurator
-            ->addPluginConfigurator($streamPluginConfigurator)
+            ->add($streamPluginConfigurator)
             ->addProcessorClass(MemoryUsageProcessorStub::class);
 
         $logger = $this->facade->buildLogger($this->configurator);
 
         $logger->info('foo bar');
-        $this->assertLogFile((new TestLoggerConfigurator())
-            ->setMessage('foo bar')
-            ->setLevel('info')
-            ->setExtra(['memory_peak_usage' => '5 MB']));
+        $this->assertLogFile(
+            (new TestLoggerConfigurator())
+                ->setMessage('foo bar')
+                ->setLevel('info')
+                ->setExtra(['memory_peak_usage' => '5 MB']),
+        );
 
         $logger->warning('foo bar warning');
-        $this->assertLogFile((new TestLoggerConfigurator())
-            ->setMessage('foo bar warning')
-            ->setLevel('warning')
-            ->setExtra(['memory_peak_usage' => '5 MB']));
+        $this->assertLogFile(
+            (new TestLoggerConfigurator())
+                ->setMessage('foo bar warning')
+                ->setLevel('warning')
+                ->setExtra(['memory_peak_usage' => '5 MB']),
+        );
     }
 
     public function test_should_log_context_and_extra(): void
@@ -111,24 +115,28 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
             ->setStreamLocation($this->logFilename);
 
         $this->configurator
-            ->addPluginConfigurator($streamPluginConfigurator)
+            ->add($streamPluginConfigurator)
             ->addProcessorClass(MemoryUsageProcessorStub::class);
 
         $logger = $this->facade->buildLogger($this->configurator);
 
         $logger->info('foo bar', ['buzz' => 'lorem ipsum']);
 
-        $this->assertLogFile((new TestLoggerConfigurator())
-            ->setMessage('foo bar')
-            ->setLevel('info')
-            ->setContext(['buzz' => 'lorem ipsum'])
-            ->setExtra(['memory_peak_usage' => '5 MB']));
+        $this->assertLogFile(
+            (new TestLoggerConfigurator())
+                ->setMessage('foo bar')
+                ->setLevel('info')
+                ->setContext(['buzz' => 'lorem ipsum'])
+                ->setExtra(['memory_peak_usage' => '5 MB']),
+        );
     }
 
     public function test_build_should_throw_exception_when_validation_fails(): void
     {
         $this->expectException(HandlerBuildException::class);
-        $this->expectExceptionMessage('Could not build handler for plugin: "EveronLoggerTests\Stub\Plugin\Stream\HandlerExceptionLoggerPluginStub". Error: Invalid value for foo bar');
+        $this->expectExceptionMessage(
+            'Could not build handler for plugin: "EveronLoggerTests\Stub\Plugin\Stream\HandlerExceptionLoggerPluginStub". Error: Invalid value for foo bar',
+        );
 
         $streamPluginConfigurator = (new StreamLoggerPluginConfiguratorStub())
             ->setPluginClass(HandlerExceptionLoggerPluginStub::class)
@@ -136,7 +144,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
             ->setStreamLocation($this->logFilename);
 
         $this->configurator
-            ->addPluginConfigurator($streamPluginConfigurator);
+            ->add($streamPluginConfigurator);
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -146,7 +154,9 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
     public function test_build_should_throw_plugin_exception(): void
     {
         $this->expectException(PluginBuildException::class);
-        $this->expectExceptionMessage('Could not build plugin: "EveronLoggerTests\Stub\Plugin\Stream\PluginExceptionLoggerPluginStub". Error: Invalid value for foo bar');
+        $this->expectExceptionMessage(
+            'Could not build plugin: "EveronLoggerTests\Stub\Plugin\Stream\PluginExceptionLoggerPluginStub". Error: Invalid value for foo bar',
+        );
 
         $streamPluginConfigurator = (new StreamLoggerPluginConfiguratorStub())
             ->setPluginClass(PluginExceptionLoggerPluginStub::class)
@@ -154,7 +164,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
             ->setStreamLocation($this->logFilename);
 
         $this->configurator
-            ->addPluginConfigurator($streamPluginConfigurator);
+            ->add($streamPluginConfigurator);
 
         $logger = $this->facade->buildLogger($this->configurator);
 
@@ -164,7 +174,9 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
     public function test_build_should_throw_processor_exception(): void
     {
         $this->expectException(ProcessorBuildException::class);
-        $this->expectExceptionMessage('Could not build processor: "EveronLoggerTests\Stub\Plugin\Stream\ProcessorExceptionStub". Error: Invalid value for foo bar');
+        $this->expectExceptionMessage(
+            'Could not build processor: "EveronLoggerTests\Stub\Plugin\Stream\ProcessorExceptionStub". Error: Invalid value for foo bar',
+        );
 
         $streamPluginConfigurator = (new StreamLoggerPluginConfiguratorStub())
             ->setPluginClass(StreamLoggerPluginStub::class)
@@ -172,7 +184,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
             ->setStreamLocation($this->logFilename);
 
         $this->configurator
-            ->addPluginConfigurator($streamPluginConfigurator)
+            ->add($streamPluginConfigurator)
             ->addProcessorClass(ProcessorExceptionStub::class);
 
         $logger = $this->facade->buildLogger($this->configurator);
@@ -188,7 +200,7 @@ class BuildLoggerFromConfiguratorTest extends AbstractPluginLoggerTest
         $streamPluginConfigurator = (new StreamLoggerPluginConfiguratorStub());
 
         $this->configurator
-            ->addPluginConfigurator($streamPluginConfigurator)
+            ->add($streamPluginConfigurator)
             ->setName(null);
 
         $logger = $this->facade->buildLogger($this->configurator);

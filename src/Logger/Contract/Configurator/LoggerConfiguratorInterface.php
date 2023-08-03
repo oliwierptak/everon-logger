@@ -73,7 +73,7 @@ interface LoggerConfiguratorInterface extends ArrayableInterface
      *
      * @return \Everon\Logger\Contract\Configurator\LoggerConfiguratorInterface
      */
-    public function addPluginConfigurator(PluginConfiguratorInterface $pluginConfigurator): LoggerConfiguratorInterface;
+    public function add(PluginConfiguratorInterface $pluginConfigurator): LoggerConfiguratorInterface;
 
     /**
      * Specification:

@@ -23,7 +23,7 @@ $streamPluginConfigurator = (new StreamLoggerPluginConfigurator)
     ->setStreamLocation('/tmp/example.log');
 
 $configurator = (new LoggerConfigurator)
-    ->addPluginConfigurator($streamPluginConfigurator);
+    ->add($streamPluginConfigurator);
 
 $logger = (new EveronLoggerFacade)->buildLogger($configurator);
 
@@ -45,10 +45,10 @@ For example, setup syslog and file logging.
 
 ```php
 $configurator = (new LoggerConfigurator)
-    ->addPluginConfigurator((new StreamLoggerPluginConfigurator)
+    ->add((new StreamLoggerPluginConfigurator)
         ->setLogLevel('debug')
         ->setStreamLocation('/tmp/example.log')
-    )->addPluginConfigurator((new SyslogLoggerPluginConfigurator)
+    )->add((new SyslogLoggerPluginConfigurator)
         ->setLogLevel('info')
         ->setIdent('everon-logger-ident'));
 ```  
@@ -62,7 +62,7 @@ in which case the custom formatter provided by the plugin will be used.
 
 ### Setup with LoggerConfigurator
 
-To setup a plugin with given handler, add it to the collection in `LoggerConfigurator` with `addPluginConfigurator()`.
+To setup a plugin with given handler, add it to the collection in `LoggerConfigurator` with `add()`.
 
 For example, setup logging to a redis server and enable memory usage processor.
 
@@ -78,7 +78,7 @@ $redisPluginConfigurator
 $configurator = (new LoggerConfigurator)
     ->setName('everon-logger-example')
     ->addProcessorClass(MemoryUsageProcessor::class)
-    ->addPluginConfigurator($redisPluginConfigurator);
+    ->add($redisPluginConfigurator);
 
 $logger = (new EveronLoggerFacade)->buildLogger($configurator);
 
