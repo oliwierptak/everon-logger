@@ -33,7 +33,7 @@ class StreamLoggerPluginStub implements LoggerPluginInterface, PluginFormatterIn
             Logger::toMonologLevel($this->configurator->requireLogLevel()),
             $this->configurator->shouldBubble(),
             $this->configurator->getFilePermission(),
-            $this->configurator->useLocking()
+            $this->configurator->useLocking(),
         );
     }
 

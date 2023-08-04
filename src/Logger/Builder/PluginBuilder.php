@@ -33,7 +33,7 @@ class PluginBuilder
                     'Could not build plugin: "%s". Error: %s',
                     $pluginConfigurator->requirePluginClass(),
                     $exception->getMessage(),
-                ), $exception->getCode(), $exception
+                ), $exception->getCode(), $exception,
             );
         }
     }

@@ -26,7 +26,7 @@ class ConfiguratorValidator
             throw new ConfiguratorValidationException(
                 $exception->getMessage(),
                 $exception->getCode(),
-                $exception
+                $exception,
             );
         }
     }

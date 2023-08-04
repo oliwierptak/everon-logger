@@ -34,7 +34,7 @@ class HandlerBuilder
                     'Could not build handler for plugin: "%s". Error: %s',
                     get_class($plugin),
                     $exception->getMessage(),
-                ), $exception->getCode(), $exception
+                ), $exception->getCode(), $exception,
             );
         }
     }

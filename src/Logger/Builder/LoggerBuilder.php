@@ -39,7 +39,7 @@ class LoggerBuilder
             $this->configurator->requireName(),
             $handlers,
             $processors,
-            new DateTimeZone($this->configurator->requireTimezone())
+            new DateTimeZone($this->configurator->requireTimezone()),
         );
     }
 
@@ -105,7 +105,7 @@ class LoggerBuilder
                         'Could not build processor: "%s". Error: %s',
                         $processorClass,
                         $exception->getMessage(),
-                    )
+                    ),
                 );
             }
         }

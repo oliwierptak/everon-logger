@@ -22,10 +22,7 @@ class PluginExceptionLoggerPluginStub implements LoggerPluginInterface
         return true;
     }
 
-    public function buildHandler(): HandlerInterface
-    {
-
-    }
+    public function buildHandler(): HandlerInterface {}
 
     public function validate(): void
     {

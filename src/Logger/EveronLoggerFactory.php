@@ -16,7 +16,7 @@ class EveronLoggerFactory
             $configurator,
             $this->createPluginBuilder(),
             $this->createHandlerBuilder(),
-            $this->createValidator()
+            $this->createValidator(),
         );
     }
 
