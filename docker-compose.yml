@@ -34,7 +34,6 @@ services:
       - ./docker/config/bash/bashrc-docker:/root/.bashrc
       - ./docker/config/bash/bash_history:/root/.bash_history
       - ./:/app/
-      - ../../:/sources/
     environment:
       - TERM=xterm-256color
     stdin_open: true # docker run -i
