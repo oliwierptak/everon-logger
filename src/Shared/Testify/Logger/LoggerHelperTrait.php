@@ -31,16 +31,10 @@ trait LoggerHelperTrait
 
     protected function assertLogFile(TestLoggerConfigurator $configurator): void
     {
-        if (!is_file($this->logFilename)) {
-            return;
-        }
+        $this->assertFileExists($this->logFilename);
 
         $logData = shell_exec('tail -n 1 ' . $this->logFilename);
-        if ($logData === null) {
-            $this->assertFalse(false);
-
-            return;
-        }
+        $this->assertNotNull($logData);
 
         $jsonContextString = json_encode($configurator->getContext());
         $jsonExtraString = json_encode($configurator->getExtra());
