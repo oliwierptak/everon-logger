@@ -10,7 +10,8 @@ trait MonologLevelConfiguratorTrait
     /**
      * The minimum logging level at which this handler will be triggered
      */
-    protected Level $logLevel;
+    protected Level $logLevel = Level::Debug;
+
 
     public function getLogLevel(): Level
     {
@@ -40,5 +41,15 @@ trait MonologLevelConfiguratorTrait
     public function hasLogLevel(): bool
     {
         return isset($this->logLevel);
+    }
+
+    public function getFilePermission(): int
+    {
+        return 644;
+    }
+
+    public function useLocking(): bool
+    {
+        return false;
     }
 }

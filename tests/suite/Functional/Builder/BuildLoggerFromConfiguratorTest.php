@@ -9,7 +9,7 @@ use Everon\Logger\Exception\HandlerBuildException;
 use Everon\Logger\Exception\PluginBuildException;
 use Everon\Logger\Exception\ProcessorBuildException;
 use Everon\Shared\Testify\Logger\LoggerHelperTrait;
-use EveronLoggerTests\Stub\Plugin\Stream\HandlerExceptionLoggerPluginStub;
+use EveronLoggerTests\Stub\Plugin\Stream\FactoryStub;
 use EveronLoggerTests\Stub\Plugin\Stream\PluginExceptionLoggerPluginStub;
 use EveronLoggerTests\Stub\Plugin\Stream\ProcessorExceptionStub;
 use EveronLoggerTests\Stub\Plugin\Stream\StreamLoggerPluginConfiguratorStub;
@@ -150,7 +150,7 @@ class BuildLoggerFromConfiguratorTest extends TestCase
         );
 
         $streamPluginConfigurator = (new StreamLoggerPluginConfiguratorStub())
-            ->setPluginClass(HandlerExceptionLoggerPluginStub::class)
+            ->setPluginFactoryClass(FactoryStub::class)
             ->setLogLevel(Level::Info)
             ->setStreamLocation($this->logFilename);
 
